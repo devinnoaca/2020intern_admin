@@ -8,7 +8,8 @@ const createUser = (request: express.Request, response: express.Response, next: 
 };
 
 const getUsers = (request: express.Request, response: express.Response, next: express.NextFunction): void => {
-  response.status(200).send(
+  console.log('getUsers');
+  response.status(200).render('usermanage', 
     {
       'status': 200,
       'users': [
@@ -16,7 +17,7 @@ const getUsers = (request: express.Request, response: express.Response, next: ex
           'id': 1,
           'type': 0,
           'name': 'Kim',
-          'email': 'abc@def.ghi'
+          'email': 'abc@def.ghi' 
         },
         {
           'id': 2,
@@ -27,7 +28,6 @@ const getUsers = (request: express.Request, response: express.Response, next: ex
       ]
     }
   );
-  console.log('getUsers');
 };
 
 const getUser = (request: express.Request, response: express.Response, next: express.NextFunction): void => {
