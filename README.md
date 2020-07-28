@@ -1,1 +1,1 @@
-Innovation Academy mentoring system admin page
+Innovation Academy mentoring system admin
