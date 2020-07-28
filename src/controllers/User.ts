@@ -9,7 +9,7 @@ const createUser = (request: express.Request, response: express.Response, next: 
 
 const getUsers = (request: express.Request, response: express.Response, next: express.NextFunction): void => {
   console.log('getUsers');
-  response.render('usermanage', 
+  response.status(200).render('usermanage', 
     {
       'status': 200,
       'users': [
