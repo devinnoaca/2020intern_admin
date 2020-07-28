@@ -1,13 +1,7 @@
 import * as mysql from 'mysql2';
+import dbConfig from '../config/db.config';
 
-const connection = mysql.createConnection({
-  host: 'localhost',
-	port: 3306,
-  user: 'root',
-  database: 'test',
-  password: '1234',
-	multipleStatements: true
-});
+const connection = mysql.createConnection(dbConfig);
 
 const init = () => {
 	const strCreateUserTableQuery = `
