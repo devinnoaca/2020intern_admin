@@ -30,7 +30,7 @@
           <!-- Page Heading -->
           <div class="d-sm-flex align-items-center justify-content-between mb-4">
             <h1 class="h3 mb-0 text-gray-800">사용자 관리</h1>
-            <button class="d-none d-sm-inline-block btn-md btn-warning shadow-sm" data-toggle="modal" data-target="createuser">
+            <button class="btn-warning shadow-sm" data-toggle="modal" data-target="#usercreate">
               회원 생성
             </button>
           </div>
@@ -42,63 +42,76 @@
             </div>
             <div class="card-body">
               <form>
-                <!-- 회원 종류-->
-                <div class="form-row">
-                  <div class="form-check form-check-inline col-md-1">
-                    <label class="form-check-label"><h5>회원 종류</h5></label>
-                  </div>
-                  <div class="form-check form-check-inline col-md-1">
-                    <input class="form-check-input" type="radio" name="userType" id="userType1" value="all">
-                    <label class="form-check-label" for="userType1">전체</label>
-                  </div>
-                  <div class="form-check form-check-inline col-md-1">
-                    <input class="form-check-input" type="radio" name="userType" id="userType2" value="1">
-                    <label class="form-check-label" for="userType2">멘티</label>
-                  </div>
-                  <div class="form-check form-check-inline col-md-1">
-                    <input class="form-check-input" type="radio" name="userType" id="userType3" value="2">
-                    <label class="form-check-label" for="userType3">멘토</label>
-                  </div>
-                  <div class="form-check form-check-inline col-md-1">
-                    <input class="form-check-input" type="radio" name="userType" id="userType4" value="3">
-                    <label class="form-check-label" for="userType4">관리자</label>
-                  </div>
-                </div>
+                <ul class="list-group list-group-flush">
+                  <!-- 회원 종류-->
+                  <li class="list-group-item">
+                    <div class="form-row">
+                      <div class="form-check form-check-inline col-md-1">
+                        <label class="form-check-label">
+                          <h5>회원 종류</h5>
+                        </label>
+                      </div>
+                      <div class="form-check form-check-inline col-md-1">
+                        <input class="form-check-input" type="radio" name="userType" id="userType1" value="all">
+                        <label class="form-check-label" for="userType1">전체</label>
+                      </div>
+                      <div class="form-check form-check-inline col-md-1">
+                        <input class="form-check-input" type="radio" name="userType" id="userType2" value="1">
+                        <label class="form-check-label" for="userType2">멘티</label>
+                      </div>
+                      <div class="form-check form-check-inline col-md-1">
+                        <input class="form-check-input" type="radio" name="userType" id="userType3" value="2">
+                        <label class="form-check-label" for="userType3">멘토</label>
+                      </div>
+                      <div class="form-check form-check-inline col-md-1">
+                        <input class="form-check-input" type="radio" name="userType" id="userType4" value="3">
+                        <label class="form-check-label" for="userType4">관리자</label>
+                      </div>
+                    </div>
+                  </li>
+                  
+                  <!-- 검색어 -->
+                  <li class="list-group-item">
+                    <div class="form-row">
+                      <div class="form-group form-inline col-md-1">
+                        <label>
+                          <h5>검색어</h5>
+                        </label>
+                      </div>
+                      <div class="form-group form-inline col-md-1">
+                        <select class="form-control" id="searchOption">
+                          <option>아이디</option>
+                          <option>조건</option>
+                          <option>etc</option>
+                        </select>
+                      </div>
+                      <div class="form-group form-inline col-md-6">
+                        <input class="form-control col-md-12" type="text" id="searchQuery">
+                      </div>
+                    </div>
+                  </li>
+                  
+                  <!-- 회원 권한 -->
+                  <li class="list-group-item">
+                    <div class="form-row">
+                      <div class="form-group form-inline col-md-1">
+                        <label>
+                          <h5>회원권한</h5>
+                        </label>
+                      </div>
+                      <div class="form-group form-inline col-md-1">
+                        <select class="form-control" id="permission">
+                          <option>일반</option>
+                          <option>관리자</option>
+                          <option>슈퍼 관리자</option>
+                        </select>
+                      </div>
+                    </div>
+                  </li>
 
-                <!-- 검색어 -->
-                <div class="form-row">
-                  <div class="form-group form-inline col-md-1">
-                    <label><h5>검색어</h5></label>
-                  </div>
-                  <div class="form-group form-inline col-md-1"> 
-                    <select class="form-control" id="searchOption">
-                      <option>아이디</option>
-                      <option>조건</option>
-                      <option>etc</option>
-                    </select>  
-                  </div>
-                  <div class="form-group form-inline col-md-6">
-                    <input class="form-control col-md-12" type="text" id="searchQuery">
-                  </div>
-                </div>
-
-                <!-- 회원 권한 -->
-                <div class="form-row">
-                  <div class="form-group form-inline col-md-1">
-                    <label><h5>회원권한</h5></label>
-                  </div>
-                  <div class="form-group form-inline col-md-1">
-                    <select class="form-control" id="permission">
-                      <option>일반</option>
-                      <option>관리자</option>
-                      <option>슈퍼 관리자</option>
-                    </select> 
-                  </div>
-                </div>
-
-                 <!-- 가입일 -->
-                
-                 <!-- 검색 버튼 -->
+                  <!-- 가입일 -->
+                </ul>
+                <!-- 검색 버튼 -->
                  <div class="form-row">
                    <div class="col">
                     <button type="submit" class="btn btn-primary align-self-center">검색</button>
@@ -184,6 +197,9 @@
     </div>
   </div>
 
+  <!-- 유저 추가 모달 -->
+  <%- include ('./createusermodal.ejs')%>
+  
   <!-- Bootstrap core JavaScript-->
   <script src="vendor/jquery/jquery.min.js"></script>
   <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
