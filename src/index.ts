@@ -16,4 +16,9 @@ app.get('/', (request: express.Request, response: express.Response) => {
 	// response.send('Hello World!');
 	response.render('dashboard');
 });
+
+app.get('/user', (request: express.Request, response: express.Response) => { 
+	response.render('usermanage');
+});
+
 app.listen(3000, () => console.log(`start`));
