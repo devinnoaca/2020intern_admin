@@ -44,11 +44,8 @@
                       <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
                     </a>
                     <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in" aria-labelledby="dropdownMenuLink">
-                      <div class="dropdown-header">Dropdown Header:</div>
-                      <a class="dropdown-item" href="#">Action</a>
-                      <a class="dropdown-item" href="#">Another action</a>
-                      <div class="dropdown-divider"></div>
-                      <a class="dropdown-item" href="#">Something else here</a>
+                      <div class="dropdown-header">keyword menu</div>
+                      <a class="dropdown-item" href="#">Add Keyword</a>                      
                     </div>
                   </div>
                 </div>
@@ -82,6 +79,7 @@
                                         <!-- <span class="badge badge-pill badge-success"><%= key %></span> -->
                                         <a href="#" class="badge badge-info" data-toggle="modal" data-target="#exampleModal" ><%= key %></a>
                                     <% }) %>
+                                    <a href="#" class="badge badge-primary" data-toggle="modal" data-target="#addKeywordModal" >+ ADD</a>
                                 </div>
                             <% }) %>
                         </div>
@@ -150,11 +148,45 @@
           </button>
         </div>
         <div class="modal-body">
-          해당 키워드를 삭제하시겠습니까?
+          키워드를 삭제하시겠습니까?
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
           <button type="button" class="btn btn-danger">Delete</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- add keyword Modal -->
+  <div class="modal fade" id="addKeywordModal" tabindex="-1" role="dialog" aria-labelledby="addKeywordModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Add Keyword</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <form>
+            <div class="form-group row">
+              <label for="staticEmail" class="col-sm-2 col-form-label">Category</label>
+              <div class="col-sm-10">
+                <input type="text" readonly class="form-control-plaintext" id="staticEmail" value="category">
+              </div>
+            </div>
+            <div class="form-group row">
+              <label for="inputKeyword" class="col-sm-2 col-form-label">Keyword</label>
+              <div class="col-sm-10">
+                <input type="text" class="form-control" id="inputKeyword">
+              </div>
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary">ADD</button>
         </div>
       </div>
     </div>
