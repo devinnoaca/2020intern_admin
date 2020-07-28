@@ -8,9 +8,9 @@ app.use('/', router);
 
 db.init();
 
-app.set('views', path.join(__dirname, '/Views'))
+app.set('views', path.join(__dirname, '/views'))
 app.set("view engine", "ejs");
-app.use(express.static(__dirname + '/Public'));
+app.use(express.static(__dirname + '/public'));
 
 app.get('/', (request: express.Request, response: express.Response) => { 
 	// response.send('Hello World!');
