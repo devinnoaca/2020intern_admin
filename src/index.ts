@@ -17,6 +17,14 @@ app.get('/', (request: express.Request, response: express.Response) => {
 	response.render('dashboard');
 });
 
+app.get('/login', (request: express.Request, response: express.Response) => { 
+	response.render('login');
+});
+
+app.get('/forgot-password', (request: express.Request, response: express.Response) => { 
+	response.render('forgot-password');
+});
+
 app.get('/keyword', (request: express.Request, response: express.Response) => { 
 	const data = [
         {
