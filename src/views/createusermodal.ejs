@@ -14,20 +14,20 @@
               <!-- 회원 종류 -->
               <li class="list-group-item">
                 <div class="form-row">
-                  <div class="form-check form-check-inline">
+                  <div class="form-check form-check-inline col-md-2">
                     <label class="form-check-label">
                       <h5>회원 종류</h5>
                     </label>
                   </div>
-                  <div class="form-check form-check-inline">
+                  <div class="form-check form-check-inline col-md-2">
                     <input class="form-check-input" type="radio" name="userType" id="userType2" value="1">
                     <label class="form-check-label" for="userType2">멘티</label>
                   </div>
-                  <div class="form-check form-check-inline">
+                  <div class="form-check form-check-inline col-md-2">
                     <input class="form-check-input" type="radio" name="userType" id="userType3" value="2">
                     <label class="form-check-label" for="userType3">멘토</label>
                   </div>
-                  <div class="form-check form-check-inline">
+                  <div class="form-check form-check-inline col-md-2">
                     <input class="form-check-input" type="radio" name="userType" id="userType4" value="3">
                     <label class="form-check-label" for="userType4">관리자</label>
                   </div>
@@ -37,10 +37,10 @@
               <!-- 이름 -->
               <li class="list-group-item">
                 <div class="form-row">
-                  <div class="form-inline">
+                  <div class="form-inline col-md-2">
                     <label>이름</label>
                   </div>
-                  <div class="form-inline">
+                  <div class="form-inline col-md-6">
                     <input class="form-control" type="text" id="name">
                   </div>
                 </div>
@@ -49,10 +49,10 @@
               <!-- 이메일 -->
               <li class="list-group-item">
                 <div class="form-row">
-                  <div class="form-inline">
+                  <div class="form-inline col-md-2">
                     <label>E-mail</label>
                   </div>
-                  <div class="form-inline">
+                  <div class="form-inline col-md-6">
                     <input class="form-control" type="text" id="email">
                   </div>
                 </div>
@@ -61,10 +61,10 @@
               <!-- 패스워드 -->
               <li class="list-group-item">
                 <div class="form-row">
-                  <div class="form-inline">
+                  <div class="form-inline col-md-2">
                     <label>Password</label>
                   </div>
-                  <div class="form-inline">
+                  <div class="form-inline col-md-6">
                     <input class="form-control" type="password" id="password">
                   </div>
                 </div>
@@ -73,10 +73,10 @@
               <!-- 유저 권한 -->
               <li class="list-group-item">
                 <div class="form-row">
-                  <div class="form-inline">
+                  <div class="form-inline col-md-2">
                     <label>유저 권한</label>
                   </div>
-                  <div class="form-inline">
+                  <div class="form-inline col-md-6">
                     <select class="form-control" id="permission">
                       <option>일반</option>
                       <option>관리자</option>
@@ -85,15 +85,12 @@
                   </div>
                 </div>
               </li>
-              <!-- 생성 버튼 -->
-              <button class="btn btn-primary align-self-center" type="submit">생성</button>
             </ul>
           </form>
         </div>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Save changes</button>
+        <button type="button" class="btn btn-primary align-self-center">생성</button>
       </div>
     </div>
   </div>
