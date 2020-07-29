@@ -1,7 +1,7 @@
-import {Router} from 'express';
-import * as userRoute from './controller/user';
-import * as keywordRoute from './controller/keyword';
-import * as categoryRoute from './controller/category';
+import { Router } from 'express';
+import * as userRoute from './controllers/User';
+import * as keywordRoute from './controllers/Keyword';
+import * as categoryRoute from './controllers/Category';
 
 const router = Router();
 router.use('/user', userRoute);
