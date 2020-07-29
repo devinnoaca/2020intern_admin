@@ -72,8 +72,20 @@ res.status(200).send(
 console.log('controller: deleteUser');
 };
 
-const modifyUser = (req: express.Request, res: express.Response, next: express.NextFunction): void => {
-
+const modifyUser = async (req: express.Request, res: express.Response, next: express.NextFunction) => {
+  const data =
+  [
+    req.params.email,
+    req.params.password,
+    req.params.name,
+    req.params.image,
+    req.params.description,
+    req.params.notification,
+    req.params.authorization,
+    req.params.permission,
+    req.params.type
+  ];
+  const result = await userQuery.modifyUser(data);
 res.status(200).send(
       {
         'status': 200,

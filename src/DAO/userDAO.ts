@@ -31,15 +31,22 @@ async function getUsers() {
 
 async function deleteUser(data: Array<any>) {
   try {
-    const [rows, fields] = await db.connection.promise(). query(query.deleteUser, data);
+    const [rows, fields] = await db.connection.promise().query(query.deleteUser, data);
     return rows;
   } catch (e) {
     console.log('dao: deleteUser error\n' + e)
   }
 }
 
-// async function modifyUser()
+async function modifyUser(data: Array<any>) {
+  try {
+    const [rows, fields] = await db.connection.promise().query(query.updateUser, data);
+    return rows;
+  } catch (e) {
+    console.log('dao: modifyUser error\n' + e)
+  }
+}
 
 export default {
-  getUser, createUser, getUsers, deleteUser
+  getUser, createUser, getUsers, deleteUser, modifyUser
 }
