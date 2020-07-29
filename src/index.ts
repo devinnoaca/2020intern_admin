@@ -1,12 +1,12 @@
 import router from './app';
 import * as express from 'express';
-//import db from './db';
+import db from './db';
 import * as path from 'path';
 
 const app = express();
 app.use('/', router);
 
-//db.init();
+db.init();
 
 app.set('views', path.join(__dirname, '/views'))
 app.set("view engine", "ejs");

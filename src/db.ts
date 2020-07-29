@@ -4,14 +4,13 @@ import { dbConfig } from '../config/db.config';
 const connection = mysql.createConnection(dbConfig);
 
 const init = () => {
-
-
 	const strDropTables	= `
-DROP TABLE Keyword; DROP TABLE User; DROP TABLE Category; 
+DROP TABLE Career; DROP TABLE Keyword; DROP TABLE User; DROP TABLE Category;
 `
 	const strCreateUserTable = `
 CREATE TABLE User(\
 usn INT NOT NULL AUTO_INCREMENT,\
+id VARCHAR(20) NOT NULL,\
 email VARCHAR(30) NOT NULL,\
 password VARCHAR(30) NOT NULL,\
 name VARCHAR(20) NOT NULL,\
@@ -24,9 +23,9 @@ type BOOL NOT NULL,\
 PRIMARY KEY(usn));`;
 	const strInsertUser = `
 INSERT INTO USER(\
-usn, email, pw, name, image, description, \
+usn, id, email, password, name, image, description, \
 notificationCount, authorization, permission, type) \
-VALUES (1, "tjdkskgnal61@gmail.com", "1234", "SeongJae",\
+VALUES (1, "tjdkskgnal", "tjdkskgnal61@gmail.com", "1234", "SeongJae",\
 "https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcS1m48JDx5jGrVvmMnYqr8zte_LCfe6dI6MFw&usqp=CAU",
 "Hi, I'm SeongJaeSong", 0, 1, 2, true);`;
 
@@ -56,6 +55,20 @@ VALUES(1, "SQL Injection", 1);`;
 INSERT INTO KEYWORD(id, name, categoryID) \
 VALUES(2, "XSS", 1);`;
 
+	const strCreateCareerTable = `
+CREATE TABLE Career(\
+id INT NOT NULL AUTO_INCREMENT,\
+career VARCHAR(500),\
+usn INT,
+PRIMARY KEY(id),\
+FOREIGN KEY(usn)\
+REFERENCES User(usn)\
+ON DELETE CASCADE \
+ON UPDATE CASCADE);`;
+	const strInsertCareer = `
+INSERT INTO Career(id, career, usn) \
+VALUES(1, "NAVER - CTO", 1);`;
+
 	connection.query(
 		strDropTables, (error: mysql.Error) => {
 			console.log('Table dropping...');
@@ -71,6 +84,7 @@ VALUES(2, "XSS", 1);`;
 			strCreateUserTable
 			+strCreateCategoryTable
 			+strCreateKeywordTable
+			+strCreateCareerTable
 			,(error: mysql.Error) => {
 			console.log('Table creating...');
 			if (error){
@@ -89,6 +103,7 @@ VALUES(2, "XSS", 1);`;
 		+strInsertCategory
 		+strInsertKeyword
 		+strInsertKeyword2
+		+strInsertCareer
 		,(error: mysql.Error) => {
 			console.log('Data inserting...');
 			if (error) {
