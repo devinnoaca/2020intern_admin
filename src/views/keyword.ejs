@@ -3,6 +3,39 @@
 
 <head>
   <%- include ('./common/header.ejs') %>
+
+  <!-- Keyword Search Function -->
+  <script type="text/javascript">
+
+    let searchKeyword = (input) => {
+      const data_set = '<%= data %>';
+      console.log(data_set);
+      
+      // data_set.map(pair => {
+      //   console.log(pair);
+      // });
+    }
+
+    const search = () => {
+        var searchForm = document.searchForm;
+        var type = searchForm.searchType.value;
+        var searchInput = searchForm.searchInput.value;
+        
+        console.log(type);
+        if(type == 'Choose...') {
+          alert('검색타입을 선택해주세요.')
+        } else {
+          alert(`${searchInput} 검색...`);
+          // const data_set = '<%- data %>';
+          // console.log(data_set);
+          searchKeyword(searchInput);
+        }
+    }
+
+    
+  
+</script>
+
 </head>
 
 <body id="page-top">
@@ -34,68 +67,95 @@
           </div>
 
           <!-- Content Row -->
-         <div>
-            <div class="card shadow">
-                <!-- Card Header - Dropdown -->
-                <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                  <h6 class="m-0 font-weight-bold text-primary">Keywords</h6>
-                  <div class="dropdown no-arrow">
-                    <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                      <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
-                    </a>
-                    <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in" aria-labelledby="dropdownMenuLink">
-                      <div class="dropdown-header">keyword menu</div>
-                      <a class="dropdown-item" href="#">Add Keyword</a>                      
-                    </div>
+
+          <!-- Keyword Search Card -->
+          <div class="card shadow">
+            <!-- Card Header -->
+            <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+              <h6 class="m-0 font-weight-bold text-primary">키워드 조회</h6>
+            </div>
+            <!-- Card Body -->
+            <div class="card-body">
+                <form name="searchForm" onsubmit="search(); return false" class="form-inline">
+                  <select name="searchType" class="custom-select" id="inlineFormCustomSelectPref">
+                    <option selected>Choose...</option>
+                    <option value="1">Category</option>
+                    <option value="2">Keyword</option>
+                    <option value="3">All</option>
+                  </select>
+                
+                  <div class="custom-control custom-checkbox my-1 mr-sm-2">                    
+                    <input type="text" name="searchInput" class="form-control" id="input-keyword" required>
                   </div>
+                
+                  <button type="submit" class="btn btn-primary my-1">조회</button>
+                </form>
+                <div class="search-result">
                 </div>
-                <!-- Card Body -->
-                <div class="card-body">
-                  <div class="row">
-                    <div class="col-xl-4 col-lg-5">
-                        <!-- List group -->
-                        <div class="list-group" id="myList" role="tablist">
-                            <% data.forEach(function (val, index) { %>
-                              <a class="list-group-item list-group-item-action" data-toggle="list" href="#category-<%= index %>" role="tab"><%= val.category %>
-                              </a>
-                              <!-- <button type="button" class="btn"><i class="fa fa-cog" aria-hidden="true"></i></button> -->
-                            <% }) %>
-                        </div>
-                        <br>
-                        <div class="input-group mb-3">
-                            <input type="text" class="form-control" placeholder="category name" aria-label="category name" aria-describedby="button-addon2">
-                            <div class="input-group-append">
-                              <button class="btn btn-outline-secondary" type="button" id="button-addon2">Add</button>
-                            </div>
-                        </div>
-                    </div>
-        
-                    <div class="col-xl-8 col-lg-7">    
-                        <!-- Tab panes -->
-                        <div class="tab-content">
-                            <% data.forEach(function (val, index) { %>
-                                <div class="tab-pane" id="category-<%= index %>" role="tabpanel">
-                                    <% val.keyword.forEach(function (key) { %>
-                                        <!-- <span class="badge badge-pill badge-success"><%= key %></span> -->
-                                        <a href="#" class="badge badge-info" data-toggle="modal" data-target="#exampleModal" ><%= key %></a>
-                                    <% }) %>
-                                    <a href="#" class="badge badge-primary" data-toggle="modal" data-target="#addKeywordModal" >+ ADD</a>
-                                </div>
-                            <% }) %>
-                        </div>
-                        <!-- <div class="input-group mb-3">
-                            <input type="text" class="form-control" placeholder="category name" aria-label="category name" aria-describedby="button-addon2">
-                            <div class="input-group-append">
-                              <button class="btn btn-outline-secondary" type="button" id="button-addon2">Add</button>
-                            </div>
-                        </div> -->
-                    </div>
+              </div>
+          </div>
+          <!-- End of Keyword Search Card -->
+          <br>
+          <!-- keyword manage Card -->
+          <div class="card shadow">
+              <!-- Card Header - Dropdown -->
+              <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                <h6 class="m-0 font-weight-bold text-primary">키워드 관리</h6>
+                <div class="dropdown no-arrow">
+                  <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
+                  </a>
+                  <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in" aria-labelledby="dropdownMenuLink">
+                    <div class="dropdown-header">keyword menu</div>
+                    <a class="dropdown-item" href="#">Add Keyword</a>                      
                   </div>
                 </div>
               </div>
-
-            
-         </div>
+              <!-- Card Body -->
+              <div class="card-body">
+                <div class="row">
+                  <div class="col-xl-4 col-lg-5">
+                      <!-- List group -->
+                      <div class="list-group" id="myList" role="tablist">
+                          <% data.forEach(function (val, index) { %>
+                            <a class="list-group-item list-group-item-action" data-toggle="list" href="#category-<%= index %>" role="tab"><%= val.category %>
+                            </a>
+                          <% }) %>
+                      </div>
+                      <br>
+                      <div class="input-group mb-3">
+                          <input type="text" class="form-control" placeholder="category name" aria-label="category name" aria-describedby="button-addon2">
+                          <div class="input-group-append">
+                              <button class="btn btn-outline-secondary" type="button" id="button-addon2">Add</button>
+                          </div>
+                      </div>
+                  </div>
+      
+                  <div class="col-xl-8 col-lg-7">    
+                      <!-- Tab panes -->
+                      <div class="tab-content">
+                          <% data.forEach(function (val, index) { %>
+                              <div class="tab-pane" id="category-<%= index %>" role="tabpanel">
+                                  <% val.keyword.forEach(function (key) { %>
+                                      <!-- <span class="badge badge-pill badge-success"><%= key %></span> -->
+                                      <a href="#" class="badge badge-info" data-toggle="modal" data-target="#exampleModal" ><%= key %></a>
+                                  <% }) %>
+                                  <a href="#" class="badge badge-primary" data-toggle="modal" data-target="#addKeywordModal" >+ ADD</a>
+                              </div>
+                          <% }) %>
+                      </div>
+                      <!-- <div class="input-group mb-3">
+                          <input type="text" class="form-control" placeholder="category name" aria-label="category name" aria-describedby="button-addon2">
+                          <div class="input-group-append">
+                            <button class="btn btn-outline-secondary" type="button" id="button-addon2">Add</button>
+                          </div>
+                      </div> -->
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- End of keyword manage Card -->
+         
 
         </div>
         <!-- /.container-fluid -->
@@ -201,13 +261,6 @@
 
   <!-- Custom scripts for all pages-->
   <script src="js/sb-admin-2.min.js"></script>
-
-  <!-- Page level plugins -->
-  <script src="vendor/chart.js/Chart.min.js"></script>
-
-  <!-- Page level custom scripts -->
-  <script src="js/demo/chart-area-demo.js"></script>
-  <script src="js/demo/chart-pie-demo.js"></script>
 
 </body>
 
