@@ -1,12 +1,13 @@
 import * as express from 'express';
 
 const createKeyword = (req: express.Request, res: express.Response, next: express.NextFunction): void => {
+  console.log('run createKeyword API');
+  console.log(req.body);
   res.status(200).send(
         {
           'status': 200
         }
-      );
-  console.log('createKeyword');
+      );  
 };
 
 const deleteKeyword = (req: express.Request, res: express.Response, next: express.NextFunction): void => {
@@ -20,7 +21,7 @@ const deleteKeyword = (req: express.Request, res: express.Response, next: expres
 
 const getKeyword = (req: express.Request, res: express.Response, next: express.NextFunction): void => {
   console.log('run getKeyword API');
-  res.status(200).render('keyword', 
+  res.status(200).render('keyword',
     {
       'status': 200,
       'data': [
@@ -44,10 +45,24 @@ const getKeyword = (req: express.Request, res: express.Response, next: express.N
     });
 }
 
+const searchKeyword = (req: express.Request, res: express.Response, next: express.NextFunction): void => {
+  console.log('run searchKeyword API');
+  console.log(req.body);
+  res.status(200).send(
+    {
+      status: 200,
+      result: '검색결과 없음'
+    }
+  );
+};
+
+
+
 const router = express.Router();
 
 router.get('/', getKeyword);
 router.post('/', createKeyword);
 router.delete('/:id', deleteKeyword);
+router.post('/search', searchKeyword);
 
 export = router;
