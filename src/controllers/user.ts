@@ -6,6 +6,7 @@ const router = express.Router();
 const createUser = async (req: express.Request, res: express.Response, next: express.NextFunction) => {
   const data = 
   [
+    req.params.id,
     req.params.email,
     req.params.password,
     req.params.name,
