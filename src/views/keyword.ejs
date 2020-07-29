@@ -7,13 +7,24 @@
   <!-- Keyword Search Function -->
   <script type="text/javascript">
 
-    let searchKeyword = (input) => {
-      const data_set = '<%= data %>';
-      console.log(data_set);
+    const sendAjax = (method, url, data) => {
+      // content-type을 설정하고 데이터 송신
+      var xhr = new XMLHttpRequest();
+      xhr.open(method, url);
+      xhr.setRequestHeader('Content-type', "application/json");
+      xhr.send(data);
       
-      // data_set.map(pair => {
-      //   console.log(pair);
-      // });
+      // 데이터 수신이 완료되면 표시
+      xhr.addEventListener('load', () => {
+        console.log(xhr.responseText);
+        alert(xhr.responseText);
+      });
+    }
+
+    const searchKeyword = (input) => {
+      //입력값 json 형태로 변환
+      let jsonInput = JSON.stringify({'data': input});
+      sendAjax('POST', 'http://localhost:3000/keyword/search', input); 
     }
 
     const search = () => {
@@ -26,15 +37,23 @@
           alert('검색타입을 선택해주세요.')
         } else {
           alert(`${searchInput} 검색...`);
-          // const data_set = '<%- data %>';
-          // console.log(data_set);
           searchKeyword(searchInput);
         }
-    }
+    }  
+  </script>
 
-    
-  
-</script>
+  <script type="text/javascript">
+    const deleteKeyword = (key) => {
+      let delConfirm = confirm(`'${key.split('_')[0]}' 키워드를 삭제하시겠습니까? `);
+      if(!delConfirm) {
+        console.log('삭제취소.');
+      } else {
+        console.log('삭제!');
+        sendAjax('DELETE', `http://localhost:3000/keyword/${key}`, null);
+      }
+
+    }
+  </script>
 
 </head>
 
@@ -137,8 +156,9 @@
                           <% data.forEach(function (val, index) { %>
                               <div class="tab-pane" id="category-<%= index %>" role="tabpanel">
                                   <% val.keyword.forEach(function (key) { %>
+                                    <% let split_key = key.split('_')[0]; %>
                                       <!-- <span class="badge badge-pill badge-success"><%= key %></span> -->
-                                      <a href="#" class="badge badge-info" data-toggle="modal" data-target="#exampleModal" ><%= key %></a>
+                                      <a href="#" class="badge badge-info" onclick="deleteKeyword('<%= key %>')" ><%= split_key %></a>
                                   <% }) %>
                                   <a href="#" class="badge badge-primary" data-toggle="modal" data-target="#addKeywordModal" >+ ADD</a>
                               </div>
@@ -198,7 +218,7 @@
   </div>
 
   <!-- keyword Modal -->
-  <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <!-- <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
@@ -216,7 +236,7 @@
         </div>
       </div>
     </div>
-  </div>
+  </div> -->
 
   <!-- add keyword Modal -->
   <div class="modal fade" id="addKeywordModal" tabindex="-1" role="dialog" aria-labelledby="addKeywordModalLabel" aria-hidden="true">

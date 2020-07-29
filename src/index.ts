@@ -24,26 +24,4 @@ app.get('/forgot-password', (request: express.Request, response: express.Respons
 	response.render('forgot-password');
 });
 
-app.get('/keyword', (request: express.Request, response: express.Response) => { 
-	const data = [
-        {
-            category: '개발/프로그래밍', 
-            keyword : ['java', 'javascript', 'python']
-        },
-        {
-            category: '디자인', 
-            keyword : ['html', 'CSS', 'SCSS']
-        },
-        {
-            category: '데이터사이언스', 
-            keyword : ['MongoDB', 'MySQL', 'MariaDB', 'SQL', 'RDBMS', 'Oracle', 'R']
-        },
-        {
-            category: '업무스킬', 
-            keyword : ['프로젝트 관리', '데이터 분석', '정보보안', 'VBA']
-        },
-    ];
-	response.render('keyword', { data: data });
-});
-
 app.listen(3000, () => console.log(`start`));
