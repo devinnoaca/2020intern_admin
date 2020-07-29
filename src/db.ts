@@ -1,9 +1,11 @@
 import * as mysql from 'mysql2';
 import { dbConfig } from '../config/db.config';
 
-const connection = mysql.createConnection(dbConfig);
+const connection = mysql.createConnection(dbConfig.conf);
 
-const init = () => {
+// 로컬 환경 DB 사용시 initialize
+if (dbConfig.branch === 'LOCAL') {
+(() => {
 	const strDropTables	= `
 DROP TABLE Career; DROP TABLE Keyword; DROP TABLE User; DROP TABLE Category;
 `
@@ -113,8 +115,9 @@ VALUES(1, "NAVER - CTO", 1);`;
 			};
 		}
 	);
-};
+})();
+}
 
 export default {
-	connection,init
+	connection
 };
