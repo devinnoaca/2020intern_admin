@@ -81,22 +81,49 @@
               <li class="list-group-item">
                 <div class="form-row">
                   <div class="form-inline col-md-2">
-                    <label>회사</label>
+                    <label>소개글</label>
                   </div>
                   <div class="col-md-10">
                     <textarea class="form-control" rows="5"></textarea>
                   </div>
                 </div>
               </li>
-              
+
               <!-- 경력 -->
               <li class="list-group-item">
-                
+                <div class="form-row">
+                  <div class="col-md-2">
+                    <label>경력</label>
+                  </div>
+                  <div class="col-md-10">
+                    <% for(let i = 0; i < 10; ++i) { %>
+                    <div class="input-group my-sm-1">
+                      <input class="form-control" type="text" aria-describedby="deleteCareerButton" disabled>
+                      <div class="input-group-append">
+                        <button class="btn btn-outline-secondary" type="button" id="deleteCareerButton" disabled>삭제</button>
+                      </div>
+                    </div>
+                    <% } %>
+                    <div class="input-group">
+                      <input class="form-control" type="text" aria-describedby="buttonAddon">
+                      <div class="input-group-append">
+                        <button class="btn btn-outline-secondary" type="button" id="buttonAddon">추가</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
               </li>
 
               <!-- 키워드 -->
               <li class="list-group-item">
-                
+                <div class="form-row">
+                  <div class="col-md-2">
+                    <label>키워드</label>
+                  </div>
+                  <div class="col-md-10">
+
+                  </div>
+                </div>
               </li>
 
               <!-- 매칭정보 -->
