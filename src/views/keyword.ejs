@@ -39,11 +39,21 @@
           alert(`${searchInput} 검색...`);
           searchKeyword(searchInput);
         }
-    }
+    }  
+  </script>
 
-    
-  
-</script>
+  <script type="text/javascript">
+    const deleteKeyword = (key) => {
+      let delConfirm = confirm(`'${key.split('_')[0]}' 키워드를 삭제하시겠습니까? `);
+      if(!delConfirm) {
+        console.log('삭제취소.');
+      } else {
+        console.log('삭제!');
+        sendAjax('DELETE', `http://localhost:3000/keyword/${key}`, null);
+      }
+
+    }
+  </script>
 
 </head>
 
@@ -146,8 +156,9 @@
                           <% data.forEach(function (val, index) { %>
                               <div class="tab-pane" id="category-<%= index %>" role="tabpanel">
                                   <% val.keyword.forEach(function (key) { %>
+                                    <% let split_key = key.split('_')[0]; %>
                                       <!-- <span class="badge badge-pill badge-success"><%= key %></span> -->
-                                      <a href="#" class="badge badge-info" data-toggle="modal" data-target="#exampleModal" ><%= key %></a>
+                                      <a href="#" class="badge badge-info" onclick="deleteKeyword('<%= key %>')" ><%= split_key %></a>
                                   <% }) %>
                                   <a href="#" class="badge badge-primary" data-toggle="modal" data-target="#addKeywordModal" >+ ADD</a>
                               </div>
@@ -207,7 +218,7 @@
   </div>
 
   <!-- keyword Modal -->
-  <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <!-- <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
@@ -225,7 +236,7 @@
         </div>
       </div>
     </div>
-  </div>
+  </div> -->
 
   <!-- add keyword Modal -->
   <div class="modal fade" id="addKeywordModal" tabindex="-1" role="dialog" aria-labelledby="addKeywordModalLabel" aria-hidden="true">
