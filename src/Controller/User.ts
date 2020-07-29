@@ -1,70 +1,92 @@
 import * as express from 'express';
+import userQuery from '../dao/userDAO'
 
 const router = express.Router();
 
-const createUser = (request: express.Request, response: express.Response, next: express.NextFunction): void => {
-  response.status(200).send('Success');
-  console.log('createUser');
-};
-
-const getUsers = (request: express.Request, response: express.Response, next: express.NextFunction): void => {
-  response.status(200).send(
+const createUser = async (req: express.Request, res: express.Response, next: express.NextFunction) => {
+  const data = 
+  [
+    req.params.email,
+    req.params.password,
+    req.params.name,
+    null,
+    null,
+    0,
+    false,
+    0,
+    req.params.type
+  ]
+  const result = await userQuery.createUser(data)
+  res.status(200).send(
     {
       'status': 200,
-      'users': [
-        {
-          'id': 1,
-          'type': 0,
-          'name': 'Kim',
-          'email': 'abc@def.ghi'
-        },
-        {
-          'id': 2,
-          'type': 1,
-          'name': 'Park',
-          'email': '123@456.789'
-        }
-      ]
+      'message': 'create user success',
+      'data': result
     }
   );
-  console.log('getUsers');
+  console.log('controller: createUser');
 };
 
-const getUser = (request: express.Request, response: express.Response, next: express.NextFunction): void => {
-  response.status(200).send(
+const getUsers = async (req: express.Request, res: express.Response, next: express.NextFunction) => {
+  const result = await userQuery.getUsers();
+  res.status(200).send(
     {
       'status': 200,
-      'id': 1,
-      'type': 0,
-      'name': 'Kim',
-      'email': 'abc@def.ghi'
+      'message': 'get user list success',
+      'data': result
     }
-  );
-  console.log('getUser');
+  )
+  console.log('controller: getUsers');
 };
 
-const deleteUser = (request: express.Request, response: express.Response, next: express.NextFunction): void => {
-response.status(200).send(
+const getUser = async (req: express.Request, res: express.Response, 
+  next: express.NextFunction) => {
+    const data = 
+    [
+      parseInt(req.params.usn)
+    ];
+  const result = await userQuery.getUser(data);
+  res.status(200).send(
     {
-    'status': 200
+      'status': 200,
+      'message': 'success',
+      'data': result
     }
-  );
-console.log('deleteUser');
+  )
+  console.log('controller: getUser');
 };
 
-const modifyUser = (request: express.Request, response: express.Response, next: express.NextFunction): void => {
-response.status(200).send(
+const deleteUser = async (req: express.Request, res: express.Response, next: express.NextFunction) => {
+  const data = 
+  [
+    parseInt(req.params.usn)
+  ];
+  const result = await userQuery.getUser(data);
+res.status(200).send(
+    {
+    'status': 200,
+    'message': 'delete user success',
+    'data': result
+    }
+  );
+console.log('controller: deleteUser');
+};
+
+const modifyUser = (req: express.Request, res: express.Response, next: express.NextFunction): void => {
+
+res.status(200).send(
       {
-        'status': 200
+        'status': 200,
+        'message': 'modify user success'
       }
     );
-console.log('modifyUser');
+console.log('controller: modifyUser');
 };
 
 router.post('/', createUser);
 router.get('/', getUsers);
-router.get('/:id', getUser);
-router.delete('/:id', deleteUser);
-router.put('/:id', modifyUser);
+router.get('/:usn', getUser);
+router.delete('/:usn', deleteUser);
+router.put('/:usn', modifyUser);
 
 export = router;

@@ -1,30 +1,45 @@
-import connection from '../db';
+import query from './userQuery';
+import db from '../db';
 
-const searchUser = `
-SELECT *\
-FROM User
-WHERE ID = ?;`;
+// TODO(SeongJaeSong): This function have to fetch keywords
+async function getUser(data: Array<any>) {
+  try {
+    const [rows, fields] = await db.connection.promise().query(query.searchUser, data);
+    return rows;
+  } catch (e) {
+    console.log('dao: getUser error\n' + e);
+  }
+}
 
-const insertUser = `
-INSERT INTO User(type, name, e-mail, password, auth)\
-VALUES (?, ?, ?, ?, ?);`;
+async function createUser(data: Array<any>) {
+  try {
+    const [rows, fields] = await db.connection.promise().query(query.insertUser, data);
+    return rows;
+  } catch (e) {
+    console.log('dao: createUser error\n' + e);
+  }
+}
 
-const updateUser = `
-UPDATE User\
-SET \
-email = ?,\
-password = ?,\
-name = ?, \
-image = ?, \
-description = ?, \
-company = ?
-WHERE usn = ?;`;
+async function getUsers() {
+  try {
+    const [rows, fields] = await db.connection.promise().query(query.searchAllUser);
+    return rows;
+  } catch (e) {
+    console.log('dao: getUsers error\n' + e);
+  }
+}
 
-const deleteUser = `
-DELETE\
-FROM User\
-WHERE usn = ?;`;
+async function deleteUser(data: Array<any>) {
+  try {
+    const [rows, fields] = await db.connection.promise(). query(query.deleteUser, data);
+    return rows;
+  } catch (e) {
+    console.log('dao: deleteUser error\n' + e)
+  }
+}
+
+// async function modifyUser()
 
 export default {
-    searchUser, insertUser, updateUser, deleteUser
-};
+  getUser, createUser, getUsers, deleteUser
+}

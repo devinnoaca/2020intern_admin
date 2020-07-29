@@ -12,8 +12,7 @@ app.set('views', path.join(__dirname, '/Views'))
 app.set("view engine", "ejs");
 app.use(express.static(__dirname + '/Public'));
 
-app.get('/', (request: express.Request, response: express.Response) => { 
-	// response.send('Hello World!');
-	response.render('dashboard');
+app.get('/', (req: express.Request, res: express.Response) => { 
+	res.render('dashboard');
 });
 app.listen(3000, () => console.log(`start`));
