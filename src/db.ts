@@ -1,15 +1,7 @@
 import * as mysql from 'mysql2';
 import { dbConfig } from '../config/db.config';
-<<<<<<< HEAD
  
-const connection = mysql.createConnection(dbConfig);
-
-const init = () => { 
-
-=======
-
 const connection = mysql.createConnection(dbConfig.conf);
->>>>>>> develop
 
 // 로컬 환경 DB 사용시 initialize
 if (dbConfig.branch === 'LOCAL') {
