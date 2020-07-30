@@ -1,7 +1,6 @@
-// Category list를 가져옴
 const searchKeyword = `
-SELECT id, name\
-FROM Category;`;
+SELECT id, name, categoryID \
+FROM Keyword;`;
 
 const createKeyword = `
 INSERT INTO Keyword(name, categoryID) \

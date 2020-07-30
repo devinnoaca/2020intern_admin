@@ -1,9 +1,9 @@
 import query from './keywordQuery';
 import db from '../db';
 
-async function getKeyword(data: Array<any>) {
+async function getKeyword() {
   try {
-    const [rows, fields] = await db.connection.promise().query(query.searchKeyword, data);
+    const [rows, fields] = await db.connection.promise().query(query.searchKeyword);
     return rows;
   } catch (e) {
     console.log('dao: getKeyword error\n' + e);
