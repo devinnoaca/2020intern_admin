@@ -5,10 +5,6 @@ const router = express.Router();
 
 const getKeywords = async (req: express.Request, res: express.Response, 
   next: express.NextFunction) => {
-    const data = 
-    [
-      req.params.id
-    ]
     const result = await keywordQuery.getKeyword();
     res.status(200).render('keyword',
       {

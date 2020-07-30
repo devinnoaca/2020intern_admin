@@ -33,7 +33,7 @@ VALUES (1, "tjdkskgnal", "tjdkskgnal61@gmail.com", "1234", "SeongJae",\
 
 	const strCreateCategoryTable = `
 CREATE TABLE Category(\
-id	INT NOT NULL AUTO_INCREMENT,\
+id INT NOT NULL AUTO_INCREMENT,\
 name VARCHAR(100),\
 PRIMARY KEY(id));`;
 	const strInsertCategory = `

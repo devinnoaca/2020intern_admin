@@ -1,5 +1,5 @@
 const searchKeyword = `
-SELECT *\
+SELECT id, name, categoryID \
 FROM Keyword;`;
 
 const createKeyword = `
@@ -8,7 +8,7 @@ VALUES(?, ?);`;
 
 const deleteKeyword = `
 DELETE FROM Keyword \
-WHERE name = ?`
+WHERE id = ?`
 
 export default {
     searchKeyword, createKeyword, deleteKeyword
