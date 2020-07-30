@@ -4,26 +4,17 @@
 <head>
   <%- include ('./common/header.ejs') %>
 
-  <!-- Keyword Search Function -->
+  <!-- Search Keyword Function -->
   <script type="text/javascript">
 
-    const sendAjax = (method, url, data) => {
-      // content-type을 설정하고 데이터 송신
-      var xhr = new XMLHttpRequest();
-      xhr.open(method, url);
-      xhr.setRequestHeader('Content-type', "application/json");
-      xhr.send(data);
-      
-      // 데이터 수신이 완료되면 표시
-      xhr.addEventListener('load', () => {
-        console.log(xhr.responseText);
-        alert(xhr.responseText);
-      });
+    const activeTab = (category) => {
+      $(`#myList a[href='#category-${category}']`).tab("show"); 
     }
 
     //keyword badge 태그 생성함수
     const badgeFactory = (value) => {
-      return `<a href="#" class="badge badge-info result-badge" >${value}</a>`
+      let pair = value.split('_');
+      return `<a href="#" class="badge badge-info result-badge" name="${pair[1]}" onclick="activeTab('${pair[1]}')">${pair[0]}</a>`
     }
 
     //
@@ -34,17 +25,17 @@
       //존재하는 키워드 중 검색어와 일치하는 키워드 검색
       let results = [];
       keywords.forEach(elem => {
-        if(elem.name.includes(input))
-          results.push(badgeFactory(elem.name.split('_')[0]));
+        if(elem.name.toLowerCase().includes(input.toLowerCase()))
+          results.push(badgeFactory(elem.name));
       });
 
       if(results.length == 0) {
         alert('해당하는 데이터가 존재하지 않습니다.');
+        resultDiv.innerHTML = '';
       } else {
         console.log(results);
         resultDiv.innerHTML = results.join('&nbsp;');
       }
-
     }
 
     // 키워드-카테고리 검색 폼 제출
@@ -64,7 +55,23 @@
     }  
   </script>
 
+<!-- Delete Keyword Function -->
   <script type="text/javascript">
+
+    const sendAjax = (method, url, data) => {
+      // content-type을 설정하고 데이터 송신
+      var xhr = new XMLHttpRequest();
+      xhr.open(method, url);
+      xhr.setRequestHeader('Content-type', "application/json");
+      xhr.send(data);
+      
+      // 데이터 수신이 완료되면 표시
+      xhr.addEventListener('load', () => {
+        console.log(xhr.responseText);
+        alert(xhr.responseText);
+      });
+    }
+
     const deleteKeyword = (key) => {
       let delConfirm = confirm(`'${key.split('_')[0]}' 키워드를 삭제하시겠습니까? `);
       if(!delConfirm) {
@@ -161,7 +168,8 @@
                       <!-- List group -->
                       <div class="list-group" id="myList" role="tablist">
                           <% data.forEach(function (val, index) { %>
-                            <a class="list-group-item list-group-item-action" data-toggle="list" href="#category-<%= index %>" role="tab"><%= val.category %>
+                            <a class="list-group-item list-group-item-action" data-toggle="list" href="#category-<%= val.category %>" role="tab" style="text-transform: capitalize;">
+                              <%= val.category %>
                             </a>
                           <% }) %>
                       </div>
@@ -178,7 +186,7 @@
                       <!-- Tab panes -->
                       <div class="tab-content">
                           <% data.forEach(function (val, index) { %>
-                              <div class="tab-pane" id="category-<%= index %>" role="tabpanel">
+                              <div class="tab-pane" id="category-<%= val.category %>" role="tabpanel">
                                   <% val.keyword.forEach(function (key) { %>
                                     <% let split_key = key.split('_')[0]; %>
                                       <!-- <span class="badge badge-pill badge-success"><%= key %></span> -->

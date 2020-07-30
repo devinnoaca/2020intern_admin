@@ -12,20 +12,20 @@ const getKeywords = async (req: express.Request, res: express.Response,
     // const result = await keywordQuery.getKeyword(data);
     const result = [
       {
-          category: '개발/프로그래밍', 
-          keyword : ['java_개발', 'javascript_개발', 'python_개발']
+          category: 'develop', 
+          keyword : ['java_develop', 'javascript_develop', 'python_develop']
       },
       {
-          category: '디자인', 
-          keyword : ['html_디자인', 'CSS_디자인', 'SCSS_디자인']
+          category: 'design', 
+          keyword : ['html_design', 'CSS_design', 'SCSS_design']
       },
       {
-          category: '데이터사이언스', 
-          keyword : ['MongoDB_데이터사이언스', 'MySQL_데이터사이언스', 'MariaDB_데이터사이언스', 'SQL_데이터사이언스', 'RDBMS_데이터사이언스', 'Oracle_데이터사이언스', 'R_데이터사이언스']
+          category: 'data', 
+          keyword : ['MongoDB_data', 'MySQL_data', 'MariaDB_data', 'SQL_data', 'RDBMS_data', 'Oracle_data', 'R_data']
       },
       {
-          category: '업무스킬', 
-          keyword : ['프로젝트관리_업무스킬', '데이터분석_업무스킬', '정보보안_업무스킬', 'VBA_업무스킬']
+          category: 'skill', 
+          keyword : ['프로젝트관리_skill', '데이터분석_skill', '정보보안_skill', 'VBA_skill']
       },
     ];
     res.status(200).render('keyword',
