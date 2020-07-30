@@ -1,3 +1,6 @@
 node_modules
 .vscode
 config/db.config.ts
+config/config.ts
+*.DS_Store
+test.rest

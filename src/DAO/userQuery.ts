@@ -1,15 +1,15 @@
 const searchUser = `
-SELECT * \
-FROM User \
-WHERE usn = ?;`;
+SELECT u.usn, u.id, email, password, name, image, description, notificationCount, authorization, permission, type, c.id careerID, career \
+FROM career as c join user as u \
+WHERE u.usn = ?;`;
 
 const searchAllUser = `
 SELECT * \
 FROM User;`;
 
 const insertUser = `
-INSERT INTO User(email, password, name, image, description, notificationCount, authorization, permission, type) \
-VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?);`;
+INSERT INTO User(id, email, password, name, image, description, notificationCount, authorization, permission, type) \
+VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?);`;
 
 const updateUser = `
 UPDATE User SET \
@@ -20,8 +20,8 @@ image = ?, \
 description = ?, \
 notificationCount = ?, \
 authorization = ?, \
-permission = ?,
-type = ?, \
+permission = ?, \
+type = ? \
 WHERE usn = ?;`;
 
 const deleteUser = `

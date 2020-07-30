@@ -6,22 +6,21 @@ const router = express.Router();
 const createUser = async (req: express.Request, res: express.Response, next: express.NextFunction) => {
   const data = 
   [
-    req.params.email,
-    req.params.password,
-    req.params.name,
+    req.body.id,
+    req.body.email,
+    req.body.password,
+    req.body.name,
     null,
-    null,
+    0,
     0,
     false,
     0,
-    req.params.type
+    req.body.type
   ]
-  const result = await userQuery.createUser(data)
+  const result = await userQuery.createUser(data);
   res.status(200).send(
     {
-      'status': 200,
       'message': 'create user success',
-      'data': result
     }
   );
   console.log('controller: createUser');
@@ -31,9 +30,8 @@ const getUsers = async (req: express.Request, res: express.Response, next: expre
   const result = await userQuery.getUsers();
   res.status(200).send(
     {
-      'status': 200,
       'message': 'get user list success',
-      'data': result
+      'users': result
     }
   )
   console.log('controller: getUsers');
@@ -41,16 +39,25 @@ const getUsers = async (req: express.Request, res: express.Response, next: expre
 
 const getUser = async (req: express.Request, res: express.Response, 
   next: express.NextFunction) => {
-    const data = 
+    const param = 
     [
       parseInt(req.params.usn)
     ];
-  const result = await userQuery.getUser(data);
+  let result = await userQuery.getUser(param);
+  let careerID: Array<Number> = new Array();
+  let career: Array<String> = new Array();
+  result.map( (current, index, result) => {
+    careerID.push(current.careerID);
+    career.push(current.career);
+  })
+  result = [result[0]];
+  result[0].careerID = careerID;
+  result[0].career = career;
+  console.log(result);
   res.status(200).send(
     {
-      'status': 200,
       'message': 'success',
-      'data': result
+      'user': result
     }
   )
   console.log('controller: getUser');
@@ -61,12 +68,10 @@ const deleteUser = async (req: express.Request, res: express.Response, next: exp
   [
     parseInt(req.params.usn)
   ];
-  const result = await userQuery.getUser(data);
+  const result = await userQuery.deleteUser(data);
 res.status(200).send(
     {
-    'status': 200,
     'message': 'delete user success',
-    'data': result
     }
   );
 console.log('controller: deleteUser');
@@ -75,20 +80,20 @@ console.log('controller: deleteUser');
 const modifyUser = async (req: express.Request, res: express.Response, next: express.NextFunction) => {
   const data =
   [
-    req.params.email,
-    req.params.password,
-    req.params.name,
-    req.params.image,
-    req.params.description,
-    req.params.notification,
-    req.params.authorization,
-    req.params.permission,
-    req.params.type
+    req.body.email,
+    req.body.password,
+    req.body.name,
+    req.body.image,
+    req.body.description,
+    req.body.notification,
+    req.body.authorization,
+    req.body.permission,
+    req.body.type,
+    parseInt(req.params.usn)
   ];
   const result = await userQuery.modifyUser(data);
 res.status(200).send(
       {
-        'status': 200,
         'message': 'modify user success'
       }
     );
