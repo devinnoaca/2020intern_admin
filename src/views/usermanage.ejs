@@ -30,7 +30,7 @@
           <!-- Page Heading -->
           <div class="d-sm-flex align-items-center justify-content-between mb-4">
             <h1 class="h3 mb-0 text-gray-800">사용자 관리</h1>
-            <button class="btn-warning shadow-sm" data-toggle="modal" data-target="#usercreate">
+            <button class="btn-warning shadow-sm" id="userCreateButton" data-toggle="modal" data-target="#usercreate">
               회원 생성
             </button>
           </div>
@@ -146,7 +146,7 @@
                       <td><%= users[i].email %></td>
                       <td>2011/04/25</td>
                       <td>
-                        <button class="d-inline" name="updateButton" data-toggle="modal" data-target="#userdetail">
+                        <button class="d-inline" name="updateButton">
                           수정
                         </button>
                         <form action="/user/<%= users[i].id%>" method="DELETE">
@@ -229,8 +229,11 @@
   <script src="js/closeModal.js"></script>
 
   <script tyep="text/JavaScript">
-    $('detelButton').on('click', () => {
-
+    //유저 생성 모달 이벤트
+    document.querySelector('[name=updateButton]').addEventListener('click', () => {
+      let updateModal = $('#userdetail');
+      
+      updateModal.modal('toggle');
     });
   </script>
 </body>
