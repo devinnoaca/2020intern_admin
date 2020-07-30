@@ -131,6 +131,7 @@
                     <tr>
                       <th>USN</th>
                       <th>종류</th>
+                      <th>ID</th>
                       <th>이름</th>
                       <th>이메일</th>
                       <th>알림 발송</th>
@@ -140,16 +141,17 @@
                   <tbody>
                     <% for (let i = 0; i < users.length; i++) { %>
                     <tr>
-                      <td><%= users[i].id %></td>
+                      <td><%= users[i].usn %></td>
                       <td><%= users[i].type %></td>
+                      <td><%= users[i].id %></td>
                       <td><%= users[i].name %></td>
                       <td><%= users[i].email %></td>
                       <td>2011/04/25</td>
                       <td>
-                        <button class="d-inline" name="updateButton">
+                        <button class="d-inline" name="updateButton" type="button" value="<%= users[i].usn %>">
                           수정
                         </button>
-                        <form action="/user/<%= users[i].id%>" method="DELETE">
+                        <form action="/user/<%= users[i].usn%>" method="DELETE">
                           <button class="d-inline" name="deleteButton" type="submit">삭제</button>
                         </form>
                       </td>
@@ -230,9 +232,18 @@
 
   <script tyep="text/JavaScript">
     //유저 생성 모달 이벤트
-    document.querySelector('[name=updateButton]').addEventListener('click', () => {
+    $('[name=updateButton]').on('click', (event) => {
       let updateModal = $('#userdetail');
-      
+      let usn = event.target.value;
+
+      $.ajax({
+        type: 'GET',
+        url: `/user/${usn}`,
+        success: (result) => {
+          console.log(result);
+        }
+      });
+
       updateModal.modal('toggle');
     });
   </script>
