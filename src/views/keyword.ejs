@@ -21,22 +21,44 @@
       });
     }
 
-    const searchKeyword = (input) => {
-      //입력값 json 형태로 변환
-      let jsonInput = JSON.stringify({'data': input});
-      sendAjax('POST', 'http://localhost:3000/keyword/search', input); 
+    //keyword badge 태그 생성함수
+    const badgeFactory = (value) => {
+      return `<a href="#" class="badge badge-info result-badge" >${value}</a>`
     }
 
-    const search = () => {
+    //
+    const searchKeyword = (input) => {
+      let keywords = document.querySelectorAll('.keyword-badge');      
+      let resultDiv = document.querySelector('.search-result');
+
+      //존재하는 키워드 중 검색어와 일치하는 키워드 검색
+      let results = [];
+      keywords.forEach(elem => {
+        if(elem.name.includes(input))
+          results.push(badgeFactory(elem.name.split('_')[0]));
+      });
+
+      if(results.length == 0) {
+        alert('해당하는 데이터가 존재하지 않습니다.');
+      } else {
+        console.log(results);
+        resultDiv.innerHTML = results.join('&nbsp;');
+      }
+
+    }
+
+    // 키워드-카테고리 검색 폼 제출
+    const searchSubmit = () => {
         var searchForm = document.searchForm;
         var type = searchForm.searchType.value;
         var searchInput = searchForm.searchInput.value;
         
         console.log(type);
+
         if(type == 'Choose...') {
           alert('검색타입을 선택해주세요.')
         } else {
-          alert(`${searchInput} 검색...`);
+          console.log(`${searchInput} 검색...`);
           searchKeyword(searchInput);
         }
     }  
@@ -95,11 +117,12 @@
             </div>
             <!-- Card Body -->
             <div class="card-body">
-                <form name="searchForm" onsubmit="search(); return false" class="form-inline">
+                <form name="searchForm" onsubmit="searchSubmit(); return false;" class="form-inline">
                   <select name="searchType" class="custom-select" id="inlineFormCustomSelectPref">
                     <option selected>Choose...</option>
                     <option value="1">Category</option>
                     <option value="2">Keyword</option>
+
                     <option value="3">All</option>
                   </select>
                 
@@ -109,6 +132,7 @@
                 
                   <button type="submit" class="btn btn-primary my-1">조회</button>
                 </form>
+                <br>
                 <div class="search-result">
                 </div>
               </div>
@@ -158,7 +182,7 @@
                                   <% val.keyword.forEach(function (key) { %>
                                     <% let split_key = key.split('_')[0]; %>
                                       <!-- <span class="badge badge-pill badge-success"><%= key %></span> -->
-                                      <a href="#" class="badge badge-info" onclick="deleteKeyword('<%= key %>')" ><%= split_key %></a>
+                                      <a href="#" class="badge badge-info keyword-badge" name="<%= key %>" onclick="deleteKeyword('<%= key %>')" ><%= split_key %></a>
                                   <% }) %>
                                   <a href="#" class="badge badge-primary" data-toggle="modal" data-target="#addKeywordModal" >+ ADD</a>
                               </div>
