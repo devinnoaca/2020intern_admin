@@ -1,7 +1,7 @@
 const searchUser = `
-SELECT usn, u.id, email, password, name, iamge, descroption, notificationCount, authorization, permission, type, c.id careerID, career\
-FROM User as u join career as c \
-WHERE User.usn = ?;`;
+SELECT u.usn, u.id, email, password, name, image, description, notificationCount, authorization, permission, type, c.id careerID, career \
+FROM career as c join user as u \
+WHERE u.usn = ?;`;
 
 const searchAllUser = `
 SELECT * \
@@ -20,8 +20,8 @@ image = ?, \
 description = ?, \
 notificationCount = ?, \
 authorization = ?, \
-permission = ?,
-type = ?, \
+permission = ?, \
+type = ? \
 WHERE usn = ?;`;
 
 const deleteUser = `
