@@ -97,17 +97,25 @@
 <!-- Ajax communication Function -->
   <script type="text/javascript">
 
-    const sendAjax = (method, url, data) => {
+    const callback = (xhr) => {
+      console.log(xhr.status);
+      console.log(xhr.responseText);
+    }
+
+    const sendAjax = (method, url, data, callback) => {
       // content-type을 설정하고 데이터 송신
-      var xhr = new XMLHttpRequest();
-      xhr.open(method, url);
+      let xhr = new XMLHttpRequest();
+      xhr.open(method, url, true);
       xhr.setRequestHeader('Content-type', "application/json");
       xhr.send(data);
       
       // 데이터 수신이 완료되면 표시
       xhr.addEventListener('load', () => {
-        console.log(xhr.responseText);
-        alert(xhr.responseText);
+        // console.log(xhr.responseText);
+        // console.log(xhr.status);
+
+        // alert(xhr.responseText);
+        callback(xhr);
       });
     }
 
@@ -117,7 +125,7 @@
         console.log('삭제취소.');
       } else {
         console.log('삭제!');
-        sendAjax('DELETE', `http://localhost:3000/keyword/${id}`, null);
+        sendAjax('DELETE', `http://localhost:3000/keyword/${id}`, null, callback);
       }
     }
 
@@ -126,7 +134,7 @@
         name: keyword,
         categoryID: categoryId
       }
-      sendAjax('POST', `http://localhost:3000/keyword/`, JSON.stringify(jsonData));
+      sendAjax('POST', `http://localhost:3000/keyword/`, JSON.stringify(jsonData), callback);
     }
 
     const addCategory = () => {
@@ -136,7 +144,7 @@
         let jsonData = {
           name: input
           }
-        sendAjax('POST', `http://localhost:3000/category/`, JSON.stringify(jsonData));
+        sendAjax('POST', `http://localhost:3000/category/`, JSON.stringify(jsonData), callback);
       }
       
     }
