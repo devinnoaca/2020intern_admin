@@ -126,7 +126,19 @@
         name: keyword,
         categoryID: categoryId
       }
-      sendAjax('POST', `http://localhost:3000/keyword/`, JSON.stringify(jsonData))
+      sendAjax('POST', `http://localhost:3000/keyword/`, JSON.stringify(jsonData));
+    }
+
+    const addCategory = () => {
+      let addForm = document.addCategoryForm;
+      let input = addForm.inputCategory.value;
+      if(input != '') {
+        let jsonData = {
+          name: input
+          }
+        sendAjax('POST', `http://localhost:3000/category/`, JSON.stringify(jsonData));
+      }
+      
     }
 
   </script>
@@ -185,7 +197,7 @@
             </div>
             <!-- Card Body -->
             <div class="card-body">
-                <form name="searchForm" onsubmit="searchSubmit(); return false;" class="form-inline">
+                <form name="searchForm" onsubmit="searchSubmit(this); return false;" class="form-inline">
                   <select name="searchType" class="custom-select" id="inlineFormCustomSelectPref">
                     <option selected>Choose...</option>
                     <option value="category">Category</option>
@@ -233,12 +245,16 @@
                           <% }) %>
                       </div>
                       <br>
-                      <div class="input-group mb-3">
-                          <input type="text" class="form-control" placeholder="category name" aria-label="category name" aria-describedby="button-addon2">
+                      
+                      <form name="addCategoryForm" onsubmit="addCategory(); return false;">
+                        <div class="input-group mb-3">
+                          <input type="text" class="form-control" name="inputCategory" placeholder="category name" aria-label="category name" aria-describedby="button-addon2" required>
                           <div class="input-group-append">
-                              <button class="btn btn-outline-secondary" type="button" id="button-addon2">Add</button>
+                              <button class="btn btn-outline-secondary" type="button" id="button-addon2" onclick="addCategory()">Add</button>
                           </div>
-                      </div>
+                        </div>
+                      </form>
+                      
                   </div>
       
                   <div class="col-xl-8 col-lg-7">    
