@@ -30,13 +30,14 @@ const createUser = async (req: express.Request, res: express.Response, next: exp
 
 const getUsers = async (req: express.Request, res: express.Response, next: express.NextFunction) => {
   const result = await userQuery.getUsers();
-  res.status(200).send(
+  res.status(200).render('usermanage',
     {
       'status': 200,
       'message': 'get user list success',
       'data': result
     }
-  )
+  );
+  
   console.log('controller: getUsers');
 };
 
