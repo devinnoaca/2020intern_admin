@@ -231,18 +231,39 @@
   <script src="js/closeModal.js"></script>
 
   <script tyep="text/JavaScript">
+    const sendAjax = (method, url, data, callback) => {
+      // content-type을 설정하고 데이터 송신
+      var xhr = new XMLHttpRequest();
+      xhr.open(method, url, true);
+      xhr.setRequestHeader('Content-type', "application/json");
+      xhr.send(data);
+
+      xhr.addEventListener('load', () => {
+        //callback(xhr.responseText);
+        return xhr.responseText;
+      });
+    }
+
+    const callback = function(text){
+      console.log(text);
+    }
+    
+
     //유저 생성 모달 이벤트
     $('[name=updateButton]').on('click', (event) => {
       let updateModal = $('#userdetail');
       let usn = event.target.value;
 
-      $.ajax({
-        type: 'GET',
+      sendAjax('GET', `/user/${usn}`, null, callback);
+
+     /* $.ajax({
+        method: 'GET',
         url: `/user/${usn}`,
         success: (result) => {
           console.log(result);
+          $('[name=udmname]').attr('value', result.user[0].name);
         }
-      });
+      });*/
 
       updateModal.modal('toggle');
     });
