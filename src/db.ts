@@ -33,29 +33,29 @@ VALUES (1, "tjdkskgnal", "tjdkskgnal61@gmail.com", "1234", "SeongJae",\
 
 	const strCreateCategoryTable = `
 CREATE TABLE Category(\
-id INT NOT NULL AUTO_INCREMENT,\
+id	INT NOT NULL AUTO_INCREMENT,\
 name VARCHAR(100),\
 PRIMARY KEY(id));`;
 	const strInsertCategory = `
-INSERT INTO CATEGORY(id, name) \
-VALUES (1, "Security");`;
+INSERT INTO CATEGORY(name) \
+VALUES ("Security");`;
 
 	const strCreateKeywordTable = `
 CREATE TABLE Keyword(\
 id INT NOT NULL AUTO_INCREMENT,\
-name VARCHAR(100),\
-categoryID INT,\
+name VARCHAR(100) NOT NULL,\
+categoryID INT(100),\
 PRIMARY KEY(id),\
 FOREIGN KEY(categoryID)\
 REFERENCES Category(id)\
 ON DELETE CASCADE \
 ON UPDATE CASCADE);`;
 	const strInsertKeyword = `
-INSERT INTO KEYWORD(id, name, categoryID) \
-VALUES(1, "SQL Injection", 1);`;
+INSERT INTO KEYWORD(name, categoryID) \
+VALUES("SQL Injection", 1);`;
 	const strInsertKeyword2 = `
-INSERT INTO KEYWORD(id, name, categoryID) \
-VALUES(2, "XSS", 1);`;
+INSERT INTO KEYWORD(name, categoryID) \
+VALUES("XSS", 1);`;
 
 	const strCreateCareerTable = `
 CREATE TABLE Career(\
@@ -68,8 +68,11 @@ REFERENCES User(usn)\
 ON DELETE CASCADE \
 ON UPDATE CASCADE);`;
 	const strInsertCareer = `
-INSERT INTO Career(id, career, usn) \
-VALUES(1, "NAVER - CTO", 1);`;
+INSERT INTO Career(career, usn) \
+VALUES("NAVER - CTO", 1);`;
+	const strInsertCareer2 = `
+INSERT INTO Career(career, usn) \
+VALUES("KAKAO - Cleaner", 1);`;
 
 	connection.query(
 		strDropTables, (error: mysql.Error) => {
@@ -106,6 +109,7 @@ VALUES(1, "NAVER - CTO", 1);`;
 		+strInsertKeyword
 		+strInsertKeyword2
 		+strInsertCareer
+		+strInsertCareer2
 		,(error: mysql.Error) => {
 			console.log('Data inserting...');
 			if (error) {
