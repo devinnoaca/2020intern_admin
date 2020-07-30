@@ -20,48 +20,6 @@
       return `<a href="#" class="badge badge-info result-badge" onclick="activeTab('${categoryId}')">${name}</a>`
     }
 
-    //
-    // const searchKeyword = (input) => {
-    //   let keywords = document.querySelectorAll('.keyword-badge');      
-    //   let resultDiv = document.querySelector('.search-result');
-
-    //   console.log('keywodd', keywords)
-    //   //존재하는 키워드 중 검색어와 일치하는 키워드 검색
-    //   let results = [];
-    //   keywords.forEach(elem => {
-    //     if(elem.name.toLowerCase().includes(input.toLowerCase()))
-    //       results.push(badgeFactory(elem.id.split('-')[1], elem.name));
-    //   });
-
-    //   if(results.length == 0) {
-    //     alert('해당하는 데이터가 존재하지 않습니다.');
-    //     resultDiv.innerHTML = '';
-    //   } else {
-    //     console.log(results);
-    //     resultDiv.innerHTML = results.join('&nbsp;');
-    //   }
-    // }
-
-    // const searchCategory = (input) => {
-    //   let categories = document.querySelectorAll('.category-tab');
-    //   let resultDiv = document.querySelector('.search-result');
-
-    //   let results = [];
-    //   categories.forEach(elem => {
-    //     if(elem.name.toLowerCase().includes(input.toLowerCase())) {
-    //       results.push(badgeFactory(elem.id.split('-')[1], elem.name));
-    //     }
-    //   });
-
-    //   if(results.length == 0) {
-    //     alert('해당하는 데이터가 존재하지 않습니다.');
-    //     resultDiv.innerHTML = '';
-    //   } else {
-    //     console.log(results);
-    //     resultDiv.innerHTML = results.join('&nbsp;');
-    //   }
-    // }
-
     const search = (type, input) => {
       let targetList = [];
       let resultDiv = document.querySelector('.search-result');
@@ -127,8 +85,6 @@
       xhr.addEventListener('load', () => {
         // console.log(xhr.responseText);
         // console.log(xhr.status);
-
-        // alert(xhr.responseText);
         callback(xhr);
       });
     }
