@@ -146,9 +146,12 @@
                       <td><%= users[i].email %></td>
                       <td>2011/04/25</td>
                       <td>
-                        <button name="updateButton" data-toggle="modal" data-target="#userdetail">
+                        <button class="d-inline" name="updateButton" data-toggle="modal" data-target="#userdetail">
                           수정
                         </button>
+                        <form action="/user/<%= users[i].id%>" method="DELETE">
+                          <button class="d-inline" name="deleteButton" type="submit">삭제</button>
+                        </form>
                       </td>
                     </tr>
                     <% } %>
@@ -222,8 +225,13 @@
   <script src="js/demo/chart-area-demo.js"></script>
   <script src="js/demo/chart-pie-demo.js"></script>
 
-  <script type="text/JavaScript">
-    alert(<%=users[0].id%>);
+  <!-- 모달 닫을시에 입력값 초기화 -->
+  <script src="js/closeModal.js"></script>
+
+  <script tyep="text/JavaScript">
+    $('detelButton').on('click', () => {
+
+    });
   </script>
 </body>
 
