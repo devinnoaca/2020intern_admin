@@ -94,7 +94,7 @@
     }  
   </script>
 
-<!-- Delete Keyword Function -->
+<!-- Ajax communication Function -->
   <script type="text/javascript">
 
     const sendAjax = (method, url, data) => {
@@ -119,8 +119,16 @@
         console.log('삭제!');
         sendAjax('DELETE', `http://localhost:3000/keyword/${id}`, null);
       }
-
     }
+
+    const addKeyword = (categoryId, keyword) => {
+      let jsonData = {
+        name: keyword,
+        categoryID: categoryId
+      }
+      sendAjax('POST', `http://localhost:3000/keyword/`, JSON.stringify(jsonData))
+    }
+
   </script>
 
 <!-- add keyword modal -->
