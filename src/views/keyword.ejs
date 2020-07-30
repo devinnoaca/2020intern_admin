@@ -4,17 +4,20 @@
 <head>
   <%- include ('./common/header.ejs') %>
 
+  <!-- jquery cdn -->
+  <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min.js"></script>
+
   <!-- Search Keyword Function -->
   <script type="text/javascript">
 
-    const activeTab = (category) => {
-      $(`#myList a[href='#category-${category}']`).tab("show"); 
+    const activeTab = (categoryId) => {
+      $(`#myList a[href='#category-${categoryId}']`).tab("show"); 
     }
 
     //keyword badge 태그 생성함수
-    const badgeFactory = (value) => {
-      let pair = value.split('_');
-      return `<a href="#" class="badge badge-info result-badge" name="${pair[1]}" onclick="activeTab('${pair[1]}')">${pair[0]}</a>`
+    const badgeFactory = (categoryId, name) => {
+      console.log(`run badgeFactory -> ${categoryId} | ${name}`);
+      return `<a href="#" class="badge badge-info result-badge" onclick="activeTab('${categoryId}')">${name}</a>`
     }
 
     //
@@ -22,11 +25,12 @@
       let keywords = document.querySelectorAll('.keyword-badge');      
       let resultDiv = document.querySelector('.search-result');
 
+      console.log('keywodd', keywords)
       //존재하는 키워드 중 검색어와 일치하는 키워드 검색
       let results = [];
       keywords.forEach(elem => {
         if(elem.name.toLowerCase().includes(input.toLowerCase()))
-          results.push(badgeFactory(elem.name));
+          results.push(badgeFactory(elem.id.split('-')[1], elem.name));
       });
 
       if(results.length == 0) {
@@ -38,19 +42,54 @@
       }
     }
 
+    const searchCategory = (input) => {
+      let categories = document.querySelectorAll('.category-tab');
+      let resultDiv = document.querySelector('.search-result');
+
+      let results = [];
+      categories.forEach(elem => {
+        if(elem.name.toLowerCase().includes(input.toLowerCase())) {
+          results.push(badgeFactory(elem.id.split('-')[1], elem.name));
+        }
+      });
+
+      if(results.length == 0) {
+        alert('해당하는 데이터가 존재하지 않습니다.');
+        resultDiv.innerHTML = '';
+      } else {
+        console.log(results);
+        resultDiv.innerHTML = results.join('&nbsp;');
+      }
+
+
+      // console.log(categories);
+    }
+
     // 키워드-카테고리 검색 폼 제출
     const searchSubmit = () => {
         var searchForm = document.searchForm;
         var type = searchForm.searchType.value;
         var searchInput = searchForm.searchInput.value;
         
-        console.log(type);
+        // console.log(type);
+        // console.log(searchInput);
 
         if(type == 'Choose...') {
           alert('검색타입을 선택해주세요.')
         } else {
           console.log(`${searchInput} 검색...`);
-          searchKeyword(searchInput);
+
+          switch(type) {
+            case 'category':
+              searchCategory(searchInput);
+              break;
+            case 'keyword':
+              searchKeyword(searchInput);
+              break;
+            default:
+              break;
+          }
+          
         }
     }  
   </script>
@@ -72,16 +111,30 @@
       });
     }
 
-    const deleteKeyword = (key) => {
-      let delConfirm = confirm(`'${key.split('_')[0]}' 키워드를 삭제하시겠습니까? `);
+    const deleteKeyword = (id, name) => {
+      let delConfirm = confirm(`'${name} 키워드를 삭제하시겠습니까? `);
       if(!delConfirm) {
         console.log('삭제취소.');
       } else {
         console.log('삭제!');
-        sendAjax('DELETE', `http://localhost:3000/keyword/${key}`, null);
+        sendAjax('DELETE', `http://localhost:3000/keyword/${id}`, null);
       }
 
     }
+  </script>
+
+<!-- add keyword modal -->
+  <script type="text/javascript" >
+    $(document).ready(() => {
+      //키워드 추가 모달창 실행 시, 해당하는 카테고리 자동선택.
+      $('#addKeywordModal').on('show.bs.modal', (event) => {
+        let addBadge = $(event.relatedTarget);
+        let categoryId = addBadge.data('category');
+        // console.log(categoryId);
+        $("#addKeywordModalSelect").val(categoryId).prop("selected", true)
+
+      })
+    });
   </script>
 
 </head>
@@ -127,10 +180,8 @@
                 <form name="searchForm" onsubmit="searchSubmit(); return false;" class="form-inline">
                   <select name="searchType" class="custom-select" id="inlineFormCustomSelectPref">
                     <option selected>Choose...</option>
-                    <option value="1">Category</option>
-                    <option value="2">Keyword</option>
-
-                    <option value="3">All</option>
+                    <option value="category">Category</option>
+                    <option value="keyword">Keyword</option>
                   </select>
                 
                   <div class="custom-control custom-checkbox my-1 mr-sm-2">                    
@@ -157,7 +208,7 @@
                   </a>
                   <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in" aria-labelledby="dropdownMenuLink">
                     <div class="dropdown-header">keyword menu</div>
-                    <a class="dropdown-item" href="#">Add Keyword</a>                      
+                    <a class="dropdown-item" href="#">Add Keyword</a>
                   </div>
                 </div>
               </div>
@@ -167,9 +218,9 @@
                   <div class="col-xl-4 col-lg-5">
                       <!-- List group -->
                       <div class="list-group" id="myList" role="tablist">
-                          <% data.forEach(function (val, index) { %>
-                            <a class="list-group-item list-group-item-action" data-toggle="list" href="#category-<%= val.category %>" role="tab" style="text-transform: capitalize;">
-                              <%= val.category %>
+                          <% data.forEach(function (elem, index) { %>
+                            <a class="list-group-item list-group-item-action category-tab" data-toggle="list" id="tab-<%= elem.category.id %>" name="<%= elem.category.name %>" href="#category-<%= elem.category.id %>" role="tab" style="text-transform: capitalize;">
+                              <%= elem.category.name %>
                             </a>
                           <% }) %>
                       </div>
@@ -185,14 +236,12 @@
                   <div class="col-xl-8 col-lg-7">    
                       <!-- Tab panes -->
                       <div class="tab-content">
-                          <% data.forEach(function (val, index) { %>
-                              <div class="tab-pane" id="category-<%= val.category %>" role="tabpanel">
-                                  <% val.keyword.forEach(function (key) { %>
-                                    <% let split_key = key.split('_')[0]; %>
-                                      <!-- <span class="badge badge-pill badge-success"><%= key %></span> -->
-                                      <a href="#" class="badge badge-info keyword-badge" name="<%= key %>" onclick="deleteKeyword('<%= key %>')" ><%= split_key %></a>
+                          <% data.forEach(function (elem, index) { %>
+                              <div class="tab-pane" id="category-<%= elem.category.id %>" role="tabpanel">
+                                  <% elem.keyword.forEach(function (key) { %>
+                                      <a href="#" class="badge badge-info keyword-badge" id="badge-<%= elem.category.id %>" name="<%= key.name %>" onclick="deleteKeyword('<%= key.id %>', '<%= key.name %>')" ><%= key.name %></a>
                                   <% }) %>
-                                  <a href="#" class="badge badge-primary" data-toggle="modal" data-target="#addKeywordModal" >+ ADD</a>
+                                  <a href="#" class="badge badge-primary" data-toggle="modal" data-target="#addKeywordModal" data-category="<%= elem.category.id %>" >+ ADD</a>
                               </div>
                           <% }) %>
                       </div>
@@ -249,27 +298,6 @@
     </div>
   </div>
 
-  <!-- keyword Modal -->
-  <!-- <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">Keyword Name</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-        <div class="modal-body">
-          키워드를 삭제하시겠습니까?
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-          <button type="button" class="btn btn-danger">Delete</button>
-        </div>
-      </div>
-    </div>
-  </div> -->
-
   <!-- add keyword Modal -->
   <div class="modal fade" id="addKeywordModal" tabindex="-1" role="dialog" aria-labelledby="addKeywordModalLabel" aria-hidden="true">
     <div class="modal-dialog">
@@ -285,7 +313,12 @@
             <div class="form-group row">
               <label for="staticEmail" class="col-sm-2 col-form-label">Category</label>
               <div class="col-sm-10">
-                <input type="text" readonly class="form-control-plaintext" id="staticEmail" value="category">
+                <select name="searchType" class="custom-select" id="addKeywordModalSelect">
+                  <% data.forEach( elem => { %>
+                    <option value="<%= elem.category.id %>" name="modal-<%= elem.category.name %>" ><%= elem.category.name %></option>
+                  <% }) %>
+                  
+                </select>
               </div>
             </div>
             <div class="form-group row">

@@ -12,20 +12,20 @@ const getKeywords = async (req: express.Request, res: express.Response,
     // const result = await keywordQuery.getKeyword(data);
     const result = [
       {
-          category: 'develop', 
-          keyword : ['java_develop', 'javascript_develop', 'python_develop']
+          category: {id: 1, name: 'develop'}, 
+          keyword : [{id: 1, name: 'java'}, {id: 2, name: 'javascript'}, {id: 3, name: 'python'}]
       },
       {
-          category: 'design', 
-          keyword : ['html_design', 'CSS_design', 'SCSS_design']
+          category: {id: 2, name: 'design'}, 
+          keyword : [{id: 4, name: 'html'}, {id: 5, name: 'css'}, {id: 6, name: 'scss'}]
       },
       {
-          category: 'data', 
-          keyword : ['MongoDB_data', 'MySQL_data', 'MariaDB_data', 'SQL_data', 'RDBMS_data', 'Oracle_data', 'R_data']
+          category: {id: 3, name: 'data'},
+          keyword : [{id: 7, name: 'mongoDB'}, {id: 8, name: 'mySQL'}, {id: 9, name: 'R'}]
       },
       {
-          category: 'skill', 
-          keyword : ['프로젝트관리_skill', '데이터분석_skill', '정보보안_skill', 'VBA_skill']
+          category: {id: 4, name: 'skill'}, 
+          keyword : [{id: 10, name: '프로젝트관리'}, {id: 11, name: '데이터분석'}, {id: 12, name: '정보보안'}]
       },
     ];
     res.status(200).render('keyword',
@@ -60,8 +60,9 @@ const deleteKeyword = async (req: express.Request, res: express.Response,
   next: express.NextFunction) => {
     const data =
     [
-      req.params.name
+      req.params.id
     ];
+    // console.log(data);
     // const result = keywordQuery.deleteKeyword(data);
     const result = 'success';
     res.status(200).send(
@@ -77,6 +78,6 @@ const deleteKeyword = async (req: express.Request, res: express.Response,
 
 router.get('/', getKeywords);
 router.post('/', createKeyword);
-router.delete('/:name', deleteKeyword);
+router.delete('/:id', deleteKeyword);
 
 export = router;
