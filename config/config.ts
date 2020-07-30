@@ -1,0 +1,1 @@
+export const MODE: String = 'LOCAL'; // DEV, DEPLOY, LOCAL(any)

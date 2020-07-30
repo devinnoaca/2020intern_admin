@@ -1,9 +1,9 @@
 import * as mysql from 'mysql2';
 import { dbConfig } from '../config/db.config';
-
+ 
 const connection = mysql.createConnection(dbConfig);
 
-const init = () => {
+const init = () => { 
 
 
 	const strDropTables	= `
