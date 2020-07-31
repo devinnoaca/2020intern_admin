@@ -224,6 +224,13 @@
 
   <!-- 모달 닫을시에 입력값 초기화 -->
   <script src="js/closeModal.js"></script>
+
+  <script type="text/JavaScript">
+    $('[name=updateButton]').on('click', (event) => {
+      const usn = event.target.value;
+      window.location.href = `user/${usn}`;
+    });
+  </script>
 </body>
 
 </html>
