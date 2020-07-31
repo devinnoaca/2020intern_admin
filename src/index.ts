@@ -1,6 +1,6 @@
 import router from './app';
 import * as express from 'express';
-//import db from './db';
+import db from './db';
 import * as path from 'path';
 import * as bodyparser from 'body-parser';
 
