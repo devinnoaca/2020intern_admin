@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <%- include ('../common/header.ejs') %>
+  
+  <!-- Ajax js(sendAjax)-->
+  <script type="text/javascript" src="/js/common/ajax.js"></script>
+  <!-- Keyword js -->
+  <script type="text/javascript" src="/js/keyword/keyword.js"></script>
+
+</head>
+
+<body id="page-top">
+
+  <!-- Page Wrapper -->
+  <div id="wrapper">
+
+    <!-- Sidebar -->
+    <%- include ('../common/sidebar.ejs') %>
+    <!-- End of Sidebar -->
+
+    <!-- Content Wrapper -->
+    <div id="content-wrapper" class="d-flex flex-column">
+
+      <!-- Main Content -->
+      <div id="content">
+
+        <!-- Topbar -->
+        <%- include ('../common/topbar.ejs') %>
+        <!-- End of Topbar -->
+
+        <!-- Begin Page Content -->
+        <div class="container-fluid">
+
+          <!-- Page Heading -->
+          <div class="d-sm-flex align-items-center justify-content-between mb-4">
+            <h1 class="h3 mb-0 text-gray-800">Keyword</h1>
+            <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i class="fas fa-download fa-sm text-white-50"></i> Generate Report</a>
+          </div>
+
+          <!-- Content Row -->
+
+          <!-- Keyword Search Card -->
+          <div class="card shadow">
+            <!-- Card Header -->
+            <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+              <h6 class="m-0 font-weight-bold text-primary">키워드 조회</h6>
+            </div>
+            <!-- Card Body -->
+            <div class="card-body">
+                <form name="searchForm" onsubmit="searchSubmit(); return false;" class="form-inline">
+                  <select name="searchType" class="custom-select" id="inlineFormCustomSelectPref">
+                    <option selected>Choose...</option>
+                    <option value="category">Category</option>
+                    <option value="keyword">Keyword</option>
+                  </select>
+                
+                  <div class="custom-control custom-checkbox my-1 mr-sm-2">                    
+                    <input type="text" name="searchInput" class="form-control" id="input-keyword" required>
+                  </div>
+                
+                  <button type="submit" class="btn btn-primary my-1">조회</button>
+                </form>
+                <br>
+                <div class="search-result">
+                </div>
+              </div>
+          </div>
+          <!-- End of Keyword Search Card -->
+          <br>
+          <!-- keyword manage Card -->
+          <div class="card shadow">
+              <!-- Card Header - Dropdown -->
+              <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                <h6 class="m-0 font-weight-bold text-primary">키워드 관리</h6>
+                <div class="dropdown no-arrow">
+                  <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
+                  </a>
+                  <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in" aria-labelledby="dropdownMenuLink">
+                    <div class="dropdown-header">keyword menu</div>
+                    <a class="dropdown-item" href="#">Add Keyword</a>
+                  </div>
+                </div>
+              </div>
+              <!-- Card Body -->
+              <div class="card-body">
+                <div class="row">
+                  <div class="col-xl-4 col-lg-5">
+                      <!-- List group -->
+                      <div class="list-group" id="myList" role="tablist">
+                          <% keywords.forEach(function (elem, index) { %>
+                            <a class="list-group-item list-group-item-action category-tab" data-toggle="list" id="tab-<%= elem.category.id %>" name="<%= elem.category.name %>" href="#category-<%= elem.category.id %>" role="tab" style="text-transform: capitalize;">
+                              <%= elem.category.name %>
+                            </a>
+                          <% }) %>
+                      </div>
+                      <br>
+                      
+                      <form name="addCategoryForm" onsubmit="addCategory(); return false;">
+                        <div class="input-group mb-3">
+                          <input type="text" class="form-control" name="inputCategory" placeholder="category name" aria-label="category name" aria-describedby="button-addon2" required>
+                          <div class="input-group-append">
+                              <button class="btn btn-outline-secondary" type="button" id="button-addon2" onclick="addCategory()">Add</button>
+                          </div>
+                        </div>
+                      </form>
+                      
+                  </div>
+      
+                  <div class="col-xl-8 col-lg-7">    
+                      <!-- Tab panes -->
+                      <div class="tab-content">
+                          <% keywords.forEach(function (elem, index) { %>
+                              <div class="tab-pane" id="category-<%= elem.category.id %>" role="tabpanel">
+                                  <% elem.keyword.forEach(function (key) { %>
+                                      <a href="#" class="badge badge-info keyword-badge" id="badge-<%= elem.category.id %>" name="<%= key.name %>" onclick="deleteKeyword('<%= key.id %>', '<%= key.name %>')" ><%= key.name %></a>
+                                  <% }) %>
+                                  <a href="#" class="badge badge-primary" data-toggle="modal" data-target="#addKeywordModal" data-category="<%= elem.category.id %>" >+ ADD</a>
+                              </div>
+                          <% }) %>
+                      </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- End of keyword manage Card -->
+         
+        </div>
+        <!-- /.container-fluid -->
+
+      </div>
+      <!-- End of Main Content -->
+
+      <!-- Footer -->
+      <%- include ('../common/footer.ejs') %>
+      <!-- End of Footer -->
+
+    </div>
+    <!-- End of Content Wrapper -->
+
+  </div>
+  <!-- End of Page Wrapper -->
+
+  <!-- Scroll to Top Button-->
+  <a class="scroll-to-top rounded" href="#page-top">
+    <i class="fas fa-angle-up"></i>
+  </a>
+
+  <!-- Logout Modal-->
+  <%- include ('../common/logoutModal.ejs') %>
+
+  <!-- create keyword Modal -->
+  <%- include ('./createKeywordModal.ejs') %>
+  
+
+</body>
+
+</html>
