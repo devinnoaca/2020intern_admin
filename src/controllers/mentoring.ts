@@ -28,7 +28,7 @@ const deleteMentoring = async (req: express.Request, res: express.Response, next
   console.log('controller: deleteCategory');
 };
 
-const index = async (req: express.Request, res: express.Response, next: express.NextFunction) => {
+const getMentoring = async (req: express.Request, res: express.Response, next: express.NextFunction) => {
     
     let result = [
         {
@@ -47,10 +47,10 @@ const index = async (req: express.Request, res: express.Response, next: express.
         mentoring : result
       }
     )
-    console.log('controller: index');
+    console.log('controller: getMentoring');
   };
 
-router.get('/', index);
+router.get('/', getMentoring);
 router.post('/', createMentoring);
 router.delete('/:id', deleteMentoring);
 
