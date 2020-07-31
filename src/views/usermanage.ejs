@@ -151,9 +151,7 @@
                         <button class="d-inline" name="updateButton" type="button" value="<%= users[i].usn %>">
                           수정
                         </button>
-                        <form action="/user/<%= users[i].usn%>" method="DELETE">
-                          <button class="d-inline" name="deleteButton" type="submit">삭제</button>
-                        </form>
+                        <button class="d-inline" name="deleteButton" type="submit">삭제</button>
                       </td>
                     </tr>
                     <% } %>
@@ -207,9 +205,6 @@
   <!-- 유저 추가 모달 -->
   <%- include ('./createusermodal.ejs')%>
   
-  <!-- 유저 수정 모달 -->
-  <%- include ('./userdetailmodal.ejs')%>
-
   <!-- Bootstrap core JavaScript-->
   <script src="vendor/jquery/jquery.min.js"></script>
   <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
@@ -229,45 +224,6 @@
 
   <!-- 모달 닫을시에 입력값 초기화 -->
   <script src="js/closeModal.js"></script>
-
-  <script tyep="text/JavaScript">
-    const sendAjax = (method, url, data, callback) => {
-      // content-type을 설정하고 데이터 송신
-      var xhr = new XMLHttpRequest();
-      xhr.open(method, url, true);
-      xhr.setRequestHeader('Content-type', "application/json");
-      xhr.send(data);
-
-      xhr.addEventListener('load', () => {
-        //callback(xhr.responseText);
-        return xhr.responseText;
-      });
-    }
-
-    const callback = function(text){
-      console.log(text);
-    }
-    
-
-    //유저 생성 모달 이벤트
-    $('[name=updateButton]').on('click', (event) => {
-      let updateModal = $('#userdetail');
-      let usn = event.target.value;
-
-      sendAjax('GET', `/user/${usn}`, null, callback);
-
-     /* $.ajax({
-        method: 'GET',
-        url: `/user/${usn}`,
-        success: (result) => {
-          console.log(result);
-          $('[name=udmname]').attr('value', result.user[0].name);
-        }
-      });*/
-
-      updateModal.modal('toggle');
-    });
-  </script>
 </body>
 
 </html>
