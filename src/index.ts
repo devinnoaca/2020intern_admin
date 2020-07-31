@@ -12,7 +12,6 @@ app.use('/', router);
 app.set('views', path.join(__dirname, '/views'))
 app.set("view engine", "ejs");
 app.use(express.static(__dirname + '/public'));
-app.use('/js', express.static(__dirname + '/public/js'));
 
 app.get('/', (req: express.Request, res: express.Response) => { 
 	res.render('dashboard');

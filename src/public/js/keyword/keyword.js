@@ -52,8 +52,9 @@ const searchSubmit = () => {
 }
 
 const callback = (xhr) => {
-  console.log(xhr.status);
-  console.log(xhr.responseText);
+  // console.log(xhr.status);
+  // console.log(xhr.responseText);
+  console.log(xhr)
   alert(`요청성공. ${xhr.status}`)
 }
 
