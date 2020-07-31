@@ -25,7 +25,7 @@ const getKeywords = async (req: express.Request, res: express.Response,
             keyword : [{id: 10, name: '프로젝트관리'}, {id: 11, name: '데이터분석'}, {id: 12, name: '정보보안'}]
           },
     ];
-    res.status(200).render('keyword',
+    res.status(200).render('keyword/keyword',
       {
         'message': 'get keywords success',
         'keywords': result
