@@ -28,12 +28,13 @@ const createUser = async (req: express.Request, res: express.Response, next: exp
 
 const getUsers = async (req: express.Request, res: express.Response, next: express.NextFunction) => {
   const result = await userQuery.getUsers();
-  res.status(200).send(
+  res.status(200).render('usermanage',
     {
       'message': 'get user list success',
       'users': result
     }
-  )
+  );
+  
   console.log('controller: getUsers');
 };
 
@@ -54,7 +55,7 @@ const getUser = async (req: express.Request, res: express.Response,
   result[0].careerID = careerID;
   result[0].career = career;
   console.log(result);
-  res.status(200).send(
+  res.status(200).render('userdetail' ,
     {
       'message': 'success',
       'user': result
