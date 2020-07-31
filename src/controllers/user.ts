@@ -55,7 +55,7 @@ const getUser = async (req: express.Request, res: express.Response,
   result[0].careerID = careerID;
   result[0].career = career;
   console.log(result);
-  res.status(200).send(
+  res.status(200).render('userdetail' ,
     {
       'message': 'success',
       'user': result
