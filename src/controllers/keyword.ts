@@ -6,10 +6,21 @@ const router = express.Router();
 const getKeywords = async (req: express.Request, res: express.Response, 
   next: express.NextFunction) => {
     const result = await keywordQuery.getKeyword();
-    res.status(200).render('keyword',
+    // let data = new Map();
+    let keywordMap = new Map();
+    result.map((current) => {
+      if(!keywordMap.has(`${current.categoryID}_${current.categoryName}`)) {
+        keywordMap.set(`${current.categoryID}_${current.categoryName}`, new Array());
+      }
+      keywordMap.get(`${current.categoryID}_${current.categoryName}`).push({'keywordID': current.keywordID, 'keywordName': current.keywordName});
+    })
+
+    const data = Object.fromEntries(keywordMap);
+    console.log(data);
+    res.status(200).send(//render('keyword',
       {
         'message': 'get keywords success',
-        'keywords': result
+        'keywords': data
       }
     )
     console.log('controller: getKeywords');
