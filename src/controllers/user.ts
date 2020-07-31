@@ -28,8 +28,8 @@ const createUser = async (req: express.Request, res: express.Response, next: exp
 
 const getUsers = async (req: express.Request, res: express.Response, next: express.NextFunction) => {
   const result = await userQuery.getUsers();
-  res.status(200).send(
-    {
+  res.status(200).render('usermanage'
+    ,{
       'message': 'get user list success',
       'users': result
     }
