@@ -100,10 +100,57 @@ res.status(200).send(
 console.log('controller: modifyUser');
 };
 
+const createUserCareer = async (req: express.Request, res: express.Response, next: express.NextFunction) => {
+  const data =
+  [
+    parseInt(req.params.usn),
+    req.body.career
+  ];
+  const result = await userQuery.createUserCareer(data);
+  res.status(200).send(
+    {
+      'message': 'create user career success'
+    }
+  );
+  console.log('controller: createUserCareer');
+}
+
+const modifyUserCareer = async (req: express.Request, res: express.Response, next: express.NextFunction) => {
+  const data =
+  [
+    req.body.id,
+    req.body.career
+  ];
+  const result = await userQuery.modifyUserCareer(data);
+  res.status(200).send(
+    {
+      'message': 'modify user career success'
+    }
+  );
+  console.log('controller: modifyUserCareer');
+}
+
+const deleteUserCareer = async (req: express.Request, res: express.Response, next: express.NextFunction) => {
+  const data = 
+  [
+    req.body.id
+  ];
+  const result = await userQuery.deleteUserCareer(data);
+  res.status(200).send(
+    {
+      'message': 'delete user career success'
+    }
+  );
+  console.log('controller: deleteUserCareer');
+}
+
 router.post('/', createUser);
 router.get('/', getUsers);
 router.get('/:usn', getUser);
 router.delete('/:usn', deleteUser);
 router.put('/:usn', modifyUser);
+router.post('/:usn/career');
+router.put('/:usn/career');
+router.delete('/:usn/career');
 
 export = router;

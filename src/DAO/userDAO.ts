@@ -47,6 +47,33 @@ async function modifyUser(data: Array<any>) {
   }
 }
 
+async function createUserCareer(data: Array<any>) {
+  try {
+    const [rows, fields] = await db.connection.promise().query(query.updateUserCareerAdd, data);
+    return rows;
+  } catch (e) {
+    console.log('dao: createUserCareer error\n' + e);
+  }
+}
+
+async function modifyUserCareer(data: Array<any>) {
+  try {
+    const [rows, fields] = await db.connection.promise().query(query.updateUserCareerModify, data);
+    return rows;
+  } catch (e) {
+    console.log('dao: modifyUserCareer error\n' + e);
+  }
+}
+
+async function deleteUserCareer(data: Array<any>) {
+  try {
+    const [rows, fields] = await db.connection.promise(). query(query.updateUserCareerDelete, data);
+    return rows;
+  } catch (e) {
+    console.log('dao: modifyUserCareer error\n' + e);
+  }
+}
+
 export default {
-  getUser, createUser, getUsers, deleteUser, modifyUser
+  getUser, createUser, getUsers, deleteUser, modifyUser, createUserCareer, modifyUserCareer, deleteUserCareer
 }

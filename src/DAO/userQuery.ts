@@ -24,10 +24,23 @@ permission = ?, \
 type = ? \
 WHERE usn = ?;`;
 
+const updateUserCareerAdd = `
+INSERT INTO Career(career, usn) \
+VALUES(?, ?);`;
+
+const updateUserCareerModify = `
+UPDATE Career SET \
+career = ? \
+WHERE id = ?;`;
+
+const updateUserCareerDelete = `
+DELETE FROM Career \
+WHERE id = ?;`;
+
 const deleteUser = `
 DELETE FROM User \
 WHERE usn = ?;`;
 
 export default {
-    searchUser, searchAllUser, insertUser, updateUser, deleteUser
+    searchUser, searchAllUser, insertUser, updateUser, deleteUser,updateUserCareerAdd, updateUserCareerModify, updateUserCareerDelete
 };
