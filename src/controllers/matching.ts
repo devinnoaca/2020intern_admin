@@ -28,6 +28,27 @@ const deleteMatching = async (req: express.Request, res: express.Response, next:
   console.log('controller: deleteCategory');
 };
 
+const updateForm = async (req: express.Request, res: express.Response, next: express.NextFunction) => {
+  console.log(req.params.id);
+
+  let result = {
+      id: req.params.id,
+      mentor: 0,
+      mentee: 1,
+      req_date: '2020/07/30',
+      is_checked: false,
+      state: 0,
+    };
+
+  res.status(200).render('matching/matchingUpdate',
+    {
+      message: 'get update form success',
+      matching: result
+    }
+  )
+  console.log('controller: updateMatching');
+}
+
 const getMatching = async (req: express.Request, res: express.Response, next: express.NextFunction) => {
 
   let result = [
@@ -52,16 +73,14 @@ const getMatching = async (req: express.Request, res: express.Response, next: ex
 
 const getMatchingDetail = async (req: express.Request, res: express.Response, next: express.NextFunction) => {
 
-  let result = [
-    {
+  let result = {
       id: 0,
       mentor: 0,
       mentee: 1,
       req_date: '2020/07/30',
       is_checked: false,
       state: 0,
-    }
-  ]
+    };
 
   res.status(200).render('matching/matchingDetail',
     {
@@ -74,6 +93,7 @@ const getMatchingDetail = async (req: express.Request, res: express.Response, ne
 
 router.get('/', getMatching);
 router.get('/:id', getMatchingDetail);
+router.get('/update/:id', updateForm);
 router.post('/', createMatching);
 router.delete('/:id', deleteMatching);
 
