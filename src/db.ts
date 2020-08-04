@@ -1,6 +1,6 @@
 import * as mysql from 'mysql2';
 import { dbConfig } from '../config/db.config';
-
+ 
 const connection = mysql.createConnection(dbConfig.conf);
 
 // 로컬 환경 DB 사용시 initialize
