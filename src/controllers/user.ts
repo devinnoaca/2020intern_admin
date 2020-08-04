@@ -18,11 +18,13 @@ const createUser = async (req: express.Request, res: express.Response, next: exp
     req.body.type
   ]
   const result = await userQuery.createUser(data);
-  res.status(200).send(
+
+  res.status(200).render('usermanage',
     {
       'message': 'create user success',
     }
   );
+  
   console.log('controller: createUser');
 };
 
