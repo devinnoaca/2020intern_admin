@@ -4,6 +4,7 @@ import userQuery from '../dao/userDAO'
 const router = express.Router();
 
 const createUser = async (req: express.Request, res: express.Response, next: express.NextFunction) => {
+  //permission을 따로 안받고 있음................
   const data = 
   [
     req.body.id,
@@ -17,6 +18,9 @@ const createUser = async (req: express.Request, res: express.Response, next: exp
     0,
     req.body.type
   ]
+
+  console.log(data);
+
   const result = await userQuery.createUser(data);
 
   res.status(200).redirect('/user');
