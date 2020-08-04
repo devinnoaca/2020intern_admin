@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
-  <%- include ('./common/header.ejs') %>
+  <%- include ('../common/header.ejs') %>
 </head>
 
 <body id="page-top">
@@ -11,7 +11,7 @@
   <div id="wrapper">
 
     <!-- Sidebar -->
-    <%- include ('./common/sidebar.ejs') %>
+    <%- include ('../common/sidebar.ejs') %>
     <!-- End of Sidebar -->
 
     <!-- Content Wrapper -->
@@ -21,7 +21,7 @@
       <div id="content">
 
         <!-- Topbar -->
-        <%- include ('./common/topbar.ejs') %>
+        <%- include ('../common/topbar.ejs') %>
         <!-- End of Topbar -->
 
         <!-- Begin Page Content -->
@@ -30,7 +30,7 @@
           <!-- Page Heading -->
           <div class="d-sm-flex align-items-center justify-content-between mb-4">
             <h1 class="h3 mb-0 text-gray-800">사용자 관리</h1>
-            <button class="btn-warning shadow-sm" id="userCreateButton" data-toggle="modal" data-target="#usercreate">
+            <button class="btn btn-primary shadow-sm" id="userCreateButton" data-toggle="modal" data-target="#usercreate">
               회원 생성
             </button>
           </div>
@@ -148,10 +148,10 @@
                       <td><%= users[i].email %></td>
                       <td>2011/04/25</td>
                       <td>
-                        <button class="d-inline" name="updateButton" type="button" value="<%= users[i].usn %>">
+                        <button class="btn btn-primary d-inline" name="updateButton" type="button" value="<%= users[i].usn %>">
                           수정
                         </button>
-                        <button class="d-inline" name="deleteButton" type="submit">삭제</button>
+                        <button class="btn btn-primary d-inline" name="deleteButton" type="button" value="<%=users[i].usn%>">삭제</button>
                       </td>
                     </tr>
                     <% } %>
@@ -168,7 +168,7 @@
       <!-- End of Main Content -->
 
       <!-- Footer -->
-      <%- include ('./common/footer.ejs') %>
+      <%- include ('../common/footer.ejs') %>
       <!-- End of Footer -->
 
     </div>
@@ -223,14 +223,12 @@
   <script src="/js/demo/chart-pie-demo.js"></script>
 
   <!-- 모달 닫을시에 입력값 초기화 -->
-  <script src="/js/closeModal.js"></script>
+  <script src="/js/user/closeModal.js"></script>
 
-  <script type="text/JavaScript">
-    $('[name=updateButton]').on('click', (event) => {
-      const usn = event.target.value;
-      window.location.href = `user/${usn}`;
-    });
-  </script>
+  <!-- Send Ajax 메소드 추가 -->
+  <script src="/js/common/ajax.js"></script>
+
+  <script src="/js/user/user.js"></script>
 </body>
 
 </html>
