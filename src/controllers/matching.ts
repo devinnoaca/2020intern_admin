@@ -2,7 +2,7 @@ import * as express from 'express';
 
 const router = express.Router();
 
-const createMentoring = async (req: express.Request, res: express.Response, next: express.NextFunction) => {
+const createMatching = async (req: express.Request, res: express.Response, next: express.NextFunction) => {
   const data = [
     req.body.name
   ];
@@ -12,10 +12,10 @@ const createMentoring = async (req: express.Request, res: express.Response, next
       'message': 'create category success',
     }
   );
-  console.log('controller: createMentoring');
+  console.log('controller: createMatching');
 };
 
-const deleteMentoring = async (req: express.Request, res: express.Response, next: express.NextFunction) => {
+const deleteMatching = async (req: express.Request, res: express.Response, next: express.NextFunction) => {
   const data =
   [
     req.params.id
@@ -28,7 +28,7 @@ const deleteMentoring = async (req: express.Request, res: express.Response, next
   console.log('controller: deleteCategory');
 };
 
-const getMentoring = async (req: express.Request, res: express.Response, next: express.NextFunction) => {
+const getMatching = async (req: express.Request, res: express.Response, next: express.NextFunction) => {
     
     let result = [
         {
@@ -41,17 +41,17 @@ const getMentoring = async (req: express.Request, res: express.Response, next: e
         }
     ]
 
-    res.status(200).render('mentoring/mentoring',
+    res.status(200).render('matching/matching',
       {
         message: 'get category success',
-        mentoring : result
+        matching : result
       }
     )
-    console.log('controller: getMentoring');
+    console.log('controller: getMatching');
   };
 
-router.get('/', getMentoring);
-router.post('/', createMentoring);
-router.delete('/:id', deleteMentoring);
+router.get('/', getMatching);
+router.post('/', createMatching);
+router.delete('/:id', deleteMatching);
 
 export = router;

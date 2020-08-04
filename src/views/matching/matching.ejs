@@ -10,10 +10,10 @@
 <script src="/js/bootstrap-datepicker.ko.min.js"></script>
 
 <!-- Search Form (datepicker)-->
-<script src="/js/mentoring/form-date-picker.js"></script>
+<script src="/js/matching/form-date-picker.js"></script>
 
-<!-- mentoring js -->
-<script src="/js/mentoring/mentoring.js"></script>
+<!-- matching js -->
+<script src="/js/matching/matching.js"></script>
 
 
 </head>
@@ -42,7 +42,7 @@
 
           <!-- Page Heading -->
           <div class="d-sm-flex align-items-center justify-content-between mb-4">
-            <h1 class="h3 mb-0 text-gray-800">Mentoring</h1>
+            <h1 class="h3 mb-0 text-gray-800">Matching</h1>
             <button class="btn btn-warning shadow-sm" data-toggle="modal" data-target="#matching-create">
               매칭정보 생성
             </button>
@@ -171,7 +171,7 @@
                   </thead>
                   <tbody>
 
-                    <% mentoring.forEach(elem => { %>
+                    <% matching.forEach(elem => { %>
                     <tr>
                       <td><%= elem.id %></td>
                       <td><%= elem.mentor %></td>
