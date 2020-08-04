@@ -30,7 +30,7 @@
           <!-- Page Heading -->
           <div class="d-sm-flex align-items-center justify-content-between mb-4">
             <h1 class="h3 mb-0 text-gray-800">사용자 상세 페이지</h1>
-            <button class="btn-warning shadow-sm" id="userUpdateButton">
+            <button class="btn btn-primary shadow-sm" id="userUpdateButton">
               회원 수정
             </button>
           </div>
@@ -42,108 +42,106 @@
             </div>
             <div class="card-body">
               <div class="container-fluid">
-                <form>
-                  <ul class="list-group list-group-flush">
-                    <li class="list-group-item">
-                      <div class="row">
-                        <!-- 회원 이미지-->
-                        <div class="col-md-6">
-                          <img class="img-thumbnail" name="image" src="<%= user[0].image%>">
-                        </div>
 
-                        <!-- 회원 권한, 이름, 아이디 -->
-                        <div class="col-md-6">
-                          <ul class="list-gorup list-group-flush">
-                            <!-- 회원 권한 -->
-                            <li class="list-group-item">
-                              <div class="form-row">
-                                <div class="form-inline col-md-2">
-                                  <label>권한</label>
-                                </div>
-                                <div class="col-md-8">
-                                  <select class="form-control" name="permission" disabled>
-                                    <option>일반</option>
-                                    <option>관리자</option>
-                                    <option>슈퍼 관리자</option>
-                                  </select>
-                                </div>
+                <ul class="list-group list-group-flush">
+                  <li class="list-group-item">
+                    <div class="row">
+                      <!-- 회원 이미지-->
+                      <div class="col-md-6">
+                        <img class="img-thumbnail" name="image" src="<%= user[0].image%>">
+                      </div>
+
+                      <!-- 회원 권한, 이름, 아이디 -->
+                      <div class="col-md-6">
+                        <ul class="list-gorup list-group-flush">
+                          <!-- 회원 권한 -->
+                          <li class="list-group-item">
+                            <div class="form-row">
+                              <div class="form-inline col-md-2">
+                                <label>권한</label>
                               </div>
-                            </li>
-
-                            <!-- 회원 이름 -->
-                            <li class="list-group-item">
-                              <div class="form-row">
-                                <div class="form-inline col-md-2">
-                                  <lable>이름</lable>
-                                </div>
-                                <div class="form-inline col-md-6">
-                                  <input class="form-control" name="name" value="<%=user[0].name%>" type="text"
-                                    disabled>
-                                </div>
+                              <div class="col-md-8">
+                                <select class="form-control" name="permission" disabled>
+                                  <option>일반</option>
+                                  <option>관리자</option>
+                                  <option>슈퍼 관리자</option>
+                                </select>
                               </div>
-                            </li>
+                            </div>
+                          </li>
 
-                            <!-- 회원 아이디 -->
-                            <li class="list-group-item">
-                              <div class="form-row">
-                                <div class="form-inline col-md-2">
-                                  <label>ID</label>
-                                </div>
-                                <div class="form-inline col-md-6">
-                                  <input class="form-control" name="id" value="<%= user[0].id%>" type="text" disabled>
-                                </div>
+                          <!-- 회원 이름 -->
+                          <li class="list-group-item">
+                            <div class="form-row">
+                              <div class="form-inline col-md-2">
+                                <lable>이름</lable>
                               </div>
-                            </li>
-                          </ul>
-                        </div>
-                      </div>
-                    </li>
+                              <div class="form-inline col-md-6">
+                                <input class="form-control" name="name" value="<%=user[0].name%>" type="text" disabled>
+                              </div>
+                            </div>
+                          </li>
 
-                    <!-- 비밀번호 -->
-                    <li class="list-group-item">
-                      <div class="row">
-                        <div class="form-inline col-md-2">
-                          <label>새 비밀번호</label>
-                        </div>
-                        <div class="form-inline col-md-4">
-                          <input class="form-control" name="company" type="text" disabled>
-                        </div>
-                        <div class="form-inline col-md-2">
-                          <label>새 비밀번호 확인</label>
-                        </div>
-                        <div class="form-inline col-md-4">
-                          <input class="form-control" name="company" type="text" disabled>
-                        </div>
+                          <!-- 회원 아이디 -->
+                          <li class="list-group-item">
+                            <div class="form-row">
+                              <div class="form-inline col-md-2">
+                                <label>ID</label>
+                              </div>
+                              <div class="form-inline col-md-6">
+                                <input class="form-control" name="id" value="<%= user[0].id%>" type="text" disabled>
+                              </div>
+                            </div>
+                          </li>
+                        </ul>
                       </div>
-                    </li>
+                    </div>
+                  </li>
 
-                    <!-- 회사 -->
-                    <li class="list-group-item">
-                      <div class="form-row">
-                        <div class="form-inline col-md-2">
-                          <label>회사</label>
-                        </div>
-                        <div class="col-md-10">
-                          <input class="form-control" name="company" type="text" disabled>
-                        </div>
+                  <!-- 비밀번호 -->
+                  <li class="list-group-item">
+                    <div class="row">
+                      <div class="form-inline col-md-2">
+                        <label>새 비밀번호</label>
                       </div>
-                    </li>
+                      <div class="form-inline col-md-4">
+                        <input class="form-control" name="company" type="password" disabled>
+                      </div>
+                      <div class="form-inline col-md-2">
+                        <label>새 비밀번호 확인</label>
+                      </div>
+                      <div class="form-inline col-md-4">
+                        <input class="form-control" name="company" type="password" disabled>
+                      </div>
+                    </div>
+                  </li>
 
-                    <!-- 소개글 -->
-                    <li class="list-group-item">
-                      <div class="form-row">
-                        <div class="form-inline col-md-2">
-                          <label>소개글</label>
-                        </div>
-                        <div class="col-md-10">
-                          <textarea class="form-control" name="description" rows="5"
-                            disabled><%=user[0].description%> </textarea>
-                        </div>
+                  <!-- 회사 -->
+                  <li class="list-group-item">
+                    <div class="form-row">
+                      <div class="form-inline col-md-2">
+                        <label>회사</label>
                       </div>
-                    </li>
-                </form>
-                
-                <form>
+                      <div class="col-md-10">
+                        <input class="form-control" name="company" type="text" disabled>
+                      </div>
+                    </div>
+                  </li>
+
+                  <!-- 소개글 -->
+                  <li class="list-group-item">
+                    <div class="form-row">
+                      <div class="form-inline col-md-2">
+                        <label>소개글</label>
+                      </div>
+                      <div class="col-md-10">
+                        <textarea class="form-control" name="description" rows="5"
+                          disabled><%=user[0].description%> </textarea>
+                      </div>
+                    </div>
+                  </li>
+
+
                   <!-- 경력 -->
                   <li class="list-group-item">
                     <div class="form-row">
@@ -167,15 +165,14 @@
                           <input class="form-control" name="addCareerInput" type="text" aria-describedby="buttonAddon"
                             disabled>
                           <div class="input-group-append">
-                            <button class="btn btn-outline-secondary" type="button" id="addCareerButton">추가</button>
+                            <button class="btn btn-outline-secondary" type="button" id="addCareerButton"
+                              disabled>추가</button>
                           </div>
                         </div>
                       </div>
                     </div>
                   </li>
-                </form>
 
-                <form>
                   <!-- 키워드 -->
                   <li class="list-group-item">
                     <div class="form-row">
@@ -183,41 +180,38 @@
                         <label>키워드</label>
                       </div>
                       <div class="form-inline col-md-10">
-                        <% for(let i = 0; i < 10; ++i) { %>
+                        <% for(let i = 0; i < 5; ++i) { %>
                         <button class="form-control badge badge-info" type="button">
                           <h5>
                             keyword
                           </h5>
-                          <span>
+                          </button>
                             <% } %>
                       </div>
                     </div>
                   </li>
-                </form>
 
-                <!-- 매칭정보 -->
-                <li class="list-group-item">
-                  <div class="form-row">
-                    <div class="form-inline col-md-2">
-                      <label>매칭정보</label>
+                  <!-- 매칭정보 -->
+                  <li class="list-group-item">
+                    <div class="form-row">
+                      <div class="form-inline col-md-2">
+                        <label>매칭정보</label>
+                      </div>
+                      <div class="form-inline">
+                        <a href="#">열람하기</a>
+                      </div>
                     </div>
-                    <div class="form-inline">
-                      <a href="#">열람하기</a>
-                    </div>
-                  </div>
-                </li>
+                  </li>
 
-                <!-- 수정, 취소 버튼-->
-                <li class="list-group-item">
-                  <div class="form-row">
-                    <div class="form-inline col-md-6">
-                      <button class="form-control badge badge-info" name="" type="button">수정</button>
+                  <!-- 수정, 취소 버튼-->
+                  <li class="list-group-item">
+                    <div class="form-row d-flex justify-content-center">
+                      <div class="form-inline ">
+                        <button class="btn btn-primary mx-3" name="updateCommitButton" type="button">수정</button>
+                        <button class="btn btn-primary mx-3" name="updateCancelButton" type="button">취소</button>
+                      </div>
                     </div>
-                    <div class="form-inline col-md-6">
-                      <button class="form-control badge badge-info" name="" type="button">취소</button>
-                    </div>
-                  </div>
-                </li>
+                  </li>
                 </ul>
 
               </div>
@@ -285,6 +279,10 @@
   <!-- Page level custom scripts -->
   <script src="/js/demo/chart-area-demo.js"></script>
   <script src="/js/demo/chart-pie-demo.js"></script>
+
+  <!-- Send Ajax 메소드 처리 script-->
+  <script src="/js/common/ajax.js"></script>
+
   <script type="text/javascript">
     console.log('<%= user[0].type%>');
 
@@ -304,7 +302,59 @@
       $('ul').find('[name="deleteCareerButton"]').attr('disabled', false);
       //career update button disabled 해제
       $('ul').find('[name="updateCareerButton"]').attr('disabled', false);
+      //career add button disabled 해제
+      $('#addCareerButton').attr('disabled', false);
     });
+
+    const addCareerButtonCallBack = (xhr) => {
+      const career = xhr.responseText.career;
+      const careerId = xhr.responseText.careerId;
+
+      const careerTemplate = `<div class="input-group my-sm-1" name="careerDiv">
+                          <input class="form-control" value="${career}" type="text"
+                            aria-describedby="deleteCareerButton" disabled>
+                          <div class="input-group-append">
+                            <button class="btn btn-outline-secondary" type="button" name="updateCareerButton"
+                              value="${careerId}" disabled>수정</button>
+                            <button class="btn btn-outline-secondary" type="button" name="deleteCareerButton"
+                              value="${careerId}" disabled>삭제</button>
+                          </div>
+                        </div>`;
+
+      $('[name="careerDiv"]:last-child').after(careerTemplate);
+    }
+
+    //커리어 추가 버튼 클릭시 이벤트 ------------ 비동기 처리로 요청 성공시 반환값으로 추가된 커리어 정보를 반환해야함"
+    $('#addCareerButton').on('click', () => {
+      const career = $('[name="addCareerInput"]').val();
+      const careerId = 1;
+
+      const careerTemplate = `<div class="input-group my-sm-1" name="careerDiv">
+                          <input class="form-control" value="${career}" type="text"
+                            aria-describedby="deleteCareerButton">
+                          <div class="input-group-append">
+                            <button class="btn btn-outline-secondary" type="button" name="updateCareerButton"
+                              value="${careerId}">수정</button>
+                            <button class="btn btn-outline-secondary" type="button" name="deleteCareerButton"
+                              value="${careerId}">삭제</button>
+                          </div>
+                        </div>`;
+
+      $('[name="careerDiv"]').last().after(careerTemplate);
+      $('[name="addCareerInput"]').val('');
+      $('[name="updateCareerButton"]').on('click', () => {
+        alert('클릭!');
+      });
+    });
+
+    $('[name="updateCareerButton"]').on('click', () => {
+      alert('클릭!');
+    });
+
+    $('[name="updateCancelButton"]').on('click', () => {
+      window.location.href = `/user/<%=user[0].usn%>`;
+    });
+
   </script>
 </body>
 
