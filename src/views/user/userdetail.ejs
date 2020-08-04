@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
-  <%- include ('./common/header.ejs') %>
+  <%- include ('../common/header.ejs') %>
 </head>
 
 <body id="page-top">
@@ -11,7 +11,7 @@
   <div id="wrapper">
 
     <!-- Sidebar -->
-    <%- include ('./common/sidebar.ejs') %>
+    <%- include ('../common/sidebar.ejs') %>
     <!-- End of Sidebar -->
 
     <!-- Content Wrapper -->
@@ -21,7 +21,7 @@
       <div id="content">
 
         <!-- Topbar -->
-        <%- include ('./common/topbar.ejs') %>
+        <%- include ('../common/topbar.ejs') %>
         <!-- End of Topbar -->
 
         <!-- Begin Page Content -->
@@ -185,8 +185,8 @@
                           <h5>
                             keyword
                           </h5>
-                          </button>
-                            <% } %>
+                        </button>
+                        <% } %>
                       </div>
                     </div>
                   </li>
@@ -226,7 +226,7 @@
       <!-- End of Main Content -->
 
       <!-- Footer -->
-      <%- include ('./common/footer.ejs') %>
+      <%- include ('../common/footer.ejs') %>
       <!-- End of Footer -->
 
     </div>
@@ -260,9 +260,6 @@
     </div>
   </div>
 
-  <!-- 유저 추가 모달 -->
-  <%- include ('./createusermodal.ejs')%>
-
   <!-- Bootstrap core JavaScript-->
   <script src="/vendor/jquery/jquery.min.js"></script>
   <script src="/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
@@ -283,77 +280,15 @@
   <!-- Send Ajax 메소드 처리 script-->
   <script src="/js/common/ajax.js"></script>
 
-  <script type="text/javascript">
+  <script src="/js/user/userModify.js"></script>
 
-    //유저 타입 셀렉트 박스 초기화 
-    $('[name="permission"] option:nth-child(<%=user[0].type + 1%>)').attr('selected', true);
+  <script type="text/JavaScript">
+  //유저 타입 셀렉트 박스 초기화 
+  $('[name="permission"] option:nth-child(<%=user[0].type + 1%>)').attr('selected', true);
 
-    //회원 수정 버튼 클릭 이벤트 
-    $('#userUpdateButton').on('click', () => {
-
-      //input disable 해제
-      $('ul').find('input').attr('disabled', false);
-      //textarea disable 해제
-      $('ul').find('textarea').attr('disabled', false);
-      //select disable 해제
-      $('ul').find('select').attr('disabled', false);
-      //career delete button disabled 해제
-      $('ul').find('[name="deleteCareerButton"]').attr('disabled', false);
-      //career update button disabled 해제
-      $('ul').find('[name="updateCareerButton"]').attr('disabled', false);
-      //career add button disabled 해제
-      $('#addCareerButton').attr('disabled', false);
-    });
-
-    const addCareerButtonCallBack = (xhr) => {
-      const career = xhr.responseText.career;
-      const careerId = xhr.responseText.careerId;
-
-      const careerTemplate = `<div class="input-group my-sm-1" name="careerDiv">
-                                <input class="form-control" value="${career}" type="text"
-                                aria-describedby="deleteCareerButton" disabled>
-                                <div class="input-group-append">
-                                  <button class="btn btn-outline-secondary" type="button" name="updateCareerButton"
-                                  value="${careerId}" disabled>수정</button>
-                                  <button class="btn btn-outline-secondary" type="button" name="deleteCareerButton"
-                                  value="${careerId}" disabled>삭제</button>
-                                </div>
-                              </div>`;
-
-      $('[name="careerDiv"]:last-child').after(careerTemplate);
-    }
-
-    //커리어 추가 버튼 클릭시 이벤트 ------------ 비동기 처리로 요청 성공시 반환값으로 추가된 커리어 정보를 반환해야함"
-    $('#addCareerButton').on('click', () => {
-      const career = $('[name="addCareerInput"]').val();
-      const careerId = 1;
-
-      const careerTemplate = `<div class="input-group my-sm-1" name="careerDiv">
-                          <input class="form-control" value="${career}" type="text"
-                            aria-describedby="deleteCareerButton">
-                          <div class="input-group-append">
-                            <button class="btn btn-outline-secondary" type="button" name="updateCareerButton"
-                              value="${careerId}">수정</button>
-                            <button class="btn btn-outline-secondary" type="button" name="deleteCareerButton"
-                              value="${careerId}">삭제</button>
-                          </div>
-                        </div>`;
-
-      $('[name="careerDiv"]').last().after(careerTemplate);
-      $('[name="addCareerInput"]').val('');
-      $('[name="updateCareerButton"]').on('click', () => {
-        alert('클릭!');
-      });
-    });
-
-    $('[name="updateCareerButton"]').on('click', () => {
-      alert('클릭!');
-    });
-
-    $('[name="updateCancelButton"]').on('click', () => {
-      window.location.href = `/user/<%=user[0].usn%>`;
-    });
-
+  $('[name="updateCancelButton"]').on('click', () => {
+    window.location.href = `/user/<%=user[0].usn%>`;
+  });
   </script>
 </body>
 

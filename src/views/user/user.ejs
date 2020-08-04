@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
-  <%- include ('./common/header.ejs') %>
+  <%- include ('../common/header.ejs') %>
 </head>
 
 <body id="page-top">
@@ -11,7 +11,7 @@
   <div id="wrapper">
 
     <!-- Sidebar -->
-    <%- include ('./common/sidebar.ejs') %>
+    <%- include ('../common/sidebar.ejs') %>
     <!-- End of Sidebar -->
 
     <!-- Content Wrapper -->
@@ -21,7 +21,7 @@
       <div id="content">
 
         <!-- Topbar -->
-        <%- include ('./common/topbar.ejs') %>
+        <%- include ('../common/topbar.ejs') %>
         <!-- End of Topbar -->
 
         <!-- Begin Page Content -->
@@ -168,7 +168,7 @@
       <!-- End of Main Content -->
 
       <!-- Footer -->
-      <%- include ('./common/footer.ejs') %>
+      <%- include ('../common/footer.ejs') %>
       <!-- End of Footer -->
 
     </div>
@@ -223,27 +223,12 @@
   <script src="/js/demo/chart-pie-demo.js"></script>
 
   <!-- 모달 닫을시에 입력값 초기화 -->
-  <script src="/js/closeModal.js"></script>
+  <script src="/js/user/closeModal.js"></script>
 
   <!-- Send Ajax 메소드 추가 -->
   <script src="/js/common/ajax.js"></script>
 
-  <script type="text/JavaScript">
-    const deleteUser = (xhr) => {
-      window.location.href = '/user';
-    }
-
-    $('[name=updateButton]').on('click', (event) => {
-      const usn = event.target.value;
-      window.location.href = `user/${usn}`;
-    });
-
-    $('[name=deleteButton]').on('click', (event) => {
-      const usn = event.target.value;
-      //(method, url, data, callback)
-      sendAjax('DELETE', `/user/${usn}`, null, deleteUser);
-    });
-  </script>
+  <script src="/js/user/user.js"></script>
 </body>
 
 </html>
