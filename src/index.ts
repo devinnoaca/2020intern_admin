@@ -22,7 +22,7 @@ app.get('/login', (request: express.Request, response: express.Response) => {
 });
 
 app.get('/forgot-password', (request: express.Request, response: express.Response) => { 
-	response.render('forgot-password');
+	response.render('forgotPassword');
 });
 
 app.listen(3000, () => console.log(`start`));
