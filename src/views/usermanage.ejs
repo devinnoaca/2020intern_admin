@@ -151,7 +151,7 @@
                         <button class="btn btn-primary d-inline" name="updateButton" type="button" value="<%= users[i].usn %>">
                           수정
                         </button>
-                        <button class="btn btn-primary d-inline" name="deleteButton" type="button">삭제</button>
+                        <button class="btn btn-primary d-inline" name="deleteButton" type="button" value="<%=users[i].usn%>">삭제</button>
                       </td>
                     </tr>
                     <% } %>
@@ -225,10 +225,23 @@
   <!-- 모달 닫을시에 입력값 초기화 -->
   <script src="/js/closeModal.js"></script>
 
+  <!-- Send Ajax 메소드 추가 -->
+  <script src="/js/common/ajax.js"></script>
+
   <script type="text/JavaScript">
+    const deleteUser = (xhr) => {
+      window.location.href = '/user';
+    }
+
     $('[name=updateButton]').on('click', (event) => {
       const usn = event.target.value;
       window.location.href = `user/${usn}`;
+    });
+
+    $('[name=deleteButton]').on('click', (event) => {
+      const usn = event.target.value;
+      //(method, url, data, callback)
+      sendAjax('DELETE', `/user/${usn}`, null, deleteUser);
     });
   </script>
 </body>
