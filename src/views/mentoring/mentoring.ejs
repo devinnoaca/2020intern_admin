@@ -9,7 +9,10 @@
 <script src="js/bootstrap-datepicker.js"></script>
 <script src="js/bootstrap-datepicker.ko.min.js"></script>
 
+<!-- Search Form (datepicker)-->
 <script src="js/mentoring/form-date-picker.js"></script>
+
+<!-- mentoring js -->
 <script src="js/mentoring/mentoring.js"></script>
 
 
@@ -40,15 +43,15 @@
           <!-- Page Heading -->
           <div class="d-sm-flex align-items-center justify-content-between mb-4">
             <h1 class="h3 mb-0 text-gray-800">Mentoring</h1>
-            <button class="btn btn-warning shadow-sm" data-toggle="modal" data-target="#usercreate">
-              멘토링 생성
+            <button class="btn btn-warning shadow-sm" data-toggle="modal" data-target="#matching-create">
+              매칭정보 생성
             </button>
           </div>
 
           <!-- 검색 조건 -->
           <div class="card shadow mb-4">
             <div class="card-header py-3">
-              <h6 class="m-0 font-weight-bold text-primary">멘토링 조회</h6>
+              <h6 class="m-0 font-weight-bold text-primary">매칭정보 조회</h6>
             </div>
             <div class="card-body">
               <form name="searchForm" onsubmit="searchSubmit(); return false;">
@@ -69,7 +72,7 @@
                           </select>
                         </div>
                         <div class="col-auto">
-                          <input type="text" class="form-control" name="mentorInput">
+                          <input type="text" class="form-control" name="mentorInput" required>
                         </div>
                       </div>
 
@@ -85,7 +88,7 @@
                           </select>
                         </div>
                         <div class="col-auto">
-                          <input type="text" class="form-scontrol" name="menteeInput">
+                          <input type="text" class="form-scontrol" name="menteeInput" required>
                         </div>
                       </div>
                     </div>
@@ -100,7 +103,7 @@
                         </label>
                       </div>
                       <div class="form-check form-check-inline col-md-1">
-                        <input class="form-check-input" type="radio" name="state" id="state1" value="all">
+                        <input class="form-check-input" type="radio" name="state" id="state1" value="all" checked>
                         <label class="form-check-label" for="state1">전체</label>
                       </div>
                       <div class="form-check form-check-inline col-md-1">
@@ -118,6 +121,7 @@
                     </div>
                   </li>
 
+                
                   <!-- 관계생성 일자 -->
                   <li class="list-group-item">
                     <div class="form-row form-inline">
@@ -127,11 +131,11 @@
                         </label>
                       </div>
                       <div class="col-auto">
-                        <input type="text" id="datePicker" name="startDate" class="form-control start-date" value="2020-07-20">
+                        <input type="text" id="datePicker" name="startDate" class="form-control start-date" value="2020-08-01">
                       </div>
                       ~
                       <div class="col-auto">
-                        <input type="text" id="datePicker" name="endDate" class="form-control end-date" value="2020-07-20">
+                        <input type="text" id="datePicker" name="endDate" class="form-control end-date" value="2020-08-01">
                       </div>
                     </div>
                   </li>
@@ -210,26 +214,10 @@
   </a>
 
   <!-- Logout Modal-->
-  <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-    aria-hidden="true">
-    <div class="modal-dialog" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
-          <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">×</span>
-          </button>
-        </div>
-        <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
-        <div class="modal-footer">
-          <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-          <a class="btn btn-primary" href="login">Logout</a>
-        </div>
-      </div>
-    </div>
-  </div>
+  <%- include ('../common/logoutModal.ejs') %>
 
-
+  <!-- Create Matching Modal -->
+  <%- include ('./createMatchingModal.ejs')%>
 </body>
 
 </html>

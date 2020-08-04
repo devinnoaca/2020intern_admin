@@ -12,6 +12,7 @@ const searchSubmit = () => {
   const startDate = searchForm.startDate.value;
   const endDate = searchForm.endDate.value;
 
+  console.log('매칭검색 실행')
   console.log(mentorType);
   console.log(mentorInput);
   console.log(menteeType);
