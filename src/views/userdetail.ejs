@@ -284,7 +284,6 @@
   <script src="/js/common/ajax.js"></script>
 
   <script type="text/javascript">
-    console.log('<%= user[0].type%>');
 
     //유저 타입 셀렉트 박스 초기화 
     $('[name="permission"] option:nth-child(<%=user[0].type + 1%>)').attr('selected', true);
@@ -311,15 +310,15 @@
       const careerId = xhr.responseText.careerId;
 
       const careerTemplate = `<div class="input-group my-sm-1" name="careerDiv">
-                          <input class="form-control" value="${career}" type="text"
-                            aria-describedby="deleteCareerButton" disabled>
-                          <div class="input-group-append">
-                            <button class="btn btn-outline-secondary" type="button" name="updateCareerButton"
-                              value="${careerId}" disabled>수정</button>
-                            <button class="btn btn-outline-secondary" type="button" name="deleteCareerButton"
-                              value="${careerId}" disabled>삭제</button>
-                          </div>
-                        </div>`;
+                                <input class="form-control" value="${career}" type="text"
+                                aria-describedby="deleteCareerButton" disabled>
+                                <div class="input-group-append">
+                                  <button class="btn btn-outline-secondary" type="button" name="updateCareerButton"
+                                  value="${careerId}" disabled>수정</button>
+                                  <button class="btn btn-outline-secondary" type="button" name="deleteCareerButton"
+                                  value="${careerId}" disabled>삭제</button>
+                                </div>
+                              </div>`;
 
       $('[name="careerDiv"]:last-child').after(careerTemplate);
     }
