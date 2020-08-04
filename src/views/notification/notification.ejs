@@ -239,6 +239,18 @@
 
   <!--  -->
   <%- include ('./createNotificationModal.ejs') %> 
+
+  <script type="text/JavaScript">
+    $('[name="receiver"]').on('click', function(){
+      
+      if($(this).val() === '3'){
+        $('[name="id"]').attr('disabled', false);
+      } else {
+        $('[name="id"]').attr('disabled', true);
+        $('[name="id"]').val('');
+      }
+    });
+  </script>
 </body>
 
 </html>
