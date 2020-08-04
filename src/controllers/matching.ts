@@ -59,7 +59,15 @@ const getMatching = async (req: express.Request, res: express.Response, next: ex
       req_date: '2020/07/30',
       is_checked: false,
       state: 0,
-    }
+    },
+    {
+      id: 1,
+      mentor: 3,
+      mentee: 5,
+      req_date: '2020/08/02',
+      is_checked: false,
+      state: 0,
+    },
   ]
 
   res.status(200).render('matching/matching',

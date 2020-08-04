@@ -1,23 +1,18 @@
-const searchSubmit = () => {
-  const searchForm = document.searchForm;
 
-  const mentorType = searchForm.mentorType.value;
-  const mentorInput = searchForm.mentorInput.value;
+$('tbody tr').click(function(){
+  console.log('click!');
+  const tr = $(this);
+  const td = tr.children();
+  const id = td.eq(0).text();
 
-  const menteeType = searchForm.menteeType.value;
-  const menteeInput = searchForm.menteeInput.value;
+  window.location.href = `/matching/${id}`;
+});
 
-  const state = searchForm.state.value;
+$('tbody tr').mouseover(function(){
+  $(this).css("background-color", '#f2f2f2');
+});
+$('tbody tr').mouseout(function(){
+  $(this).css("background-color", '');
+});
 
-  const startDate = searchForm.startDate.value;
-  const endDate = searchForm.endDate.value;
 
-  console.log('매칭검색 실행')
-  console.log(mentorType);
-  console.log(mentorInput);
-  console.log(menteeType);
-  console.log(menteeInput);
-  console.log(state);
-  console.log(startDate);
-  console.log(endDate);
-}

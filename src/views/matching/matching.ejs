@@ -4,16 +4,8 @@
 <head>
   <%- include ('../common/header.ejs') %>
 
-<link href="/css/bootstrap-datepicker.css" rel="stylesheet">
+  <link href="/css/bootstrap-datepicker.css" rel="stylesheet">
 
-<script src="/js/bootstrap-datepicker.js"></script>
-<script src="/js/bootstrap-datepicker.ko.min.js"></script>
-
-<!-- Search Form (datepicker)-->
-<script src="/js/matching/form-date-picker.js"></script>
-
-<!-- matching js -->
-<script src="/js/matching/matching.js"></script>
 
 
 </head>
@@ -121,7 +113,7 @@
                     </div>
                   </li>
 
-                
+
                   <!-- 관계생성 일자 -->
                   <li class="list-group-item">
                     <div class="form-row form-inline">
@@ -131,11 +123,13 @@
                         </label>
                       </div>
                       <div class="col-auto">
-                        <input type="text" id="datePicker" name="startDate" class="form-control start-date" value="2020-08-01">
+                        <input type="text" id="datePicker" name="startDate" class="form-control start-date"
+                          value="2020-08-01">
                       </div>
                       ~
                       <div class="col-auto">
-                        <input type="text" id="datePicker" name="endDate" class="form-control end-date" value="2020-08-01">
+                        <input type="text" id="datePicker" name="endDate" class="form-control end-date"
+                          value="2020-08-01">
                       </div>
                     </div>
                   </li>
@@ -218,6 +212,17 @@
 
   <!-- Create Matching Modal -->
   <%- include ('./createMatchingModal.ejs')%>
+
+  <script src="/js/bootstrap-datepicker.js"></script>
+  <script src="/js/bootstrap-datepicker.ko.min.js"></script>
+
+  <!-- Search Form (datepicker)-->
+  <script src="/js/matching/form-date-picker.js"></script>
+
+  <!-- matching js -->
+  <script type="text/javascript" src="/js/matching/matching.js"></script>
+  <script type="text/javascript" src="/js/matching/search.js"></script>
+
 </body>
 
 </html>
