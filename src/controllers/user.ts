@@ -106,24 +106,6 @@ console.log('controller: modifyUser');
 };
 
 const createUserCareer = async (req: express.Request, res: express.Response, next: express.NextFunction) => {
-<<<<<<< HEAD
-  console.log('===================createUserCareer==============================');
-  const data = 
-  [
-    req.body.career,
-    req.body.usn
-  ];
-  
-  console.log(data);
-
-  //const result = await userQuery.createUser(data);
-
-  res.status(200).send({
-    'message' : 'ok'
-  })
-  console.log('controller: createUser');
-};
-=======
   const data =
   [
     parseInt(req.params.usn),
@@ -226,19 +208,12 @@ const deleteUserTotalKeyword = async (req: express.Request, res: express.Respons
   );
   console.log('controller: deleteUserTotalKeyword');
 }
->>>>>>> develop
 
 router.post('/', createUser);
 router.get('/', getUsers);
 router.get('/:usn', getUser);
 router.delete('/:usn', deleteUser);
 router.put('/:usn', modifyUser);
-<<<<<<< HEAD
-
-router.post('/:usn/career', createUserCareer);
-
-
-=======
 router.post('/:usn/career', createUserCareer);
 router.put('/:usn/career', modifyUserCareer);
 router.delete('/:usn/career', deleteUserCareer);
@@ -246,5 +221,4 @@ router.post('/:usn/keyword-re', createUserRecommendKeyword);
 router.delete('/:usn/keyword-re', deleteUserRecommendKeyword);
 router.post('/:usn/keyword-to', createUserTotalKeyword);
 router.delete('/:usn/keyword-to', deleteUserTotalKeyword);
->>>>>>> develop
 export = router;

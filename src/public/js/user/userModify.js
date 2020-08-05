@@ -38,14 +38,17 @@ const addCareerButtonCallBack = (xhr) => {
 //커리어 추가 버튼 클릭시 이벤트 ------------ 비동기 처리로 요청 성공시 반환값으로 추가된 커리어 정보를 반환해야함"
 $('#addCareerButton').on('click', () => {
   const career = $('[name="addCareerInput"]').val();
-  const usn = 1;
+  let url = window.location.href;
+  const urlSplit = url.split('/');
+  const usn = urlSplit[urlSplit.length - 1];
+
+  console.log(usn);
 
   const data = {
     "usn": usn,
     "career": career
   };
 
-  console.log('이벤트 시작');
   sendAjax('POST', `/user/${usn}/career`, JSON.stringify(data), addCareer);
 
 });
