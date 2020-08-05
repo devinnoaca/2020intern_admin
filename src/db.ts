@@ -1,6 +1,6 @@
 import * as mysql from 'mysql2';
 import { dbConfig } from '../config/db.config';
- 
+
 const connection = mysql.createConnection(dbConfig.conf);
 
 // 로컬 환경 DB 사용시 initialize
@@ -11,34 +11,31 @@ DROP DATABASE test; CREATE DATABASE test; USE test`;
 
 	const strCreateUserTable = `
 CREATE TABLE User(\
-usn INT NOT NULL AUTO_INCREMENT,\
-id VARCHAR(20) NOT NULL,\
-email VARCHAR(30) NOT NULL,\
-password VARCHAR(30) NOT NULL,\
-name VARCHAR(20) NOT NULL,\
-image VARCHAR(255),\
+USN INT NOT NULL AUTO_INCREMENT,\
+name VARCHAR(45) NOT NULL,\
+ID VARCHAR(45) NOT NULL,\
+email VARCHAR(45) NOT NULL,\
+password VARCHAR(45) NOT NULL,\
+image_url TEXT ,\
 description VARCHAR(1000),\
-notificationCount INT,\
-authorization BOOL NOT NULL,\ 
+company TEXT,\
 permission INT NOT NULL,\
-type BOOL NOT NULL,\
-PRIMARY KEY(usn));`;
-// authorization: 이메일 인증 여부
-// permission: 권한(0: 일반유저, 1: 어드민, 2: 슈퍼)
-// type: 분류(0(false): 멘티, 1: 멘토)
+noti_count INT NOT NULL,\
+type INT NOT NULL,\
+PRIMARY KEY(USN));`;
 
 	const strInsertUser = `
 INSERT INTO USER(\
-usn, id, email, password, name, image, description, \
-notificationCount, authorization, permission, type) \
-VALUES (1, "ImMentor", "mentor@e.mail", "q1w2e3r4", "Edsger Wybe Dijkstra", "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d9/Edsger_Wybe_Dijkstra.jpg/600px-Edsger_Wybe_Dijkstra.jpg", "Go To Statement Considered Harmful", false, 1, 2, true), (2, "ImMentee", "mentee@e.mail", "1234", "Cho Ding Kim", "https://upload3.inven.co.kr/upload/2020/05/11/bbs/i13789520996.jpg", "I wanna be a adult!!!", false, 1, 0, false);`;
+USN, name, ID, email, password, image_url, description, \
+company, permission, noti_count, type) \
+VALUES (1, "Edsger Wybe Dijkstra","ImMentor", "mentor@e.mail", "q1w2e3r4", "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d9/Edsger_Wybe_Dijkstra.jpg/600px-Edsger_Wybe_Dijkstra.jpg", "Go To Statement Considered Harmful", "BaekSoo", 0, 1, 1), (2, "Cho Ding Kim", "ImMentee", "mentee@e.mail", "1234", "https://upload3.inven.co.kr/upload/2020/05/11/bbs/i13789520996.jpg", "I wanna be a adult!!!", "Elementary school", 0, 0, 0);`;
 
 
 	const strCreateCategoryTable = `
 CREATE TABLE Category(\
-id INT NOT NULL AUTO_INCREMENT,\
-name VARCHAR(100),\
-PRIMARY KEY(id));`;
+ID INT NOT NULL AUTO_INCREMENT,\
+name VARCHAR(100) NOT NULL,\
+PRIMARY KEY(ID));`;
 
 	const strInsertCategory = `
 INSERT INTO CATEGORY(name) \
@@ -46,143 +43,190 @@ VALUES ("Security");`;
 
 	const strCreateKeywordTable = `
 CREATE TABLE Keyword(\
-id INT NOT NULL AUTO_INCREMENT,\
+ID INT NOT NULL AUTO_INCREMENT,\
 name VARCHAR(100) NOT NULL,\
-categoryID INT(100),\
+category_ID INT,\
 PRIMARY KEY(id),\
-FOREIGN KEY(categoryID)\
-REFERENCES Category(id)\
+FOREIGN KEY(category_id)\
+REFERENCES Category(ID)\
 ON DELETE CASCADE \
 ON UPDATE CASCADE);`;
 
 	const strInsertKeyword = `
-INSERT INTO KEYWORD(name, categoryID) \
+INSERT INTO KEYWORD(name, category_id) \
 VALUES("SQL Injection", 1), ("XSS", 1);`;
 
 	const strCreateCareerTable = `
 CREATE TABLE Career(\
-id INT NOT NULL AUTO_INCREMENT,\
-career VARCHAR(500),\
-usn INT,
-PRIMARY KEY(id),\
-FOREIGN KEY(usn)\
-REFERENCES User(usn)\
+ID INT NOT NULL AUTO_INCREMENT,\
+user_USN INT NOT NULL,\
+content VARCHAR(100) NOT NULL,\
+PRIMARY KEY(ID), \
+FOREIGN KEY(user_USN) \
+REFERENCES User(USN) \
 ON DELETE CASCADE \
 ON UPDATE CASCADE);`;
 
 	const strInsertCareer = `
-INSERT INTO Career(career, usn) \
+INSERT INTO Career(content, user_usn) \
 VALUES("NAVER - CTO", 1), ("KAKAO - CEO", 1);`;
 
 	const strCreateRecommendKeywordTable = `
-CREATE TABLE RecommendKeyword(\
-usn	INT NOT NULL,\
-keywordID INT NOT NULL, \
-PRIMARY KEY(usn, keywordID),\
-FOREIGN KEY(usn)\
+CREATE TABLE Recommend_keyword(\
+user_USN	INT NOT NULL,\
+keyword_ID INT NOT NULL, \
+PRIMARY KEY(user_USN, keyword_ID),\
+FOREIGN KEY(user_USN)\
 REFERENCES User(usn)\
 ON DELETE CASCADE \
 ON UPDATE CASCADE,\
-FOREIGN KEY(keywordID) \
-REFERENCES Keyword(id) \
+FOREIGN KEY(keyword_ID) \
+REFERENCES Keyword(ID) \
 ON DELETE CASCADE \
 ON UPDATE CASCADE);`;
 
 	const strInsertRecommendKeyword = `
-INSERT INTO RecommendKeyword(usn, keywordID) \
+INSERT INTO Recommend_keyword(user_usn, keyword_ID) \
 VALUES(1, 1);`
 
 	const strCreateTotalKeywordTable = `
-CREATE TABLE TotalKeyword(\
-usn	INT NOT NULL,\
-keywordID INT NOT NULL, \
-PRIMARY KEY(usn, keywordID),\
-FOREIGN KEY(usn)\
+CREATE TABLE User_total_keyword(\
+user_usn	INT NOT NULL,\
+keyword_ID INT NOT NULL, \
+PRIMARY KEY(user_usn, keyword_ID),\
+FOREIGN KEY(user_usn)\
 REFERENCES User(usn)\
 ON DELETE CASCADE \
 ON UPDATE CASCADE,\
-FOREIGN KEY(keywordID) \
-REFERENCES Keyword(id) \
+FOREIGN KEY(keyword_ID) \
+REFERENCES Keyword(ID) \
 ON DELETE CASCADE \
 ON UPDATE CASCADE);`;
 
 	const strInsertTotalKeyword = `
-INSERT INTO TotalKeyword(usn, keywordID) \
+INSERT INTO User_total_keyword(user_usn, keyword_ID) \
 VALUES(1, 1), (1, 2);`;
 
 	const strCreateMatchingTable = `
 CREATE TABLE Matching(\
-id INT NOT NULL AUTO_INCREMENT,\
-mentor_USN INT NOT NULL,\
+ID INT NOT NULL AUTO_INCREMENT,\
 mentee_USN INT NOT NULL,\
-request_time DATETIME NOT NULL,\
-response_time DATETIME,\
+mentor_USN INT NOT NULL,\
+request_time DATETIME,\
+request_message TEXT,\
+is_checked BOOL NOT NULL,\
 state INT NOT NULL,\
-request_message VARCHAR(500),\
-response_message VARCHAR(500),\
-is_checked BOOL NOT NULL, \
-PRIMARY KEY(id), \
-FOREIGN KEY(mentor_USN)\
+response_message TEXT, \
+response_time DATETIME, \
+PRIMARY KEY(ID),\
+FOREIGN KEY(mentee_USN)\
 REFERENCES User(usn)\
 ON DELETE CASCADE \
-ON UPDATE CASCADE, \
-FOREIGN KEY(mentee_USN) \
+ON UPDATE CASCADE,\
+FOREIGN KEY(mentor_USN) \
 REFERENCES User(usn) \
 ON DELETE CASCADE \
 ON UPDATE CASCADE);`;
-// state: 매칭 상태(0: 대기, 1: 수락, 2: 거절)
 
 	const strInsertMatching = `
 INSERT INTO Matching(mentor_USN, mentee_USN, request_time, response_time, state, is_checked, request_message) \
 VALUES(1, 2, '2020-07-28 17:22:21', '2017-07-29 10:58:32', 1, true, 'this is request message');`;
 
+
 	const strCreateMatchingKeywordTable = `
-CREATE TABLE MatchingKeyword(\
-matchingID INT NOT NULL,\
-keywordID INT NOT NULL,\
-PRIMARY KEY(matchingID, keywordID), \
-FOREIGN KEY(matchingID) REFERENCES Matching(id) \
-ON DELETE CASCADE ON UPDATE CASCADE, \
-FOREIGN KEY(keywordID) REFERENCES Keyword(id) \
-ON DELETE CASCADE ON UPDATE CASCADE);`;
+CREATE TABLE Matching_keyword(\
+ID INT NOT NULL AUTO_INCREMENT,\
+matching_ID INT NOT NULL,\
+keyword_name TEXT NOT NULL,\
+category_name TEXT NOT NULL,\
+PRIMARY KEY(ID),\
+FOREIGN KEY(matching_ID)\
+REFERENCES Matching(ID)\
+ON DELETE CASCADE \
+ON UPDATE CASCADE);`;
 
 	const strInsertMatchingKeyword = `
-INSERT INTO MatchingKeyword(matchingID, keywordID) \
-VALUES(1, 1);`;
+INSERT INTO Matching_keyword(matching_ID, keyword_name, category_name) \
+VALUES(1, "React", "Web");`;
 
-// 	const strCreateNotificationTable = `
-// CREATE TABLE Notification\
-// id INT NOT NULL AUTO_INCREMENT\
-// type INT NOT NULL\
-// isCheck BOOL NOT NULL\
-// message VARCHAR(1000)\
-// PRIMARY KEY(id);`;
-// // type: 어떤 종류의 알림인지(0: 수락, 1: 거절, 2: 대기(요청), 3: 메시지?공지??)
+	const strCreateNotificationTable = `
+CREATE TABLE Notification( \
+ID INT NOT NULL AUTO_INCREMENT, \
+type INT NOT NULL, \
+is_checked BOOL NOT NULL, \
+message TEXT, \
+PRIMARY KEY(ID));`;
 
-// 	const strInsertNotificationTable = `
-// INSERT INTO Notification(type, isCheck) \
-// VALUES(0, true);`;
+	const strInsertNotificationTable = `
+INSERT INTO Notification(type, is_checked) \
+VALUES(0, true);`;
 
-// 	const strCreateUserNotificationTable = `
-// CREATE TABLE UserNotification\
-// usn INT NOT NULL\
-// notificationID INT NOT NULL\
-// time DATETIME NOT NULL\
-// reference INT NOT NULL;`;
+	const strCreateUserNotificationTable = `
+CREATE TABLE User_notification(\
+noti_ID INT NOT NULL, \
+receiver_USN INT NOT NULL, \
+sender_USN INT NOT NULL, \
+time DATETIME NOT NULL, \
+PRIMARY KEY(noti_ID), \
+FOREIGN KEY(noti_ID) \
+REFERENCES Notification(ID) \
+ON DELETE CASCADE \
+ON UPDATE CASCADE, \
+FOREIGN KEY(receiver_USN) \
+REFERENCES User(USN) \
+ON DELETE CASCADE \
+ON UPDATE CASCADE, \
+FOREIGN KEY(sender_USN) \
+REFERENCES User(USN) \
+ON DELETE CASCADE \
+ON UPDATE CASCADE);`;
 
-const strCreateUserKeywordCategoryView1 = `
-CREATE OR REPLACE VIEW UserTotalkeywordCategory AS \
-SELECT t.usn usn, t.keywordID keywordID, k.name keywordName, k.categoryID categoryID, c.name categoryName \
+	const strInsertUserNotification = `
+INSERT INTO User_notification(noti_ID, receiver_USN, sender_USN, time) \
+VALUES(1,2,1, '2019-10-12 15:18:35')`
+
+	const strCreateRecommendKeywordView = `
+CREATE OR REPLACE VIEW get_recommend_keyword AS \
+SELECT t.user_usn mentee_USN, t.keyword_ID keyword_ID, k.name keyword_Name, k.category_ID category_ID, c.name category_Name \
 FROM keyword as k \
-JOIN category as c ON k.categoryID = c.id \
-JOIN totalkeyword as t ON k.id = t.keywordid;`;
+JOIN category as c ON k.category_ID = c.ID \
+JOIN User_total_keyword as t ON k.ID = t.keyword_id;`;
 
-const strCreateUserKeywordCategoryView2 = `
-CREATE OR REPLACE VIEW UserRecommendkeywordCategory AS \
-SELECT t.usn usn, t.keywordID keywordID, k.name keywordName, k.categoryID categoryID, c.name categoryName \
+	const strCreateTotalKeywordView = `
+CREATE OR REPLACE VIEW get_total_keyword AS \
+SELECT r.user_usn user_usn, r.keyword_ID keyword_ID, k.name keyword_Name, k.category_ID category_ID, c.name category_Name \
 FROM keyword as k \
-JOIN category as c ON k.categoryID = c.id \
-JOIN RecommendKeyword as t ON k.id = t.keywordid;`;
+JOIN category as c ON k.category_ID = c.ID \
+JOIN Recommend_keyword as r ON k.ID = r.keyword_ID;`;
+
+	const strCreateAllKeywordView = `
+CREATE OR REPLACE VIEW get_all_keyword AS \
+SELECT k.name keyword_name, k.id keyword_id, c.id category_id, c.name category_name \
+FROM Keyword as k \
+JOIN Category as c ON k.category_id = c.ID;`;
+
+	const strCreateMatchingMenteeView = `
+CREATE OR REPLACE VIEW get_matching_mentee AS \
+SELECT u.USN USN, u.name user_name, m.id matching_id, m.request_message request_message, m.response_message response_message, m.mentee_USN mentee_USN, m.state state, m.is_checked is_checked, m.request_time request_time, m.response_time response_time, mk.keyword_name keyword_name, mk.category_name category_name \
+FROM User as u \
+JOIN Matching as m ON u.usn = m.mentee_usn \
+JOIN Matching_Keyword as mk ON m.id = mk.matching_id;`;
+
+	const strCreateMatchingMentorView = `
+CREATE OR REPLACE VIEW get_matching_mentor AS \
+SELECT u.USN USN, u.name name, m.id matching_id, m.request_message request_message, m.response_message response_message, m.mentor_USN mentor_USN, m.state state, m.is_checked is_checked, m.request_time request_time, m.response_time response_time, mk.keyword_name keyword_name, mk.category_name category_name \
+FROM User as u \
+JOIN Matching as m ON u.usn = m.mentor_usn \
+JOIN Matching_Keyword as mk ON m.id = mk.matching_id;`;
+
+	const strCreateMentorListView = `
+CREATE OR REPLACE VIEW get_mentor_list AS \
+SELECT u.USN USN, u.name name, c.name category_name, k.name keyword_name, u.email email, u.image_url image_url, u.description description, cr.content career \
+FROM Category as c \
+JOIN Keyword as k ON c.id = k.category_id \
+JOIN User_Total_Keyword as utk ON k.id = utk.keyword_id \
+JOIN User as u ON utk.user_USN = u.usn \
+JOIN Career as cr ON u.usn = cr.user_USN;`;
 
 	connection.query(
 		strDropDB, (error: mysql.Error) => {
@@ -204,8 +248,14 @@ JOIN RecommendKeyword as t ON k.id = t.keywordid;`;
 			+strCreateRecommendKeywordTable
 			+strCreateMatchingTable
 			+strCreateMatchingKeywordTable
-			+strCreateUserKeywordCategoryView1
-			+strCreateUserKeywordCategoryView2
+			+strCreateNotificationTable
+			+strCreateUserNotificationTable
+			+strCreateRecommendKeywordView
+			+strCreateTotalKeywordView
+			+strCreateAllKeywordView
+			+strCreateMatchingMenteeView
+			+strCreateMatchingMentorView
+			+strCreateMentorListView
 			,(error: mysql.Error) => {
 			console.log('Table creating...');
 			if (error){
@@ -228,6 +278,8 @@ JOIN RecommendKeyword as t ON k.id = t.keywordid;`;
 		+strInsertRecommendKeyword
 		+strInsertMatching
 		+strInsertMatchingKeyword
+		+strInsertNotificationTable
+		+strInsertUserNotification
 		,(error: mysql.Error) => {
 			console.log('Data inserting...');
 			if (error) {
