@@ -47,8 +47,9 @@ const getUser = async (req: express.Request, res: express.Response,
       parseInt(req.params.usn)
     ];
   let result = await userQuery.getUser(param);
+  let keywordResult = await userQuery.getUserKeywords(param);
   let careerID: Array<Number> = new Array();
-  let career: Array<String> = new Array();
+  let career: Array<String | Number> = new Array(); 
   result.map( (current, index, result) => {
     careerID.push(current.careerID);
     career.push(current.career);
@@ -56,6 +57,7 @@ const getUser = async (req: express.Request, res: express.Response,
   result = [result[0]];
   result[0].careerID = careerID;
   result[0].career = career;
+  result[0].keywords = keywordResult;
   console.log(result);
   res.status(200).render('user/userDetail' ,
     {
@@ -104,6 +106,7 @@ console.log('controller: modifyUser');
 };
 
 const createUserCareer = async (req: express.Request, res: express.Response, next: express.NextFunction) => {
+<<<<<<< HEAD
   console.log('===================createUserCareer==============================');
   const data = 
   [
@@ -120,14 +123,128 @@ const createUserCareer = async (req: express.Request, res: express.Response, nex
   })
   console.log('controller: createUser');
 };
+=======
+  const data =
+  [
+    parseInt(req.params.usn),
+    req.body.career
+  ];
+  const result = await userQuery.createUserCareer(data);
+  res.status(200).send(
+    {
+      'message': 'create user career success'
+    }
+  );
+  console.log('controller: createUserCareer');
+}
+
+const modifyUserCareer = async (req: express.Request, res: express.Response, next: express.NextFunction) => {
+  const data =
+  [
+    req.body.id,
+    req.body.career
+  ];
+  const result = await userQuery.modifyUserCareer(data);
+  res.status(200).send(
+    {
+      'message': 'modify user career success'
+    }
+  );
+  console.log('controller: modifyUserCareer');
+}
+
+const deleteUserCareer = async (req: express.Request, res: express.Response, next: express.NextFunction) => {
+  const data = 
+  [
+    req.body.id
+  ];
+  const result = await userQuery.deleteUserCareer(data);
+  res.status(200).send(
+    {
+      'message': 'delete user career success'
+    }
+  );
+  console.log('controller: deleteUserCareer');
+}
+
+const createUserRecommendKeyword = async (req: express.Request, res: express.Response, next: express.NextFunction) => {
+  const data =
+  [
+    parseInt(req.params.usn),
+    req.body.id
+  ]
+  const result = await userQuery.createUserRecommendKeyword(data);
+  res.status(200).send(
+    {
+      'message': 'create user recommend keyword success'
+    }
+  );
+  console.log('controller: createUserRecommendKeyword');
+}
+
+const deleteUserRecommendKeyword = async (req: express.Request, res: express.Response, next: express.NextFunction) => {
+  const data =
+  [
+    parseInt(req.params.usn),
+    req.body.id
+  ]
+  const result = await userQuery.deleteUserRecommendKeyword(data);
+  res.status(200).send(
+    {
+      'message': 'delete user recommend keyword success'
+    }
+  );
+  console.log('controller: deleteUserRecommendKeyword');
+}
+
+const createUserTotalKeyword = async (req: express.Request, res: express.Response, next: express.NextFunction) => {
+  const data =
+  [
+    parseInt(req.params.usn),
+    req.body.id
+  ]
+  const result = await userQuery.createUserTotalKeyword(data);
+  res.status(200).send(
+    {
+      'message': 'create user total keyword success'
+    }
+  );
+  console.log('controller: createUserTotalKeyword');
+}
+
+const deleteUserTotalKeyword = async (req: express.Request, res: express.Response, next: express.NextFunction) => {
+  const data =
+  [
+    parseInt(req.params.usn),
+    req.body.id
+  ]
+  const result = await userQuery.deleteUserTotalKeyword(data);
+  res.status(200).send(
+    {
+      'message': 'delete user total keyword success'
+    }
+  );
+  console.log('controller: deleteUserTotalKeyword');
+}
+>>>>>>> develop
 
 router.post('/', createUser);
 router.get('/', getUsers);
 router.get('/:usn', getUser);
 router.delete('/:usn', deleteUser);
 router.put('/:usn', modifyUser);
+<<<<<<< HEAD
 
 router.post('/:usn/career', createUserCareer);
 
 
+=======
+router.post('/:usn/career', createUserCareer);
+router.put('/:usn/career', modifyUserCareer);
+router.delete('/:usn/career', deleteUserCareer);
+router.post('/:usn/keyword-re', createUserRecommendKeyword);
+router.delete('/:usn/keyword-re', deleteUserRecommendKeyword);
+router.post('/:usn/keyword-to', createUserTotalKeyword);
+router.delete('/:usn/keyword-to', deleteUserTotalKeyword);
+>>>>>>> develop
 export = router;
