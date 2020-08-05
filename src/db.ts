@@ -113,27 +113,28 @@ VALUES(1, 1), (1, 2);`;
 	const strCreateMatchingTable = `
 CREATE TABLE Matching(\
 id INT NOT NULL AUTO_INCREMENT,\
-mentorUSN INT NOT NULL,\
-menteeUSN INT NOT NULL,\
-requestTime DATETIME NOT NULL,\
-responseTime DATETIME NOT NULL,\
+mentor_USN INT NOT NULL,\
+mentee_USN INT NOT NULL,\
+request_time DATETIME NOT NULL,\
+response_time DATETIME,\
 state INT NOT NULL,\
-message VARCHAR(500),\
-isCheck BOOL NOT NULL, \
+request_message VARCHAR(500),\
+response_message VARCHAR(500),\
+is_checked BOOL NOT NULL, \
 PRIMARY KEY(id), \
-FOREIGN KEY(mentorUSN)\
+FOREIGN KEY(mentor_USN)\
 REFERENCES User(usn)\
 ON DELETE CASCADE \
 ON UPDATE CASCADE, \
-FOREIGN KEY(menteeUSN) \
+FOREIGN KEY(mentee_USN) \
 REFERENCES User(usn) \
 ON DELETE CASCADE \
 ON UPDATE CASCADE);`;
 // state: 매칭 상태(0: 대기, 1: 수락, 2: 거절)
 
 	const strInsertMatching = `
-INSERT INTO Matching(mentorUSN, menteeUSN, requestTime, responseTime, state, isCheck) \
-VALUES(1, 2, '2020-07-28 17:22:21', '2017-07-29 10:58:32', 1, true);`;
+INSERT INTO Matching(mentor_USN, mentee_USN, request_time, response_time, state, is_checked, request_message) \
+VALUES(1, 2, '2020-07-28 17:22:21', '2017-07-29 10:58:32', 1, true, 'this is request message');`;
 
 	const strCreateMatchingKeywordTable = `
 CREATE TABLE MatchingKeyword(\

@@ -1,16 +1,15 @@
 const getAllMatching = `
-SELECT id, mentorUSN, menteeUSN, requestTime, responseTime, state, message, isCheck \
+SELECT id, mentor_USN, mentee_USN, request_time, state, is_checked \
 FROM Matching;`;
 
-// id | mentorUSN | menteeUSN | requestTime         | responseTime        | state | message | isCheck
 const getMatching = `
-SELECT id, mentorUSN, menteeUSN, requestTime, responseTime, state, message, isCheck \
+SELECT id, mentor_USN, mentee_USN, request_time, response_time, state, request_message, response_message, is_checked \
 FROM Matching \
 WHERE id = ?;`;
 
 const createMatching = `
-INSERT INTO Matching(name, categoryID) \
-VALUES(?, ?);`;
+INSERT INTO Matching(mentor_USN, mentee_USN, request_time, state, is_checked) \
+VALUES(?, ?, ?, ?, ?);`;
 
 const deleteMatching = `
 DELETE FROM Matching \

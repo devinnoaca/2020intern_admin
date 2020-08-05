@@ -1,23 +1,37 @@
 import * as express from 'express';
+import matchingDAO from '../dao/matchingDAO'
 
 const router = express.Router();
 
 const createMatching = async (req: express.Request, res: express.Response, next: express.NextFunction) => {
+
+  let is_checked = true;
+  //매칭요청이 대기 상태로 생성 될 시, 읽지 않음으로 생성
+  if(req.body.state == 0) {
+    is_checked = false;
+  }
+
   const data = [
-    req.body.name
+    req.body.mentorUSN, //mentor_USN
+    req.body.menteeUSN, //mentee_USN
+    new Date(), //request_time
+    req.body.state, //state
+    is_checked //is_checked
   ];
-  //   const result = await categoryQuery.createCategory(data);
-  res.status(200).send(
-    {
-      'message': 'create category success',
-    }
-  );
+
+
+  const result = await matchingDAO.createMatching(data);
+  console.log(result);
+
+  res.status(200).send({
+    'message': 'create category success',
+  });
+  // res.redirect('/matching');
   console.log('controller: createMatching');
 };
 
 const deleteMatching = async (req: express.Request, res: express.Response, next: express.NextFunction) => {
-  const data =
-    [
+  const data = [
       req.params.id
     ];
   res.status(200).send(
@@ -51,29 +65,13 @@ const updateForm = async (req: express.Request, res: express.Response, next: exp
 
 const getMatching = async (req: express.Request, res: express.Response, next: express.NextFunction) => {
 
-  let result = [
-    {
-      id: 0,
-      mentor: 0,
-      mentee: 1,
-      req_date: '2020/07/30',
-      is_checked: false,
-      state: 0,
-    },
-    {
-      id: 1,
-      mentor: 3,
-      mentee: 5,
-      req_date: '2020/08/02',
-      is_checked: false,
-      state: 0,
-    },
-  ]
+  let data = await matchingDAO.getAllMatching();
+  console.log(data);
 
   res.status(200).render('matching/matching',
     {
       message: 'get category success',
-      matching: result
+      matching: data
     }
   )
   console.log('controller: getMatching');
@@ -81,19 +79,12 @@ const getMatching = async (req: express.Request, res: express.Response, next: ex
 
 const getMatchingDetail = async (req: express.Request, res: express.Response, next: express.NextFunction) => {
 
-  let result = {
-      id: 0,
-      mentor: 0,
-      mentee: 1,
-      req_date: '2020/07/30',
-      is_checked: false,
-      state: 0,
-    };
+  let data = await matchingDAO.getMatching([req.params.id]);
 
   res.status(200).render('matching/matchingDetail',
     {
       message: 'get category success',
-      matching: result
+      matching: data[0]
     }
   )
   console.log('controller: getMatching');
