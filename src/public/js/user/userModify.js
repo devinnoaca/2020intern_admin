@@ -36,8 +36,15 @@ $('#addCareerButton').on('click', () => {
 
 });
 
-$('[name="updateCareerButton"]').on('click', () => {
-  alert('클릭!');
+$('[name="careerDiv"]').on('click', function(event) {
+  const index = $(this).index();
+  const target = $(event.target);
+
+  if(target.is('[name="updateCareerButton"]')){
+    sendAjax('PUT', `/user/${usn}/career`, );
+  } else if (target.is('[name="deleteCareerButton"]')){
+    
+  }
 });
 
 // 유저 기본 정보 업데이트 이벤트
