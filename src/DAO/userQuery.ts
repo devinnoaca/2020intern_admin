@@ -1,25 +1,25 @@
 const searchUser = `
-SELECT u.usn, u.id, email, password, name, image, description, notificationCount, authorization, permission, type, c.id careerID, career \
+SELECT u.usn, u.id, email, password, name, image_url, description, noti_count, permission, type, c.id careerID, c.content career \
 FROM career as c \
-JOIN user as u ON c.usn = u.usn \
+JOIN user as u ON c.user_usn = u.usn \
 WHERE u.usn = ?;`;
 
 const searchUserTotalkeywords = `
-SELECT keywordID, keywordName, categoryID, categoryName \
-FROM UserTotalkeywordCategory \
-WHERE usn = ?;`
+SELECT keyword_ID, keyword_Name, category_ID, category_Name \
+FROM get_total_keyword \
+WHERE user_usn = ?;`
 
 const searchUserRecommendkeywords = `
-SELECT keywordID, keywordName, categoryID, categoryName \
-FROM UserRecommendkeywordCategory \
-WHERE usn = ?;`;
+SELECT keyword_ID, keyword_Name, category_ID, category_Name \
+FROM get_recommend_keyword \
+WHERE mentee_usn = ?;`;
 
 const searchAllUser = `
 SELECT * \
 FROM User;`;
 
 const insertUser = `
-INSERT INTO User(id, email, password, name, image, description, notificationCount, authorization, permission, type) \
+INSERT INTO User(id, email, password, name, image_url, description, company, permission, noti_count,type) \
 VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?);`;
 
 const updateUser = `
@@ -27,21 +27,20 @@ UPDATE User SET \
 email = ?,\
 password = ?,\
 name = ?, \
-image = ?, \
+image_url = ?, \
 description = ?, \
-notificationCount = ?, \
-authorization = ?, \
+noti_count = ?, \
 permission = ?, \
 type = ? \
 WHERE usn = ?;`;
 
 const updateUserCareerAdd = `
-INSERT INTO Career(usn, career) \
+INSERT INTO Career(user_usn, content) \
 VALUES(?, ?);`;
 
 const updateUserCareerModify = `
 UPDATE Career SET \
-career = ? \
+content = ? \
 WHERE id = ?;`;
 
 const updateUserCareerDelete = `
@@ -53,20 +52,20 @@ DELETE FROM User \
 WHERE usn = ?;`;
 
 const updateUserRecommendKeywordCreate = `
-INSERT INTO RecommendKeyword(usn, keywordID) \
+INSERT INTO Recommend_Keyword(user_usn, keyword_ID) \
 VALUES(?, ?);`;
 
 const updateUserRecommendKeywordDelete = `
-DELETE FROM RecommendKeyword(usn, keywordID) \
-WHERE usn = ? and keywordID = ?;`;
+DELETE FROM Recommend_Keyword \
+WHERE user_usn = ? and keyword_ID = ?;`;
 
 const updateUserTotalKeywordCreate = `
-INSERT INTO TotalKeyword(usn, keywordID) \
+INSERT INTO User_Total_Keyword(user_usn, keyword_ID) \
 VALUES(?, ?);`;
 
 const updateUserTotalKeywordDelete = `
-DELETE FROM TotalKeyword(usn, keywordID) \
-WHERE usn =? and keywordID = ?;`;
+DELETE FROM User_Total_Keyword \
+WHERE user_usn = ? and keyword_ID = ?;`;
 
 export default {
     searchUser, searchAllUser, insertUser, updateUser, deleteUser,updateUserCareerAdd, updateUserCareerModify, updateUserCareerDelete,
