@@ -28,7 +28,6 @@ const createMatching = async (req: express.Request, res: express.Response, next:
   //   'message': 'create category success',
   // });
   res.redirect('/matching');
-  // res.redirect('/matching');
   console.log('controller: createMatching');
 };
 
@@ -36,7 +35,6 @@ const deleteMatching = async (req: express.Request, res: express.Response, next:
   const data = [
     req.params.id
   ];
-  console.log('dsddddddd', data);
 
   const result = await matchingDAO.deleteMatching(data);
   console.log(result);
