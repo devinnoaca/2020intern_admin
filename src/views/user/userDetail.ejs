@@ -191,6 +191,24 @@
                     </div>
                   </li>
 
+                  <!-- 추천 키워드 -->
+                  <li class="list-group-item">
+                    <div class="form-row">
+                      <div class="form-inline col-md-2">
+                        <label>추천 키워드</label>
+                      </div>
+                      <div class="form-inline col-md-10">
+                        <% user[0].keywords.recommendKeywords.forEach(function(elem, index) {  %>
+                        <button class="form-control badge badge-info" value="<%=elem.keywordId%>" type="button">
+                          <h5>
+                            <%=elem.keywordName%>
+                          </h5>
+                        </button>
+                        <% }) %>
+                      </div>
+                    </div>
+                  </li>
+
                   <!-- 매칭정보 -->
                   <li class="list-group-item">
                     <div class="form-row">
@@ -285,7 +303,7 @@
   <script type="text/JavaScript">
   console.log(<%= user[0].usn %>);
   //유저 타입 셀렉트 박스 초기화 
-  $('[name="permission"] option:nth-child(<%=user[0].type + 1%>)').attr('selected', true);
+  $('[name="permission"] option:nth-child(<%=user[0].permission + 1%>)').attr('selected', true);
 
   $('[name="updateCancelButton"]').on('click', () => {
     window.location.href = `/user/<%=user[0].usn%>`;
