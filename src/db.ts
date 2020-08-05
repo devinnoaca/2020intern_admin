@@ -117,7 +117,7 @@ request_message TEXT,\
 is_checked BOOL NOT NULL,\
 state INT NOT NULL,\
 response_message TEXT, \
-response_time DATETIME NOT NULL, \
+response_time DATETIME, \
 PRIMARY KEY(ID),\
 FOREIGN KEY(mentee_USN)\
 REFERENCES User(usn)\
@@ -129,8 +129,9 @@ ON DELETE CASCADE \
 ON UPDATE CASCADE);`;
 
 	const strInsertMatching = `
-INSERT INTO Matching(ID, mentor_USN, mentee_USN, request_time, request_message, is_checked, state, response_time) \
-VALUES(1, 1, 2, '2020-07-28 17:22:21', 'rmsid!', true, 0, '2017-07-29 10:58:32');`;
+INSERT INTO Matching(mentor_USN, mentee_USN, request_time, response_time, state, is_checked, request_message) \
+VALUES(1, 2, '2020-07-28 17:22:21', '2017-07-29 10:58:32', 1, true, 'this is request message');`;
+
 
 	const strCreateMatchingKeywordTable = `
 CREATE TABLE Matching_keyword(\
