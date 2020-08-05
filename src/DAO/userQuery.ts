@@ -1,7 +1,7 @@
 const searchUser = `
 SELECT u.usn, u.id, email, password, name, image_url, description, noti_count, permission, type, c.id careerID, c.content career \
 FROM career as c \
-JOIN user as u ON c.user_usn = u.usn \
+RIGHT JOIN user as u ON c.user_usn = u.usn \
 WHERE u.usn = ?;`;
 
 const searchUserTotalkeywords = `

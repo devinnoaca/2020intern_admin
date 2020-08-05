@@ -19,8 +19,6 @@ const createUser = async (req: express.Request, res: express.Response, next: exp
     req.body.type
   ]
 
-  console.log(data);
-
   const result = await userQuery.createUser(data);
 
   res.status(200).redirect('user');
@@ -58,7 +56,7 @@ const getUser = async (req: express.Request, res: express.Response,
   result[0].careerID = careerID;
   result[0].career = career;
   result[0].keywords = keywordResult;
-  console.log(result);
+
   res.status(200).render('user/userDetail' ,
     {
       'message': 'success',
@@ -97,7 +95,7 @@ const modifyUser = async (req: express.Request, res: express.Response, next: exp
     parseInt(req.params.usn)
   ];
   const result = await userQuery.modifyUser(data);
-res.status(200).send(
+  res.status(200).send(
       {
         'message': 'modify user success'
       }
@@ -114,7 +112,8 @@ const createUserCareer = async (req: express.Request, res: express.Response, nex
   const result = await userQuery.createUserCareer(data);
   res.status(200).send(
     {
-      'message': 'create user career success'
+      'message': 'create user career success',
+      'careerID': result.insertId
     }
   );
   console.log('controller: createUserCareer');
