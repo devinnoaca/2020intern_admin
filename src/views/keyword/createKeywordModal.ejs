@@ -15,9 +15,9 @@
 						<label for="staticEmail" class="col-sm-2 col-form-label">Category</label>
 						<div class="col-sm-10">
 							<select name="searchType" class="custom-select" id="addKeywordModalSelect">
-								<% keywords.forEach( elem => { %>
-								<option value="<%= elem.category.id %>" name="modal-<%= elem.category.name %>">
-									<%= elem.category.name %></option>
+								<% Object.keys(keywords).forEach( elem => { %>
+								<option value="<%= elem.split('_')[0] %>" name="modal-<%= elem.split('_')[1] %>">
+									<%= elem.split('_')[1] %></option>
 								<% }) %>
 							</select>
 						</div>
