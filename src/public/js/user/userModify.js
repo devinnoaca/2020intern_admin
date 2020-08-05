@@ -1,4 +1,6 @@
-
+let url = window.location.href;
+const urlSplit = url.split('/');
+const usn = urlSplit[urlSplit.length - 1];
 
 //회원 수정 버튼 클릭 이벤트 
 $('#userUpdateButton').on('click', () => {
@@ -17,30 +19,9 @@ $('#userUpdateButton').on('click', () => {
   $('#addCareerButton').attr('disabled', false);
 });
 
-const addCareerButtonCallBack = (xhr) => {
-  const career = xhr.responseText.career;
-  const careerId = xhr.responseText.careerId;
-
-  const careerTemplate = `<div class="input-group my-sm-1" name="careerDiv">
-                              <input class="form-control" value="${career}" type="text"
-                              aria-describedby="deleteCareerButton" disabled>
-                              <div class="input-group-append">
-                                <button class="btn btn-outline-secondary" type="button" name="updateCareerButton"
-                                value="${careerId}" disabled>수정</button>
-                                <button class="btn btn-outline-secondary" type="button" name="deleteCareerButton"
-                                value="${careerId}" disabled>삭제</button>
-                              </div>
-                            </div>`;
-
-  $('[name="careerDiv"]:last-child').after(careerTemplate);
-}
-
 //커리어 추가 버튼 클릭시 이벤트 ------------ 비동기 처리로 요청 성공시 반환값으로 추가된 커리어 정보를 반환해야함"
 $('#addCareerButton').on('click', () => {
   const career = $('[name="addCareerInput"]').val();
-  let url = window.location.href;
-  const urlSplit = url.split('/');
-  const usn = urlSplit[urlSplit.length - 1];
 
   console.log(usn);
 
@@ -55,6 +36,33 @@ $('#addCareerButton').on('click', () => {
 
 $('[name="updateCareerButton"]').on('click', () => {
   alert('클릭!');
+});
+
+// 유저 기본 정보 업데이트 이벤트
+$('[name="updateCommitButton"]').on('click', () => {
+  const permission = $('[name="permission"]').val();
+  const name = $('[name="name"]').val();
+  const id = $('[name="id"]').val();
+  const email = $('[name="email"]').val();
+  const password = $('[name="password"]').val();
+  const company = $('[name="company"]').val();
+  const description = $('[name="description"]:first-child').val(); 
+
+  const data = {
+    "email" : email,
+    "password" : password,
+    "name" : name,
+    "description" : description,
+    "id" : id,
+    "type" : 0,
+    "company" : company,
+    "permission" : permission,
+    "usn" : usn
+  };
+
+  sendAjax('PUT', `/user/${usn}`, JSON.stringify(data), (xhr) => {
+    window.location.href = `/user/${usn}`;
+  });
 });
 
 const addCareer = (xhr) => {
@@ -80,4 +88,6 @@ const addCareer = (xhr) => {
     alert('클릭!');
   });*/
 }
+
+
 
