@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
-  <%- include ('./common/header.ejs') %>
+  <%- include ('../common/header.ejs') %>
 </head>
 
 <body id="page-top">
@@ -11,7 +11,7 @@
   <div id="wrapper">
 
     <!-- Sidebar -->
-    <%- include ('./common/sidebar.ejs') %>
+    <%- include ('../common/sidebar.ejs') %>
     <!-- End of Sidebar -->
 
     <!-- Content Wrapper -->
@@ -21,7 +21,7 @@
       <div id="content">
 
         <!-- Topbar -->
-        <%- include ('./common/topbar.ejs') %>
+        <%- include ('../common/topbar.ejs') %>
         <!-- End of Topbar -->
 
         <!-- Begin Page Content -->
@@ -30,7 +30,7 @@
           <!-- Page Heading -->
           <div class="d-sm-flex align-items-center justify-content-between mb-4">
             <h1 class="h3 mb-0 text-gray-800">사용자 관리</h1>
-            <button class="btn-warning shadow-sm" data-toggle="modal" data-target="#usercreate">
+            <button class="btn btn-primary shadow-sm" id="userCreateButton" data-toggle="modal" data-target="#usercreate">
               회원 생성
             </button>
           </div>
@@ -52,19 +52,19 @@
                         </label>
                       </div>
                       <div class="form-check form-check-inline col-md-1">
-                        <input class="form-check-input" type="radio" name="userType" id="userType1" value="all">
+                        <input class="form-check-input" type="radio" name="userType" id="search-userType1" value="all">
                         <label class="form-check-label" for="userType1">전체</label>
                       </div>
                       <div class="form-check form-check-inline col-md-1">
-                        <input class="form-check-input" type="radio" name="userType" id="userType2" value="1">
+                        <input class="form-check-input" type="radio" name="userType" id="search-userType2" value="1">
                         <label class="form-check-label" for="userType2">멘티</label>
                       </div>
                       <div class="form-check form-check-inline col-md-1">
-                        <input class="form-check-input" type="radio" name="userType" id="userType3" value="2">
+                        <input class="form-check-input" type="radio" name="userType" id="search-userType3" value="2">
                         <label class="form-check-label" for="userType3">멘토</label>
                       </div>
                       <div class="form-check form-check-inline col-md-1">
-                        <input class="form-check-input" type="radio" name="userType" id="userType4" value="3">
+                        <input class="form-check-input" type="radio" name="userType" id="search-userType4" value="3">
                         <label class="form-check-label" for="userType4">관리자</label>
                       </div>
                     </div>
@@ -100,7 +100,7 @@
                         </label>
                       </div>
                       <div class="form-group form-inline col-md-1">
-                        <select class="form-control" id="permission">
+                        <select class="form-control" id="search-permission">
                           <option>일반</option>
                           <option>관리자</option>
                           <option>슈퍼 관리자</option>
@@ -129,8 +129,9 @@
                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                   <thead>
                     <tr>
-                      <th>USN</th> 
+                      <th>USN</th>
                       <th>종류</th>
+                      <th>ID</th>
                       <th>이름</th>
                       <th>이메일</th>
                       <th>알림 발송</th>
@@ -139,18 +140,17 @@
                   </thead>
                   <tbody>
                     <% for (let i = 0; i < users.length; i++) { %>
-                      <tr>
-                        <td><%= users[i].id %></td>
-                        <td><%= users[i].type %></td>
-                        <td><%= users[i].name %></td>
-                        <td><%= users[i].email %></td>
-                        <td>2011/04/25</td>
-                        <td>
-                          <button name="updateButton" data-toggle="modal" data-target="#userdetail">
-                            수정
-                          </button>
-                        </td>
-                      </tr>
+                    <tr>
+                      <td><%= users[i].usn %></td>
+                      <td><%= users[i].type %></td>
+                      <td><%= users[i].id %></td>
+                      <td><%= users[i].name %></td>
+                      <td><%= users[i].email %></td>
+                      <td>2011/04/25</td>
+                      <td>
+                        <button class="btn btn-primary d-inline" name="deleteButton" type="button" value="<%=users[i].usn%>">삭제</button>
+                      </td>
+                    </tr>
                     <% } %>
                   </tbody>
                 </table>
@@ -165,7 +165,7 @@
       <!-- End of Main Content -->
 
       <!-- Footer -->
-      <%- include ('./common/footer.ejs') %>
+      <%- include ('../common/footer.ejs') %>
       <!-- End of Footer -->
 
     </div>
@@ -202,26 +202,30 @@
   <!-- 유저 추가 모달 -->
   <%- include ('./createusermodal.ejs')%>
   
-  <!-- 유저 수정 모달 -->
-  <%- include ('./userdetailmodal.ejs')%>
-
   <!-- Bootstrap core JavaScript-->
-  <script src="vendor/jquery/jquery.min.js"></script>
-  <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="/vendor/jquery/jquery.min.js"></script>
+  <script src="/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
   <!-- Core plugin JavaScript-->
-  <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+  <script src="/vendor/jquery-easing/jquery.easing.min.js"></script>
 
   <!-- Custom scripts for all pages-->
-  <script src="js/sb-admin-2.min.js"></script>
+  <script src="/js/sb-admin-2.min.js"></script>
 
   <!-- Page level plugins -->
-  <script src="vendor/chart.js/Chart.min.js"></script>
+  <script src="/vendor/chart.js/Chart.min.js"></script>
 
   <!-- Page level custom scripts -->
-  <script src="js/demo/chart-area-demo.js"></script>
-  <script src="js/demo/chart-pie-demo.js"></script>
+  <script src="/js/demo/chart-area-demo.js"></script>
+  <script src="/js/demo/chart-pie-demo.js"></script>
 
+  <!-- 모달 닫을시에 입력값 초기화 -->
+  <script src="/js/user/closeModal.js"></script>
+
+  <!-- Send Ajax 메소드 추가 -->
+  <script src="/js/common/ajax.js"></script>
+
+  <script src="/js/user/user.js"></script>
 </body>
 
 </html>

@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <%- include ('../common/header.ejs') %>
+
+  <link href="/css/bootstrap-datepicker.css" rel="stylesheet">
+
+
+
+</head>
+
+<body id="page-top">
+
+  <!-- Page Wrapper -->
+  <div id="wrapper">
+
+    <!-- Sidebar -->
+    <%- include ('../common/sidebar.ejs') %>
+    <!-- End of Sidebar -->
+
+    <!-- Content Wrapper -->
+    <div id="content-wrapper" class="d-flex flex-column">
+
+      <!-- Main Content -->
+      <div id="content">
+
+        <!-- Topbar -->
+        <%- include ('../common/topbar.ejs') %>
+        <!-- End of Topbar -->
+
+        <!-- Begin Page Content -->
+        <div class="container-fluid">
+
+          <!-- Page Heading -->
+          <div class="d-sm-flex align-items-center justify-content-between mb-4">
+            <h1 class="h3 mb-0 text-gray-800">Matching</h1>
+            <button class="btn btn-warning shadow-sm" data-toggle="modal" data-target="#matching-create">
+              매칭정보 생성
+            </button>
+          </div>
+
+          <!-- 검색 조건 -->
+          <div class="card shadow mb-4">
+            <div class="card-header py-3">
+              <h6 class="m-0 font-weight-bold text-primary">매칭정보 조회</h6>
+            </div>
+            <div class="card-body">
+              <form name="searchForm" onsubmit="searchSubmit(); return false;">
+                <ul class="list-group list-group-flush">
+
+                  <!-- mentor / mentee -->
+                  <li class="list-group-item">
+                    <div class="form-row align-items-center">
+                      <div class="form-inline col-md-4">
+                        <div class="col-auto">
+                          <span>멘토</span>
+                        </div>
+                        <div class="col-auto">
+                          <select class="custom-select" name="mentorType">
+                            <option>아이디</option>
+                            <option>usn</option>
+                            <option>이메일</option>
+                          </select>
+                        </div>
+                        <div class="col-auto">
+                          <input type="text" class="form-control" name="mentorInput" required>
+                        </div>
+                      </div>
+
+                      <div class="form-inline col-md-4">
+                        <div class="col-auto">
+                          <span>멘티</span>
+                        </div>
+                        <div class="col-auto">
+                          <select class="custom-select" name="menteeType">
+                            <option>아이디</option>
+                            <option>usn</option>
+                            <option>이메일</option>
+                          </select>
+                        </div>
+                        <div class="col-auto">
+                          <input type="text" class="form-scontrol" name="menteeInput" required>
+                        </div>
+                      </div>
+                    </div>
+                  </li>
+
+                  <!-- state-->
+                  <li class="list-group-item">
+                    <div class="form-row form-inline">
+                      <div class="form-check col-md-1">
+                        <label class="form-check-label">
+                          상태
+                        </label>
+                      </div>
+                      <div class="form-check form-check-inline col-md-1">
+                        <input class="form-check-input" type="radio" name="state" id="state1" value="all" checked>
+                        <label class="form-check-label" for="state1">전체</label>
+                      </div>
+                      <div class="form-check form-check-inline col-md-1">
+                        <input class="form-check-input" type="radio" name="state" id="state2" value="0">
+                        <label class="form-check-label" for="state2">요청</label>
+                      </div>
+                      <div class="form-check form-check-inline col-md-1">
+                        <input class="form-check-input" type="radio" name="state" id="state3" value="1">
+                        <label class="form-check-label" for="state3">수락</label>
+                      </div>
+                      <div class="form-check form-check-inline col-md-1">
+                        <input class="form-check-input" type="radio" name="state" id="state4" value="2">
+                        <label class="form-check-label" for="state4">거절</label>
+                      </div>
+                    </div>
+                  </li>
+
+
+                  <!-- 관계생성 일자 -->
+                  <li class="list-group-item">
+                    <div class="form-row form-inline">
+                      <div class="col-md-1">
+                        <label>
+                          일자
+                        </label>
+                      </div>
+                      <div class="col-auto">
+                        <input type="text" id="datePicker" name="startDate" class="form-control start-date"
+                          value="2020-08-01">
+                      </div>
+                      ~
+                      <div class="col-auto">
+                        <input type="text" id="datePicker" name="endDate" class="form-control end-date"
+                          value="2020-08-01">
+                      </div>
+                    </div>
+                  </li>
+                </ul>
+                <!-- 조회 버튼 -->
+                <div class="form-row">
+                  <div class="col-auto">
+                    <button type="submit" class="btn btn-primary align-self-center">조회</button>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+
+          <!-- 검색 결과 테이블 -->
+          <div class="card shadow mb-4">
+            <div class="card-header py-3">
+              <h6 class="m-0 font-weight-bold text-primary">검색 결과</h6>
+            </div>
+            <div class="card-body">
+              <div class="table-responsive">
+                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                  <thead>
+                    <tr>
+                      <th>구분</th>
+                      <th>Mentor</th>
+                      <th>Mentee</th>
+                      <th>요청일자</th>
+                      <th>확인여부</th>
+                      <th>상태</th>
+                      <th></th>
+                    </tr>
+                  </thead>
+                  <tbody>
+
+                    <% matching.forEach(elem => { %>
+                    <tr>
+                      <td><%= elem.id %></td>
+                      <td><%= elem.mentor %></td>
+                      <td><%= elem.mentee %></td>
+                      <td><%= elem.req_date %></td>
+                      <td><%= elem.is_checked %></td>
+                      <td><%= elem.state %></td>
+                      <td>
+                        <button class="btn btn-secondary" name="detailButton">
+                          열람
+                        </button>
+                      </td>
+                    </tr>
+                    <% }) %>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+
+        </div>
+        <!-- /.container-fluid -->
+
+      </div>
+      <!-- End of Main Content -->
+
+      <!-- Footer -->
+      <%- include ('../common/footer.ejs') %>
+      <!-- End of Footer -->
+
+    </div>
+    <!-- End of Content Wrapper -->
+
+  </div>
+  <!-- End of Page Wrapper -->
+
+  <!-- Scroll to Top Button-->
+  <a class="scroll-to-top rounded" href="#page-top">
+    <i class="fas fa-angle-up"></i>
+  </a>
+
+  <!-- Logout Modal-->
+  <%- include ('../common/logoutModal.ejs') %>
+
+  <!-- Create Matching Modal -->
+  <%- include ('./createMatchingModal.ejs')%>
+
+  <script src="/js/bootstrap-datepicker.js"></script>
+  <script src="/js/bootstrap-datepicker.ko.min.js"></script>
+
+  <!-- Search Form (datepicker)-->
+  <script src="/js/matching/form-date-picker.js"></script>
+
+  <!-- matching js -->
+  <script type="text/javascript" src="/js/matching/matching.js"></script>
+  <script type="text/javascript" src="/js/matching/search.js"></script>
+
+</body>
+
+</html>

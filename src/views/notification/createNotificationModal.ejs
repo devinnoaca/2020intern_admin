@@ -1,0 +1,73 @@
+<div class="modal fade" id="notiCreate" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">알림 생성</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <form action="/notification" method="POST" id="notificationForm"> 
+        <div class="modal-body">
+          <div class="container-fluid">
+            <ul class="list-group list-group-flush">
+              <!-- 수신자 -->
+              <li class="list-group-item">
+                <div class="row form-group">
+                  <div class="form-check form-check-inline col-md-2">
+                    <label class="form-check-label">수신자</label>
+                  </div>
+                  <div class="form-check form-check-inline col-md-2">
+                    <input class="form-check-input" type="radio" name="receiver" id="receiver1" value="0">
+                    <label class="form-check-label" for="userType1">전체</label>
+                  </div>
+                  <div class="form-check form-check-inline col-md-2">
+                    <input class="form-check-input" type="radio" name="receiver" id="receiver2" value="1">
+                    <label class="form-check-label" for="userType2">멘티</label>
+                  </div>
+                  <div class="form-check form-check-inline col-md-2">
+                    <input class="form-check-input" type="radio" name="receiver" id="receiver3" value="2">
+                    <label class="form-check-label" for="userType3">멘토</label>
+                  </div>
+                  <div class="form-check form-check-inline col-md-2">
+                    <input class="form-check-input" type="radio" name="receiver" id="receiver4" value="3">
+                    <label class="form-check-label" for="userType3">특정 회원</label>
+                  </div>
+                </div>
+              </li>
+
+              <!-- E-mail -->
+              <li class="list-group-item">
+                <div class="row form-group">
+                  <div class="form-inline col-md-2">
+                    <label>수신자 ID</label>
+                  </div>
+                  <div class="form-inline col-md-8">
+                    <input class="form-control" type="text" name="id" disabled>
+                  </div>
+                </div>
+              </li>
+
+              <!-- 메세지 -->
+              <li class="list-group-item">
+                <div class="row form-group">
+                  <div class="form-inline col-md-2">
+                    <label>메시지</label>
+                  </div>
+                  <div class="col-md-10">
+                    <textarea class="form-control" name="message" rows="10"></textarea>
+                  </div>
+                </div>
+              </li>
+
+            </ul>
+          </div>
+        </div>
+
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-primary align-self-center" id="createNotificationButton">송신</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

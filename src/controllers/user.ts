@@ -4,6 +4,7 @@ import userQuery from '../dao/userDAO'
 const router = express.Router();
 
 const createUser = async (req: express.Request, res: express.Response, next: express.NextFunction) => {
+  //permission을 따로 안받고 있음................
   const data = 
   [
     req.body.id,
@@ -17,23 +18,25 @@ const createUser = async (req: express.Request, res: express.Response, next: exp
     0,
     req.body.type
   ]
+
+  console.log(data);
+
   const result = await userQuery.createUser(data);
-  res.status(200).send(
-    {
-      'message': 'create user success',
-    }
-  );
+
+  res.status(200).redirect('user');
   console.log('controller: createUser');
 };
 
 const getUsers = async (req: express.Request, res: express.Response, next: express.NextFunction) => {
   const result = await userQuery.getUsers();
-  res.status(200).send(
+
+  res.status(200).render('user/user',
     {
       'message': 'get user list success',
       'users': result
     }
-  )
+  );
+  
   console.log('controller: getUsers');
 };
 
@@ -56,7 +59,7 @@ const getUser = async (req: express.Request, res: express.Response,
   result[0].career = career;
   result[0].keywords = keywordResult;
   console.log(result);
-  res.status(200).send(
+  res.status(200).render('user/userDetail' ,
     {
       'message': 'success',
       'user': result

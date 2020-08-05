@@ -17,7 +17,7 @@ const getKeywords = async (req: express.Request, res: express.Response,
 
     const data = Object.fromEntries(keywordMap);
     console.log(data);
-    res.status(200).send(//render('keyword',
+    res.status(200).render('keyword',
       {
         'message': 'get keywords success',
         'keywords': data
@@ -46,10 +46,11 @@ const deleteKeyword = async (req: express.Request, res: express.Response,
   next: express.NextFunction) => {
     const data =
     [
-      req.params.name
+      req.params.id
     ];
+
     const result = keywordQuery.deleteKeyword(data);
-    res.status(200).send(
+    res.status(200).send (
       {
         'message': 'delete keyword success',
       }
@@ -60,6 +61,6 @@ const deleteKeyword = async (req: express.Request, res: express.Response,
 
 router.get('/', getKeywords);
 router.post('/', createKeyword);
-router.delete('/:name', deleteKeyword);
+router.delete('/:id', deleteKeyword);
 
 export = router;

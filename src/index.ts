@@ -22,7 +22,41 @@ app.get('/login', (request: express.Request, response: express.Response) => {
 });
 
 app.get('/forgot-password', (request: express.Request, response: express.Response) => { 
-	response.render('forgot-password');
+	response.render('forgotPassword');
+});
+
+app.get('/notification', (req: express.Request, res: express.Response) => {
+	const data = {
+		'message' : 'OK',
+		'notifications': [
+			{
+				'id' : 1,
+				'type' : 'message',
+				'receiver' : 'dlwlsrn94',
+				'sender' : 'dlwsrln95',
+				'creationTime' : '2020-08-03 12:00',
+				'isChecked' : true
+			},
+			{
+				'id' : 2,
+				'type' : 'message',
+				'receiver' : 'dlwlsrn94',
+				'sender' : 'dlwsrln95',
+				'creationTime' : '2020-08-03 12:00',
+				'isChecked' : false
+			},
+			{
+				'id' : 3,
+				'type' : 'message',
+				'receiver' : 'dlwlsrn94',
+				'sender' : 'dlwsrln95',
+				'creationTime' : '2020-08-03 12:00',
+				'isChecked' : true
+			},
+		]
+	};
+
+	res.render('notification/notification', data);
 });
 
 app.listen(3000, () => console.log(`start`));
