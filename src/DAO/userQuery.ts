@@ -36,7 +36,7 @@ type = ? \
 WHERE usn = ?;`;
 
 const updateUserCareerAdd = `
-INSERT INTO Career(career, usn) \
+INSERT INTO Career(usn, career) \
 VALUES(?, ?);`;
 
 const updateUserCareerModify = `
