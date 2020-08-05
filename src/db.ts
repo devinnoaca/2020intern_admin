@@ -112,8 +112,8 @@ CREATE TABLE Matching(\
 ID INT NOT NULL AUTO_INCREMENT,\
 mentee_USN INT NOT NULL,\
 mentor_USN INT NOT NULL,\
-request_time DATETIME NOT NULL,\
-request_message TEXT NOT NULL,\
+request_time DATETIME,\
+request_message TEXT,\
 is_checked BOOL NOT NULL,\
 state INT NOT NULL,\
 response_message TEXT, \
