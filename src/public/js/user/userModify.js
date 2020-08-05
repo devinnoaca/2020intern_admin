@@ -17,6 +17,8 @@ $('#userUpdateButton').on('click', () => {
   $('ul').find('[name="updateCareerButton"]').attr('disabled', false);
   //career add button disabled 해제
   $('#addCareerButton').attr('disabled', false);
+  //id는 disabled처리
+  $('ul').find('[name="id"]').attr('disabled', true);
 });
 
 //커리어 추가 버튼 클릭시 이벤트 ------------ 비동기 처리로 요청 성공시 반환값으로 추가된 커리어 정보를 반환해야함"
@@ -48,6 +50,9 @@ $('[name="updateCommitButton"]').on('click', () => {
   const company = $('[name="company"]').val();
   const description = $('[name="description"]:first-child').val(); 
   const type = $('[name="type"]').val(); 
+  const imageUrl = $('[name="image"]').attr('src');
+
+  console.log(imageUrl);
 
   const data = {
     "email" : email,
@@ -58,7 +63,9 @@ $('[name="updateCommitButton"]').on('click', () => {
     "type" : type,
     "company" : company,
     "permission" : permission,
-    "usn" : usn
+    "usn" : usn,
+    "notiCount" : 0,
+    "image_url" : imageUrl
   };
 
   sendAjax('PUT', `/user/${usn}`, JSON.stringify(data), (xhr) => {
