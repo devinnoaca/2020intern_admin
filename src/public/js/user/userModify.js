@@ -47,6 +47,7 @@ $('[name="updateCommitButton"]').on('click', () => {
   const password = $('[name="password"]').val();
   const company = $('[name="company"]').val();
   const description = $('[name="description"]:first-child').val(); 
+  const type = $('[name="type"]').val(); 
 
   const data = {
     "email" : email,
@@ -54,7 +55,7 @@ $('[name="updateCommitButton"]').on('click', () => {
     "name" : name,
     "description" : description,
     "id" : id,
-    "type" : 0,
+    "type" : type,
     "company" : company,
     "permission" : permission,
     "usn" : usn
