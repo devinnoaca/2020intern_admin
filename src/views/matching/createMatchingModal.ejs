@@ -8,8 +8,9 @@
         </button>
       </div>
 
+      <!-- onsubmit="createSubmit(); return false;" -->
       <!-- create form -->
-      <form action="/matching" method="POST" id="create-form" name="createForm"> 
+      <form id="create-form" name="createForm" method="POST", action="/matching"> 
         <div class="modal-body">
           <div class="container-fluid">
             <ul class="list-group list-group-flush">
@@ -93,23 +94,4 @@
   </div>
 </div>
 
-<!-- 매칭정보의 상태가 거절일 경우, 거절사유 입력폼을 보여준다. -->
-<script>
-  window.onload = () => {
-    const stateRadio = document.createForm.state;
-    const rejectInput = document.querySelector('#reject-input-form');
-
-    for (var i = 0; i < stateRadio.length; ++i) {
-      stateRadio[i].onclick = function () {
-        switch (this.value) {
-          case '2':
-            rejectInput.style.display = "block";
-            break;
-          default:
-            rejectInput.style.display = "none";
-        }
-      }
-    }
-
-  }
-</script>
+<script type="text/javascript" src="/js/matching/matching-create.js"></script>

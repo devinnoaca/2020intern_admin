@@ -16,27 +16,33 @@ const createMatching = async (req: express.Request, res: express.Response, next:
     req.body.menteeUSN, //mentee_USN
     new Date(), //request_time
     req.body.state, //state
-    is_checked //is_checked
+    is_checked, //is_checked
+    req.body.requestMessage,
+    req.body.responseMessage
   ];
-
 
   const result = await matchingDAO.createMatching(data);
   console.log(result);
 
-  res.status(200).send({
-    'message': 'create category success',
-  });
+  // res.status(200).send({
+  //   'message': 'create category success',
+  // });
+  res.redirect('/matching');
   // res.redirect('/matching');
   console.log('controller: createMatching');
 };
 
 const deleteMatching = async (req: express.Request, res: express.Response, next: express.NextFunction) => {
   const data = [
-      req.params.id
-    ];
+    req.params.id
+  ];
+  console.log('dsddddddd', data);
+
+  const result = await matchingDAO.deleteMatching(data);
+  console.log(result);
   res.status(200).send(
     {
-      'message': 'delete category success',
+      'message': 'delete category success'
     }
   )
   console.log('controller: deleteCategory');

@@ -30,7 +30,7 @@
           <!-- Page Heading -->
           <div class="d-sm-flex align-items-center justify-content-between mb-4">
             <h1 class="h3  mb-0 text-gray-800">상세 매칭정보</h1>
-            <button class="btn btn-danger shadow-sm" id="userUpdateButton" onclick="confirm('해당 매칭정보를 삭제하시겠습니까?')">
+            <button class="btn btn-danger shadow-sm" id="userUpdateButton" onclick="onDelete('<%= matching.id %>')">
               매칭정보 삭제
             </button>
           </div>
@@ -193,6 +193,9 @@
 
   <!-- Logout Modal-->
   <%- include ('../common/logoutModal.ejs') %>
+
+  <script type="text/javascript" src="/js/matching/matching-delete.js"></script>
+  <script type="text/javascript" src="/js/common/ajax.js"></script>
 
 </body>
 

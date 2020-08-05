@@ -8,8 +8,8 @@ FROM Matching \
 WHERE id = ?;`;
 
 const createMatching = `
-INSERT INTO Matching(mentor_USN, mentee_USN, request_time, state, is_checked) \
-VALUES(?, ?, ?, ?, ?);`;
+INSERT INTO Matching(mentor_USN, mentee_USN, request_time, state, is_checked, request_message, response_message) \
+VALUES(?, ?, ?, ?, ?, ?, ?);`;
 
 const deleteMatching = `
 DELETE FROM Matching \
