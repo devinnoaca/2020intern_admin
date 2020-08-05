@@ -169,6 +169,19 @@ VALUES(1, 1);`;
 // time DATETIME NOT NULL\
 // reference INT NOT NULL;`;
 
+const strCreateUserKeywordCategoryView1 = `
+CREATE OR REPLACE VIEW UserTotalkeywordCategory AS \
+SELECT t.usn usn, t.keywordID keywordID, k.name keywordName, k.categoryID categoryID, c.name categoryName \
+FROM keyword as k \
+JOIN category as c ON k.categoryID = c.id \
+JOIN totalkeyword as t ON k.id = t.keywordid;`;
+
+const strCreateUserKeywordCategoryView2 = `
+CREATE OR REPLACE VIEW UserRecommendkeywordCategory AS \
+SELECT t.usn usn, t.keywordID keywordID, k.name keywordName, k.categoryID categoryID, c.name categoryName \
+FROM keyword as k \
+JOIN category as c ON k.categoryID = c.id \
+JOIN RecommendKeyword as t ON k.id = t.keywordid;`;
 
 	connection.query(
 		strDropDB, (error: mysql.Error) => {
@@ -190,6 +203,8 @@ VALUES(1, 1);`;
 			+strCreateRecommendKeywordTable
 			+strCreateMatchingTable
 			+strCreateMatchingKeywordTable
+			+strCreateUserKeywordCategoryView1
+			+strCreateUserKeywordCategoryView2
 			,(error: mysql.Error) => {
 			console.log('Table creating...');
 			if (error){

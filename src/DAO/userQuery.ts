@@ -1,7 +1,18 @@
 const searchUser = `
 SELECT u.usn, u.id, email, password, name, image, description, notificationCount, authorization, permission, type, c.id careerID, career \
-FROM career as c join user as u \
+FROM career as c \
+JOIN user as u ON c.usn = u.usn \
 WHERE u.usn = ?;`;
+
+const searchUserTotalkeywords = `
+SELECT keywordID, keywordName, categoryID, categoryName \
+FROM UserTotalkeywordCategory \
+WHERE usn = ?;`
+
+const searchUserRecommendkeywords = `
+SELECT keywordID, keywordName, categoryID, categoryName \
+FROM UserRecommendkeywordCategory \
+WHERE usn = ?;`;
 
 const searchAllUser = `
 SELECT * \
@@ -41,6 +52,25 @@ const deleteUser = `
 DELETE FROM User \
 WHERE usn = ?;`;
 
+const updateUserRecommendKeywordCreate = `
+INSERT INTO RecommendKeyword(usn, keywordID) \
+VALUES(?, ?);`;
+
+const updateUserRecommendKeywordDelete = `
+DELETE FROM RecommendKeyword(usn, keywordID) \
+WHERE usn = ? and keywordID = ?;`;
+
+const updateUserTotalKeywordCreate = `
+INSERT INTO TotalKeyword(usn, keywordID) \
+VALUES(?, ?);`;
+
+const updateUserTotalKeywordDelete = `
+DELETE FROM TotalKeyword(usn, keywordID) \
+WHERE usn =? and keywordID = ?;`;
+
 export default {
-    searchUser, searchAllUser, insertUser, updateUser, deleteUser,updateUserCareerAdd, updateUserCareerModify, updateUserCareerDelete
+    searchUser, searchAllUser, insertUser, updateUser, deleteUser,updateUserCareerAdd, updateUserCareerModify, updateUserCareerDelete,
+    updateUserRecommendKeywordCreate, updateUserRecommendKeywordDelete,
+    updateUserTotalKeywordCreate, updateUserTotalKeywordDelete,
+    searchUserTotalkeywords, searchUserRecommendkeywords
 };
