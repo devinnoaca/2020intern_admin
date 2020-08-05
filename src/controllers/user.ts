@@ -104,7 +104,21 @@ console.log('controller: modifyUser');
 };
 
 const createUserCareer = async (req: express.Request, res: express.Response, next: express.NextFunction) => {
+  console.log('===================createUserCareer==============================');
+  const data = 
+  [
+    req.body.career,
+    req.body.usn
+  ];
+  
+  console.log(data);
 
+  //const result = await userQuery.createUser(data);
+
+  res.status(200).send({
+    'message' : 'ok'
+  })
+  console.log('controller: createUser');
 };
 
 router.post('/', createUser);
@@ -113,6 +127,7 @@ router.get('/:usn', getUser);
 router.delete('/:usn', deleteUser);
 router.put('/:usn', modifyUser);
 
-router.post('/career', createUserCareer);
+router.post('/:usn/career', createUserCareer);
+
 
 export = router;
