@@ -88,11 +88,13 @@
               <div class="card-body">
                 <div class="row">
                   <div class="col-xl-4 col-lg-5">
-                      <!-- List group -->
+                      <!-- List group : Category -->
                       <div class="list-group" id="myList" role="tablist">
-                          <% keywords.forEach(function (elem, index) { %>
-                            <a class="list-group-item list-group-item-action category-tab" data-toggle="list" id="tab-<%= elem.category.id %>" name="<%= elem.category.name %>" href="#category-<%= elem.category.id %>" role="tab" style="text-transform: capitalize;">
-                              <%= elem.category.name %>
+                          <% Object.keys(keywords).forEach(function (elem, index) { %>
+                            <% const categoryID = elem.split('_')[0]; %>
+                            <% const categoryName = elem.split('_')[1]; %>
+                            <a class="list-group-item list-group-item-action category-tab" data-toggle="list" id="tab-<%= categoryID %>" name="<%= categoryName %>" href="#category-<%= categoryID %>" role="tab" style="text-transform: capitalize;">
+                              <%= categoryName %>
                             </a>
                           <% }) %>
                       </div>
@@ -112,12 +114,14 @@
                   <div class="col-xl-8 col-lg-7">    
                       <!-- Tab panes -->
                       <div class="tab-content">
-                          <% keywords.forEach(function (elem, index) { %>
-                              <div class="tab-pane" id="category-<%= elem.category.id %>" role="tabpanel">
-                                  <% elem.keyword.forEach(function (key) { %>
-                                      <a href="#" class="badge badge-info keyword-badge" id="badge-<%= elem.category.id %>" name="<%= key.name %>" onclick="deleteKeyword('<%= key.id %>', '<%= key.name %>')" ><%= key.name %></a>
+                          <% Object.keys(keywords).forEach(function (elem, index) { %>
+                            <% const categoryID = elem.split('_')[0]; %>
+                            <% const categoryName = elem.split('_')[1]; %>
+                              <div class="tab-pane" id="category-<%= categoryID %>" role="tabpanel">
+                                  <% keywords[elem].forEach(function (key) { %>
+                                      <a href="#" class="badge badge-info keyword-badge" id="badge-<%= categoryID %>" name="<%= key.keywordName %>" onclick="deleteKeyword('<%= key.keywordID %>', '<%= key.keywordName %>')" ><%= key.keywordName %></a>
                                   <% }) %>
-                                  <a href="#" class="badge badge-primary" data-toggle="modal" data-target="#addKeywordModal" data-category="<%= elem.category.id %>" >+ ADD</a>
+                                  <a href="#" class="badge badge-primary" data-toggle="modal" data-target="#addKeywordModal" data-category="<%= categoryID %>" >+ ADD</a>
                               </div>
                           <% }) %>
                       </div>
@@ -152,7 +156,7 @@
   <%- include ('../common/logoutModal.ejs') %>
 
   <!-- create keyword Modal -->
-  <%- include ('./createKeywordModal.ejs') %>
+  <%- include ('./createKeywordModal.ejs') %>  
   
 
 </body>
