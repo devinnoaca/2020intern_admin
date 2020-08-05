@@ -103,10 +103,16 @@ res.status(200).send(
 console.log('controller: modifyUser');
 };
 
+const createUserCareer = async (req: express.Request, res: express.Response, next: express.NextFunction) => {
+
+};
+
 router.post('/', createUser);
 router.get('/', getUsers);
 router.get('/:usn', getUser);
 router.delete('/:usn', deleteUser);
 router.put('/:usn', modifyUser);
+
+router.post('/career', createUserCareer);
 
 export = router;
