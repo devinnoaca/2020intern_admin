@@ -28,7 +28,7 @@ PRIMARY KEY(USN));`;
 INSERT INTO USER(\
 USN, name, ID, email, password, image_url, description, \
 company, permission, noti_count, type) \
-VALUES (1, "Edsger Wybe Dijkstra","ImMentor", "mentor@e.mail", "q1w2e3r4", "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d9/Edsger_Wybe_Dijkstra.jpg/600px-Edsger_Wybe_Dijkstra.jpg", "Go To Statement Considered Harmful", "BaekSoo", 0, 1, 1), (2, "Cho Ding Kim", "ImMentee", "mentee@e.mail", "1234", "https://upload3.inven.co.kr/upload/2020/05/11/bbs/i13789520996.jpg", "I wanna be a adult!!!", "Elementary school", 0, 0, 0);`;
+VALUES (2, "Edsger Wybe Dijkstra","ImMentor", "mentor@e.mail", "q1w2e3r4", "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d9/Edsger_Wybe_Dijkstra.jpg/600px-Edsger_Wybe_Dijkstra.jpg", "Go To Statement Considered Harmful", "BaekSoo", 0, 1, 1), (3, "Cho Ding Kim", "ImMentee", "mentee@e.mail", "1234", "https://upload3.inven.co.kr/upload/2020/05/11/bbs/i13789520996.jpg", "I wanna be a adult!!!", "Elementary school", 0, 0, 0), (1, "SuperAdmin", "ImAdmin", "admin@e.mail", "d!e#tdDqa!12!@", "https://t1.daumcdn.net/cfile/blog/2778C3345902CAD121", "Hello, I'm Admin", "Innovation Academy", 2, 0, 2);`;
 
 
 	const strCreateCategoryTable = `
