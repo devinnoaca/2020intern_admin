@@ -19,11 +19,7 @@ password VARCHAR(45) NOT NULL,\
 image_url TEXT ,\
 description VARCHAR(1000),\
 company TEXT,\
-<<<<<<< Updated upstream
 permission INT NOT NULL DEFAULT -1,\
-=======
-permission INT NOT NULL,\
->>>>>>> Stashed changes
 noti_count INT NOT NULL DEFAULT 0,\
 type INT NOT NULL,\
 PRIMARY KEY(USN));`;
