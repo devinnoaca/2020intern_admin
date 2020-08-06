@@ -4,22 +4,18 @@ import userQuery from '../dao/userDAO'
 const router = express.Router();
 
 const createUser = async (req: express.Request, res: express.Response, next: express.NextFunction) => {
-  //permission을 따로 안받고 있음................
   const data = 
   [
     req.body.id,
+    req.body.name,
     req.body.email,
     req.body.password,
-    req.body.name,
     req.body.image_url,
     req.body.description,
     req.body.company,
     req.body.permission,
-    req.body.noti_count,
     req.body.type
   ]
-
-  console.log(data);
 
   const result = await userQuery.createUser(data);
 
@@ -58,7 +54,7 @@ const getUser = async (req: express.Request, res: express.Response,
   result[0].careerID = careerID;
   result[0].career = career;
   result[0].keywords = keywordResult;
-  console.log(result);
+
   res.status(200).render('user/userDetail' ,
     {
       'message': 'success',
@@ -83,26 +79,49 @@ console.log('controller: deleteUser');
 };
 
 const modifyUser = async (req: express.Request, res: express.Response, next: express.NextFunction) => {
-  const data =
-  [
-    req.body.email,
-    req.body.password,
-    req.body.name,
-    req.body.image,
-    req.body.description,
-    req.body.notification,
-    req.body.authorization,
-    req.body.permission,
-    req.body.type,
-    parseInt(req.params.usn)
-  ];
-  const result = await userQuery.modifyUser(data);
-res.status(200).send(
+  let data: Array<any>;
+  let result;
+  console.log(req.body.password);
+  if (req.body.password === null) {
+    data = 
+    [
+      req.body.email,
+      req.body.name,
+      req.body.image,
+      req.body.description,
+      req.body.company,
+      req.body.permission,
+      req.body.type,
+      parseInt(req.params.usn)
+    ];
+    result = await userQuery.modifyUserWithoutPW(data);
+    res.status(200).send(
+        {
+          'message': 'modify user without password success'
+        }
+      );
+    console.log('controller: modifyUserWithoutPW');
+  } else {
+    data =
+    [
+      req.body.email,
+      req.body.password,
+      req.body.name,
+      req.body.image,
+      req.body.description,
+      req.body.company,
+      req.body.permission,
+      req.body.type,
+      parseInt(req.params.usn)
+    ];
+    result = await userQuery.modifyUser(data);
+    res.status(200).send(
       {
         'message': 'modify user success'
       }
     );
-console.log('controller: modifyUser');
+    console.log('controller: modifyUser');
+  }
 };
 
 const createUserCareer = async (req: express.Request, res: express.Response, next: express.NextFunction) => {
@@ -112,9 +131,12 @@ const createUserCareer = async (req: express.Request, res: express.Response, nex
     req.body.content
   ];
   const result = await userQuery.createUserCareer(data);
+  const content = req.body.content;
   res.status(200).send(
     {
-      'message': 'create user career success'
+      'message': 'create user career success',
+      'careerID': result.insertId,
+      'content': content
     }
   );
   console.log('controller: createUserCareer');
@@ -123,8 +145,8 @@ const createUserCareer = async (req: express.Request, res: express.Response, nex
 const modifyUserCareer = async (req: express.Request, res: express.Response, next: express.NextFunction) => {
   const data =
   [
-    req.body.career_id,
-    req.body.career
+    req.body.content,
+    req.body.id 
   ];
   const result = await userQuery.modifyUserCareer(data);
   res.status(200).send(
@@ -138,7 +160,7 @@ const modifyUserCareer = async (req: express.Request, res: express.Response, nex
 const deleteUserCareer = async (req: express.Request, res: express.Response, next: express.NextFunction) => {
   const data = 
   [
-    req.body.career_id
+    req.body.id
   ];
   const result = await userQuery.deleteUserCareer(data);
   res.status(200).send(
@@ -153,7 +175,7 @@ const createUserRecommendKeyword = async (req: express.Request, res: express.Res
   const data =
   [
     parseInt(req.params.usn),
-    req.body.keyword_id
+    req.body.id
   ]
   const result = await userQuery.createUserRecommendKeyword(data);
   res.status(200).send(
@@ -168,7 +190,7 @@ const deleteUserRecommendKeyword = async (req: express.Request, res: express.Res
   const data =
   [
     parseInt(req.params.usn),
-    req.body.keyword_id
+    req.body.id
   ]
   const result = await userQuery.deleteUserRecommendKeyword(data);
   res.status(200).send(
@@ -183,7 +205,7 @@ const createUserTotalKeyword = async (req: express.Request, res: express.Respons
   const data =
   [
     parseInt(req.params.usn),
-    req.body.keyword_id
+    req.body.id
   ]
   const result = await userQuery.createUserTotalKeyword(data);
   res.status(200).send(
@@ -198,7 +220,7 @@ const deleteUserTotalKeyword = async (req: express.Request, res: express.Respons
   const data =
   [
     parseInt(req.params.usn),
-    req.body.keyword_id
+    req.body.id
   ]
   const result = await userQuery.deleteUserTotalKeyword(data);
   res.status(200).send(

@@ -1,7 +1,6 @@
 import query from './userQuery';
 import db from '../db';
 
-// TODO(SeongJaeSong): This function have to fetch keywords
 async function getUser(data: Array<any>) {
   try {
     const [rows, fields] = await db.connection.promise().query(query.searchUser, data);
@@ -16,9 +15,6 @@ async function getUserKeywords(data: Array<any>) {
     const [totalKeywords] = await db.connection.promise().query(query.searchUserTotalkeywords, data);
     const [recommendKeywords] = await db.connection.promise().query(query.searchUserRecommendkeywords, data);
     return {'totalKeywords': totalKeywords, 'recommendKeywords': recommendKeywords};
-    // console.log(totalKeywords);
-    // console.log(recommendKeywords);
-    // // return rows;
   } catch (e) {
     console.log('dao: getUserKeywords error\n' + e);
   }
@@ -56,9 +52,17 @@ async function modifyUser(data: Array<any>) {
     const [rows, fields] = await db.connection.promise().query(query.updateUser, data);
     return rows;
   } catch (e) {
-    console.log('dao: modifyUser error\n' + e)
+    console.log('dao: modifyUser error\n' + e);
   }
 }
+
+async function modifyUserWithoutPW(data: Array<any>) {
+  try {
+    const [rows, fields] = await db.connection.promise().query(query.updateUserWithoutPW, data);
+    return rows;
+} catch (e) {
+    console.log('dao: modifyUser error\n' + e);
+}}
 
 async function createUserCareer(data: Array<any>) {
   try {
@@ -124,7 +128,8 @@ async function deleteUserTotalKeyword(data: Array<any>) {
 }
 
 export default {
-  getUser, createUser, getUsers, deleteUser, modifyUser, createUserCareer, modifyUserCareer, deleteUserCareer, 
+  getUser, createUser, getUsers, deleteUser, modifyUser,modifyUserWithoutPW,
+  createUserCareer, modifyUserCareer, deleteUserCareer, 
   createUserRecommendKeyword, deleteUserRecommendKeyword,
   createUserTotalKeyword, deleteUserTotalKeyword,
   getUserKeywords

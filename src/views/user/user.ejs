@@ -141,14 +141,14 @@
                   <tbody>
                     <% for (let i = 0; i < users.length; i++) { %>
                     <tr>
-                      <td><%= users[i].usn %></td>
+                      <td><%= users[i].USN %></td>
                       <td><%= users[i].type %></td>
-                      <td><%= users[i].id %></td>
+                      <td><%= users[i].ID %></td>
                       <td><%= users[i].name %></td>
                       <td><%= users[i].email %></td>
                       <td>2011/04/25</td>
                       <td>
-                        <button class="btn btn-primary d-inline" name="deleteButton" type="button" value="<%=users[i].usn%>">삭제</button>
+                        <button class="btn btn-primary d-inline" name="deleteButton" type="button" value="<%=users[i].USN%>">삭제</button>
                       </td>
                     </tr>
                     <% } %>
@@ -211,13 +211,6 @@
 
   <!-- Custom scripts for all pages-->
   <script src="/js/sb-admin-2.min.js"></script>
-
-  <!-- Page level plugins -->
-  <script src="/vendor/chart.js/Chart.min.js"></script>
-
-  <!-- Page level custom scripts -->
-  <script src="/js/demo/chart-area-demo.js"></script>
-  <script src="/js/demo/chart-pie-demo.js"></script>
 
   <!-- 모달 닫을시에 입력값 초기화 -->
   <script src="/js/user/closeModal.js"></script>

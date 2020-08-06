@@ -1,7 +1,7 @@
 const searchUser = `
-SELECT u.usn, u.id, email, password, name, image_url, description, noti_count, permission, type, c.id careerID, c.content career \
+SELECT u.usn, u.id, email, password, name, image_url, description, company, noti_count, permission, type, c.id careerID, c.content career \
 FROM career as c \
-JOIN user as u ON c.user_usn = u.usn \
+RIGHT JOIN user as u ON c.user_usn = u.usn \
 WHERE u.usn = ?;`;
 
 const searchUserTotalkeywords = `
@@ -19,20 +19,32 @@ SELECT * \
 FROM User;`;
 
 const insertUser = `
-INSERT INTO User(id, email, password, name, image_url, description, company, permission, noti_count,type) \
-VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?);`;
+INSERT INTO User(id, name, email, password, image_url, description, company, permission,type) \
+VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?);`;
 
 const updateUser = `
 UPDATE User SET \
+name = ?, \
 email = ?,\
 password = ?,\
-name = ?, \
 image_url = ?, \
 description = ?, \
-noti_count = ?, \
+company = ?, \
 permission = ?, \
 type = ? \
 WHERE usn = ?;`;
+
+const updateUserWithoutPW = `
+UPDATE User SET \
+email = ?,\
+name = ?, \
+image_url = ?, \
+description = ?, \
+company = ?, \
+permission = ?, \
+type = ? \
+WHERE usn = ?;`;
+
 
 const updateUserCareerAdd = `
 INSERT INTO Career(user_usn, content) \
@@ -68,7 +80,8 @@ DELETE FROM User_Total_Keyword \
 WHERE user_usn = ? and keyword_ID = ?;`;
 
 export default {
-    searchUser, searchAllUser, insertUser, updateUser, deleteUser,updateUserCareerAdd, updateUserCareerModify, updateUserCareerDelete,
+    searchUser, searchAllUser, insertUser, updateUser, updateUserWithoutPW, deleteUser,
+    updateUserCareerAdd, updateUserCareerModify, updateUserCareerDelete,
     updateUserRecommendKeywordCreate, updateUserRecommendKeywordDelete,
     updateUserTotalKeywordCreate, updateUserTotalKeywordDelete,
     searchUserTotalkeywords, searchUserRecommendkeywords

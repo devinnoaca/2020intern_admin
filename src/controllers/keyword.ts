@@ -16,8 +16,6 @@ const getKeywords = async (req: express.Request, res: express.Response,
     })
 
     const data = Object.fromEntries(keywordMap);
-    console.log(data);
-    // console.log(Object.keys(data));
     res.status(200).render('keyword/keyword',
       {
         'message': 'get keywords success',
@@ -32,7 +30,7 @@ const createKeyword = async (req: express.Request, res: express.Response,
     const data =
     [
       req.body.name,
-      req.body.categoryID
+      req.body.id
     ];
     const result = keywordQuery.createKeyword(data);
     res.status(200).send(

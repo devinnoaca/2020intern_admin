@@ -22,7 +22,6 @@ const createMatching = async (req: express.Request, res: express.Response, next:
   ];
 
   const result = await matchingDAO.createMatching(data);
-  console.log(result);
 
   // res.status(200).send({
   //   'message': 'create category success',
@@ -38,7 +37,7 @@ const deleteMatching = async (req: express.Request, res: express.Response, next:
   ];
 
   const result = await matchingDAO.deleteMatching(data);
-  console.log(result);
+  (result);
   res.status(200).send(
     {
       'message': 'delete category success'
@@ -46,7 +45,6 @@ const deleteMatching = async (req: express.Request, res: express.Response, next:
   )
   console.log('controller: deleteCategory');
 };
-
 
 const modifyForm = async (req: express.Request, res: express.Response, next: express.NextFunction) => {
   
@@ -90,7 +88,6 @@ const modifyMatching = async (req: express.Request, res: express.Response, next:
 const getMatching = async (req: express.Request, res: express.Response, next: express.NextFunction) => {
 
   let data = await matchingDAO.getAllMatching();
-  console.log(data);
 
   res.status(200).render('matching/matching',
     {
