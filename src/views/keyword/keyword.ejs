@@ -49,7 +49,7 @@
             </div>
             <!-- Card Body -->
             <div class="card-body">
-                <form name="searchForm" onsubmit="searchSubmit(); return false;" class="form-inline">
+                <form name="searchForm" onsubmit="onSearch(); return false;" class="form-inline">
                   <select name="searchType" class="custom-select" id="inlineFormCustomSelectPref">
                     <option selected>Choose...</option>
                     <option value="category">Category</option>
@@ -100,7 +100,7 @@
                       </div>
                       <br>
                       
-                      <form name="addCategoryForm" onsubmit="addCategory(); return false;">
+                      <form name="addCategoryForm">
                         <div class="input-group mb-3">
                           <input type="text" class="form-control" name="inputCategory" placeholder="category name" aria-label="category name" aria-describedby="button-addon2" required>
                           <div class="input-group-append">
