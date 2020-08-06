@@ -19,17 +19,17 @@ SELECT * \
 FROM User;`;
 
 const insertUser = `
-INSERT INTO User(id, email, password, name, image_url, description, company, permission, noti_count,type) \
-VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?);`;
+INSERT INTO User(id, name, email, password, image_url, description, company, permission,type) \
+VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?);`;
 
 const updateUser = `
 UPDATE User SET \
+name = ?, \
 email = ?,\
 password = ?,\
-name = ?, \
 image_url = ?, \
 description = ?, \
-noti_count = ?, \
+company = ?, \
 permission = ?, \
 type = ? \
 WHERE usn = ?;`;
