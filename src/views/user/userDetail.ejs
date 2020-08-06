@@ -48,7 +48,7 @@
                     <div class="row">
                       <!-- 회원 이미지-->
                       <div class="col-md-6">
-                        <img class="img-thumbnail" name="image" src="<%= user[0].image_url%>">
+                        <img class="img-thumbnail" name="image" src="<%= user[0].image_url%>" width="300" height="300">
                       </div>
 
                       <!-- 회원 권한, 이름, 아이디 -->
@@ -333,7 +333,6 @@
   <script src="/js/user/userModify.js"></script>
 
   <script type="text/JavaScript">
-  console.log(<%= user[0].type%>);
   //유저 권한 셀렉트 박스 초기화 
   $('[name="permission"] option:nth-child(<%=user[0].permission + 1%>)').attr('selected', true);
   //유저 타입 셀렉트 박스 초기화  
