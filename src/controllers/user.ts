@@ -89,6 +89,7 @@ const modifyUser = async (req: express.Request, res: express.Response, next: exp
       req.body.name,
       req.body.image,
       req.body.description,
+      req.body.company,
       req.body.permission,
       req.body.type,
       parseInt(req.params.usn)
@@ -108,6 +109,7 @@ const modifyUser = async (req: express.Request, res: express.Response, next: exp
       req.body.name,
       req.body.image,
       req.body.description,
+      req.body.company,
       req.body.permission,
       req.body.type,
       parseInt(req.params.usn)
