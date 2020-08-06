@@ -30,7 +30,7 @@ const createKeyword = async (req: express.Request, res: express.Response,
     const data =
     [
       req.body.name,
-      req.body.categoryID
+      req.body.id
     ];
     const result = keywordQuery.createKeyword(data);
     res.status(200).send(

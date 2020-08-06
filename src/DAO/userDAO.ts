@@ -52,9 +52,17 @@ async function modifyUser(data: Array<any>) {
     const [rows, fields] = await db.connection.promise().query(query.updateUser, data);
     return rows;
   } catch (e) {
-    console.log('dao: modifyUser error\n' + e)
+    console.log('dao: modifyUser error\n' + e);
   }
 }
+
+async function modifyUserWithoutPW(data: Array<any>) {
+  try {
+    const [rows, fields] = await db.connection.promise().query(query.updateUserWithoutPW, data);
+    return rows;
+} catch (e) {
+    console.log('dao: modifyUser error\n' + e);
+}}
 
 async function createUserCareer(data: Array<any>) {
   try {
@@ -120,7 +128,8 @@ async function deleteUserTotalKeyword(data: Array<any>) {
 }
 
 export default {
-  getUser, createUser, getUsers, deleteUser, modifyUser, createUserCareer, modifyUserCareer, deleteUserCareer, 
+  getUser, createUser, getUsers, deleteUser, modifyUser,modifyUserWithoutPW,
+  createUserCareer, modifyUserCareer, deleteUserCareer, 
   createUserRecommendKeyword, deleteUserRecommendKeyword,
   createUserTotalKeyword, deleteUserTotalKeyword,
   getUserKeywords
