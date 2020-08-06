@@ -143,8 +143,8 @@ const createUserCareer = async (req: express.Request, res: express.Response, nex
 const modifyUserCareer = async (req: express.Request, res: express.Response, next: express.NextFunction) => {
   const data =
   [
-    req.body.id,
-    req.body.content
+    req.body.content,
+    req.body.id
   ];
   const result = await userQuery.modifyUserCareer(data);
   res.status(200).send(
