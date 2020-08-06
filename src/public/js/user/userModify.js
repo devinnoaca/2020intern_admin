@@ -43,7 +43,7 @@ $('[name="careerDiv"]').on('click', function(event) {
   const careerId = careerDiv.find('[name="updateCareerButton"]').val();
   const data = {
     "id" : careerId,
-    "career" : careerContent
+    "content" : careerContent
   };
 
   if(target.is('[name="updateCareerButton"]')){
