@@ -122,8 +122,8 @@ const createUserCareer = async (req: express.Request, res: express.Response, nex
 const modifyUserCareer = async (req: express.Request, res: express.Response, next: express.NextFunction) => {
   const data =
   [
-    req.body.career_id,
-    req.body.career
+    req.body.career,
+    req.body.career_id
   ];
   const result = await userQuery.modifyUserCareer(data);
   res.status(200).send(
@@ -131,6 +131,7 @@ const modifyUserCareer = async (req: express.Request, res: express.Response, nex
       'message': 'modify user career success'
     }
   );
+  console.log(data);
   console.log('controller: modifyUserCareer');
 }
 
@@ -145,6 +146,7 @@ const deleteUserCareer = async (req: express.Request, res: express.Response, nex
       'message': 'delete user career success'
     }
   );
+  console.log(data);
   console.log('controller: deleteUserCareer');
 }
 
