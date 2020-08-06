@@ -29,13 +29,14 @@ $('#addCareerButton').on('click', () => {
 
   const data = {
     "usn": usn,
-    "career": career
+    "content": career
   };
 
-  sendAjax('POST', `/user/${usn}/career`, JSON.stringify(data), addCareer);
+  sendAjax('POST', `/user/${usn}/career`, JSON.stringify(data), addCareerCallback);
 
 });
 
+// 커리어 추가 혹은 삭제 이벤트
 $('[name="careerDiv"]').on('click', function(event) {
   const index = $(this).index();
   const target = $(event.target);
@@ -59,7 +60,7 @@ $('[name="updateCommitButton"]').on('click', () => {
   const type = $('[name="type"]').val(); 
   const imageUrl = $('[name="image"]').attr('src');
 
-  console.log(imageUrl);
+  alert(permission);
 
   const data = {
     "email" : email,
@@ -71,8 +72,8 @@ $('[name="updateCommitButton"]').on('click', () => {
     "company" : company,
     "permission" : permission,
     "usn" : usn,
-    "notiCount" : 0,
-    "image_url" : imageUrl
+    "notification" : "0",
+    "image" : imageUrl
   };
 
   sendAjax('PUT', `/user/${usn}`, JSON.stringify(data), (xhr) => {
@@ -80,7 +81,7 @@ $('[name="updateCommitButton"]').on('click', () => {
   });
 });
 
-const addCareer = (xhr) => {
+const addCareerCallback = (xhr) => {
   const message = xhr.responseText.message;
   console.log(message);
   /*const career = xhr.responseText.career;
