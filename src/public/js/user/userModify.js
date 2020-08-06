@@ -34,15 +34,27 @@ $('#addCareerButton').on('click', () => {
 
 });
 
-// 커리어 추가 혹은 삭제 이벤트
+// 커리어 수정 혹은 삭제 이벤트
 $('[name="careerDiv"]').on('click', function(event) {
-  const index = $(this).index();
+  const careerDiv = $(this);
+  const index = $(this).index() + 1;
   const target = $(event.target);
+  const careerContent = careerDiv.find('[name="career"]').val();
+  const careerId = careerDiv.find('[name="updateCareerButton"]').val();
+  const data = {
+    "career_id" : careerId,
+    "career" : careerContent
+  };
 
   if(target.is('[name="updateCareerButton"]')){
-    sendAjax('PUT', `/user/${usn}/career`, );
+    sendAjax('PUT', `/user/${usn}/career`, JSON.stringify(data), (xhr) => {
+      alert(xhr.responseText.parse());
+    });
   } else if (target.is('[name="deleteCareerButton"]')){
-    
+    sendAjax('DELETE', `/user/${usn}/career`, JSON.stringify(data), (xhr) => {
+      alert(xhr.responseText.parse());
+      careerDiv.remove();
+    });
   }
 });
 
