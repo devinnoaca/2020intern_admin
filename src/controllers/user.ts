@@ -89,11 +89,11 @@ const modifyUser = async (req: express.Request, res: express.Response, next: exp
     req.body.image,
     req.body.description,
     req.body.notification,
-    req.body.authorization,
     req.body.permission,
     req.body.type,
     parseInt(req.params.usn)
   ];
+
   const result = await userQuery.modifyUser(data);
   res.status(200).send(
       {
