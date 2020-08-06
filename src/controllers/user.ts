@@ -131,10 +131,12 @@ const createUserCareer = async (req: express.Request, res: express.Response, nex
     req.body.content
   ];
   const result = await userQuery.createUserCareer(data);
+  const content = req.body.content;
   res.status(200).send(
     {
       'message': 'create user career success',
-      'careerID': result.insertId
+      'careerID': result.insertId,
+      'content': content
     }
   );
   console.log('controller: createUserCareer');
@@ -144,7 +146,7 @@ const modifyUserCareer = async (req: express.Request, res: express.Response, nex
   const data =
   [
     req.body.content,
-    req.body.id
+    req.body.id 
   ];
   const result = await userQuery.modifyUserCareer(data);
   res.status(200).send(

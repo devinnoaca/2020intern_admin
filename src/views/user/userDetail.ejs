@@ -48,7 +48,7 @@
                     <div class="row">
                       <!-- 회원 이미지-->
                       <div class="col-md-6">
-                        <img class="img-thumbnail" name="image" src="<%= user[0].image_url%>">
+                        <img class="img-thumbnail" name="image" src="<%= user[0].image_url%>" width="300" height="300">
                       </div>
 
                       <!-- 회원 권한, 이름, 아이디 -->
@@ -60,7 +60,7 @@
                               <div class="form-inline col-md-2">
                                 <label>권한</label>
                               </div>
-                              <div class="col-md-8">
+                              <div class="col-md-10">
                                 <select class="form-control" name="permission" disabled>
                                   <option value="0">일반</option>
                                   <option value="1">관리자</option>
@@ -76,7 +76,7 @@
                               <div class="form-inline col-md-2">
                                 <label>타입</label>
                               </div>
-                              <div class="col-md-8">
+                              <div class="col-md-10">
                                 <select class="form-control" name="type" disabled>
                                   <option value="0">멘티</option>
                                   <option value="1">멘토</option>
@@ -92,7 +92,7 @@
                               <div class="form-inline col-md-2">
                                 <lable>이름</lable>
                               </div>
-                              <div class="form-inline col-md-6">
+                              <div class="col-md-10">
                                 <input class="form-control" name="name" value="<%=user[0].name%>" type="text" disabled>
                               </div>
                             </div>
@@ -104,7 +104,7 @@
                               <div class="form-inline col-md-2">
                                 <label>ID</label>
                               </div>
-                              <div class="form-inline col-md-6">
+                              <div class="col-md-10">
                                 <input class="form-control" name="id" value="<%= user[0].id%>" type="text" disabled>
                               </div>
                             </div>
@@ -116,11 +116,12 @@
                               <div class="form-inline col-md-2">
                                 <label>email</label>
                               </div>
-                              <div class="form-inline col-md-6">
+                              <div class="col-md-10">
                                 <input class="form-control" name="email" value="<%= user[0].email%>" type="text"
                                   disabled>
                               </div>
                             </div>
+                            <input name="originPassword" type="hidden">
                           </li>
                         </ul>
                       </div>
@@ -133,13 +134,13 @@
                       <div class="form-inline col-md-2">
                         <label>새 비밀번호</label>
                       </div>
-                      <div class="form-inline col-md-4">
+                      <div class="col-md-4">
                         <input class="form-control" name="password" type="password" disabled>
                       </div>
                       <div class="form-inline col-md-2">
                         <label>새 비밀번호 확인</label>
                       </div>
-                      <div class="form-inline col-md-4">
+                      <div class="col-md-4">
                         <input class="form-control" name="passwordCheck" type="password" disabled>
                       </div>
                     </div>
@@ -180,7 +181,7 @@
                       <div class="col-md-10">
                         <% user[0].career.forEach(function(elem, index) { %>
                         <div class="input-group my-sm-1" name="careerDiv">
-                          <input class="form-control" value="<%=elem%>" type="text"
+                          <input class="form-control" value="<%=elem%>" name="career" type="text"
                             aria-describedby="deleteCareerButton" disabled>
                           <div class="input-group-append">
                             <button class="btn btn-outline-secondary" type="button" name="updateCareerButton"
@@ -320,20 +321,12 @@
   <!-- Custom scripts for all pages-->
   <script src="/js/sb-admin-2.min.js"></script>
 
-  <!-- Page level plugins -->
-  <script src="/vendor/chart.js/Chart.min.js"></script>
-
-  <!-- Page level custom scripts -->
-  <script src="/js/demo/chart-area-demo.js"></script>
-  <script src="/js/demo/chart-pie-demo.js"></script>
-
   <!-- Send Ajax 메소드 처리 script-->
   <script src="/js/common/ajax.js"></script>
 
   <script src="/js/user/userModify.js"></script>
 
   <script type="text/JavaScript">
-  console.log(<%= user[0].type%>);
   //유저 권한 셀렉트 박스 초기화 
   $('[name="permission"] option:nth-child(<%=user[0].permission + 1%>)').attr('selected', true);
   //유저 타입 셀렉트 박스 초기화  

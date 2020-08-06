@@ -25,27 +25,17 @@ $('#userUpdateButton').on('click', () => {
 $('#addCareerButton').on('click', () => {
   const career = $('[name="addCareerInput"]').val();
 
-  console.log(usn);
-
   const data = {
     "usn": usn,
     "content": career
   };
 
   sendAjax('POST', `/user/${usn}/career`, JSON.stringify(data), addCareerCallback);
-
 });
 
-// 커리어 추가 혹은 삭제 이벤트
+// 커리어 수정 혹은 삭제 이벤트
 $('[name="careerDiv"]').on('click', function(event) {
-  const index = $(this).index();
-  const target = $(event.target);
-
-  if(target.is('[name="updateCareerButton"]')){
-    sendAjax('PUT', `/user/${usn}/career`, );
-  } else if (target.is('[name="deleteCareerButton"]')){
-    
-  }
+  careerClickEvent(event, $(this));
 });
 
 // 유저 기본 정보 업데이트 이벤트
@@ -59,8 +49,6 @@ $('[name="updateCommitButton"]').on('click', () => {
   const description = $('[name="description"]:first-child').val(); 
   const type = $('[name="type"]').val(); 
   const imageUrl = $('[name="image"]').attr('src');
-
-  alert(permission);
 
   const data = {
     "email" : email,
@@ -76,34 +64,60 @@ $('[name="updateCommitButton"]').on('click', () => {
     "image" : imageUrl
   };
 
+  if(password.trim().length == 0){
+    data.password = null;
+  }
+
   sendAjax('PUT', `/user/${usn}`, JSON.stringify(data), (xhr) => {
     window.location.href = `/user/${usn}`;
   });
 });
 
 const addCareerCallback = (xhr) => {
-  const message = xhr.responseText.message;
-  console.log(message);
-  /*const career = xhr.responseText.career;
-  const careerId = xhr.responseText.careerId;
+  const message = xhr.response.message;
+  const content = xhr.response.content;
+  const careerID = xhr.response.careerID;
 
   const careerTemplate = `<div class="input-group my-sm-1" name="careerDiv">
-  <input class="form-control" value="${career}" type="text"
-    aria-describedby="deleteCareerButton">
-  <div class="input-group-append">
-    <button class="btn btn-outline-secondary" type="button" name="updateCareerButton"
-      value="${careerId}">수정</button>
-    <button class="btn btn-outline-secondary" type="button" name="deleteCareerButton"
-      value="${careerId}">삭제</button>
-  </div>
-</div>`;
+                            <input class="form-control" value="${content}" name="career" type="text"
+                            aria-describedby="deleteCareerButton">
+                            <div class="input-group-append">
+                              <button class="btn btn-outline-secondary" type="button" name="updateCareerButton"
+                              value="${careerID}">수정</button>
+                              <button class="btn btn-outline-secondary" type="button" name="deleteCareerButton"
+                              value="${careerID}">삭제</button>
+                            </div>
+                          </div>`;
+
+  alert(message);
 
   $('[name="careerDiv"]').last().after(careerTemplate);
   $('[name="addCareerInput"]').val('');
-  $('[name="updateCareerButton"]').on('click', () => {
-    alert('클릭!');
-  });*/
+  $('[name="careerDiv"]').last().on('click', function(event){
+    careerClickEvent(event, $(this));
+  });
 }
 
-
-
+//커리어 항목 클릭시 이벤트 처리
+const careerClickEvent = function(event, careerDiv) {
+  const target = $(event.target);
+  const careerContent = careerDiv.find('[name="career"]').val();
+  const careerId = careerDiv.find('[name="updateCareerButton"]').val();
+  const data = {
+    "id" : careerId,
+    "content" : careerContent
+  };
+  
+  if(target.is('[name="updateCareerButton"]')){
+    sendAjax('PUT', `/user/${usn}/career`, JSON.stringify(data), (xhr) => {
+      const message = xhr.response.message;
+      alert(message);
+    });
+  } else if (target.is('[name="deleteCareerButton"]')){
+    sendAjax('DELETE', `/user/${usn}/career`, JSON.stringify(data), (xhr) => {
+      const message = xhr.response.message;
+      alert(message);
+      careerDiv.remove();
+    });
+  }
+}
