@@ -221,7 +221,8 @@
                       </div>
                       <!-- 토탈 키워드 추가 버튼 -->
                       <div class="col-md-2">
-                        <button class="btn btn-primary" name="totalKeywordButton" disabled>키워드 추가</button>
+                        <button class="btn btn-primary" name="totalKeywordButton" data-toggle="modal" 
+                        data-target="#userKeywordCreate" disabled>키워드 추가</button>
                       </div>
                     </div>
                   </li>
@@ -242,7 +243,8 @@
                         <% }) %>
                       </div>
                       <div class="col-md-2">
-                        <button class="btn btn-primary" name="recommendKeywordButton" disabled>추천 키워드 추가</button>
+                        <button class="btn btn-primary" name="recommendKeywordButton" data-toggle="modal"
+                        data-target="#userKeywordCreate" disabled>추천 키워드 추가</button>
                       </div>
                     </div>
                   </li>
@@ -329,7 +331,11 @@
   <!-- Send Ajax 메소드 처리 script-->
   <script src="/js/common/ajax.js"></script>
 
+  <!-- 유저정보 수정관련 이벤트 처리-->
   <script src="/js/user/userModify.js"></script>
+
+  <!-- 키워드 추가 모달-->
+  <%- include ('./userKeywordModal.ejs') %> 
 
   <script type="text/JavaScript">
   //유저 권한 셀렉트 박스 초기화 
