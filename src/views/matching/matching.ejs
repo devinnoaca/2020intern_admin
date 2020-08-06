@@ -164,13 +164,12 @@
                     </tr>
                   </thead>
                   <tbody>
-
                     <% matching.forEach(elem => { %>
                     <tr>
                       <td><%= elem.id %></td>
-                      <td><%= elem.mentor %></td>
-                      <td><%= elem.mentee %></td>
-                      <td><%= elem.req_date %></td>
+                      <td><%= elem.mentor_USN %></td>
+                      <td><%= elem.mentee_USN %></td>
+                      <td><%= elem.request_time %></td>
                       <td><%= elem.is_checked %></td>
                       <td><%= elem.state %></td>
                       <td>
