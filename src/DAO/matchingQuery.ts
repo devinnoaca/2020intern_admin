@@ -15,6 +15,18 @@ const deleteMatching = `
 DELETE FROM Matching \
 WHERE id = ?;`;
 
+const modifyMatching = `
+UPDATE Matching SET \
+mentor_USN = ?,\
+mentee_USN = ?,\
+request_time = ?,\
+response_time = ?,\
+state = ?,\
+request_message = ?,\
+response_message = ?,\
+is_checked = ? \
+WHERE id = ?;`;
+
 export default {
-    getAllMatching, createMatching, deleteMatching, getMatching
-};
+    getAllMatching, createMatching, deleteMatching, getMatching, modifyMatching
+}

@@ -3,6 +3,7 @@
 
 <head>
   <%- include ('../common/header.ejs') %>
+  <link href="/css/bootstrap-datepicker.css" rel="stylesheet">
 </head>
 
 <body id="page-top">
@@ -38,130 +39,137 @@
             </div>
             <div class="card-body">
               <div class="container-fluid">
+                
+                <form name="modifyForm">
+                  <ul class="list-group list-group-flush">
 
-                <ul class="list-group list-group-flush">
+                    <!-- 매칭번호(ID), 상태  -->
+                    <li class="list-group-item">
+                      <div class="row">
+                        <!-- 매칭번호 -->
+                        <div class="form-row col-md-6">
+                          <div class="form-inline col-md-2">
+                            <lable>매칭번호</lable>
+                          </div>
+                          <div class="form-inline col-md-6">
+                            <input class="form-control" name="name" value="<%= matching.id %>" type="text" disabled>
+                          </div>
+                        </div>
 
-                  <!-- 매칭번호(ID), 상태  -->
-                  <li class="list-group-item">
-                    <div class="row">
-                      <!-- 매칭번호 -->
-                      <div class="form-row col-md-6">
-                        <div class="form-inline col-md-2">
-                          <lable>매칭번호</lable>
-                        </div>
-                        <div class="form-inline col-md-6">
-                            <input class="form-control" name="name" value="" type="text" disabled>
-                        </div>
-                      </div>
-
-                      <!-- 매칭상태 -->
-                      <div class="form-row col-md-6">
-                        <div class="form-inline col-md-2">
-                          <lable>상태</lable>
-                        </div>
-                        <div class="form-inline col-md-6">
-                          <input class="form-control" name="name" value="" type="text">
-                        </div>
-                      </div>
-                    </div>
-                  </li>
-
-                  <!-- 멘토, 멘티  -->
-                  <li class="list-group-item">
-                    <div class="row">
-                      <!-- 멘티 -->
-                      <div class="form-row col-md-6">
-                        <div class="form-inline col-md-2">
-                          <lable>멘티</lable>
-                        </div>
-                        <div class="form-inline col-md-6">
-                          <input class="form-control" name="name" value="" type="text">
+                        <!-- 매칭상태 -->
+                        <div class="form-row col-md-6">
+                          <div class="form-inline col-md-2">
+                            <lable>상태</lable>
+                          </div>
+                          <div class="form-inline col-md-6">
+                            <input class="form-control" name="name" value="<%= matching.state %>" type="text">
+                          </div>
                         </div>
                       </div>
+                    </li>
 
-                      <!-- 멘토 -->
-                      <div class="form-row col-md-6">
-                        <div class="form-inline col-md-2">
-                          <lable>멘토</lable>
+                    <!-- 멘토, 멘티  -->
+                    <li class="list-group-item">
+                      <div class="row">
+                        <!-- 멘티 -->
+                        <div class="form-row col-md-6">
+                          <div class="form-inline col-md-2">
+                            <lable>멘티</lable>
+                          </div>
+                          <div class="form-inline col-md-6">
+                            <input class="form-control" name="name" value="<%= matching.mentee_USN %>" type="text">
+                          </div>
                         </div>
-                        <div class="form-inline col-md-6">
-                          <input class="form-control" name="name" value="" type="text">
+
+                        <!-- 멘토 -->
+                        <div class="form-row col-md-6">
+                          <div class="form-inline col-md-2">
+                            <lable>멘토</lable>
+                          </div>
+                          <div class="form-inline col-md-6">
+                            <input class="form-control" name="name" value="<%= matching.mentor_USN %>" type="text">
+                          </div>
                         </div>
                       </div>
-                    </div>
-                  </li>
+                    </li>
 
-                  <!-- 열람 여부  -->
-                  <li class="list-group-item">
-                    <div class="form-row">
-                      <div class="form-inline col-md-1">
-                        <lable>열람 여부</lable>
+                    <!-- 열람 여부  -->
+                    <li class="list-group-item">
+                      <div class="form-row">
+                        <div class="form-inline col-md-1">
+                          <lable>열람 여부</lable>
+                        </div>
+                        <div class="form-inline">
+                          <input class="form-control" name="name" value="<%= matching.is_checked %>" type="text">
+                        </div>
                       </div>
-                      <div class="form-inline">
-                        <input class="form-control" name="name" value="" type="text">
-                      </div>
-                    </div>
-                  </li>
+                    </li>
 
-                  <!-- 매칭 요청일자  -->
-                  <li class="list-group-item">
-                    <div class="form-row">
-                      <div class="form-inline col-md-1">
-                        <lable>매칭 요청일자</lable>
+                    <!-- 매칭 요청일자  -->
+                    <li class="list-group-item">
+                      <div class="form-row">
+                        <div class="form-inline col-md-1">
+                          <lable>매칭 요청일자</lable>
+                        </div>
+                        <div class="form-inline">
+                          <input type="text" id="datePicker" name="requestTime" class="form-control start-date"
+                            value="<%= matching.request_time%>">
+                        </div>
                       </div>
-                      <div class="form-inline">
-                        <input class="form-control" name="name" value="" type="text">
-                      </div>
-                    </div>
-                  </li>
+                    </li>
 
-                  <!-- 매칭 응답일자  -->
-                  <li class="list-group-item">
-                    <div class="form-row">
-                      <div class="form-inline col-md-1">
-                        <lable>매칭 응답일자</lable>
-                      </div>
-                      <div class="form-inline">
-                        <input class="form-control" name="name" value="" type="text">
-                      </div>
-                    </div>
-                  </li>
+                    <!-- 매칭 응답일자  -->
+                    <li class="list-group-item">
+                      <div class="form-row">
+                        <div class="form-inline col-md-1">
+                          <lable>매칭 응답일자</lable>
+                        </div>
+                        <div class="form-inline">
 
-                  <!-- 요청 사유 -->
-                  <li class="list-group-item">
-                    <div class="form-row">
-                      <div class="form-inline col-md-1">
-                        <label>요청 사유</label>
+                          <input type="text" id="datePicker" name="responseTime" class="form-control end-date"
+                            value="<%= matching.response_time %>">
+                        </div>
                       </div>
-                      <div class="col-md-8">
-                        <textarea class="form-control" name="description" rows="5"></textarea>
-                      </div>
-                    </div>
-                  </li>
+                    </li>
 
-                  <!-- 요청 거절사유 -->
-                  <li class="list-group-item">
-                    <div class="form-row">
-                      <div class="form-inline col-md-1">
-                        <label>거절 사유</label>
+                    <!-- 요청 사유 -->
+                    <li class="list-group-item">
+                      <div class="form-row">
+                        <div class="form-inline col-md-1">
+                          <label>요청 사유</label>
+                        </div>
+                        <div class="col-md-8">
+                          <textarea class="form-control" name="description"
+                            rows="5"><%= matching.request_message %></textarea>
+                        </div>
                       </div>
-                      <div class="col-md-8">
-                        <textarea class="form-control" name="description" rows="5"></textarea>
-                      </div>
-                    </div>
-                  </li>
+                    </li>
 
-                  <!-- 수정, 취소 버튼-->
-                  <li class="list-group-item">
-                    <div class="form-row d-flex justify-content-center">
-                      <div class="form-inline ">
-                        <button class="btn btn-primary mx-3" name="updateCommitButton" type="button">수정 완료</button>
-                        <button class="btn btn-secondary mx-3" type="button" onclick="location.href = '/matching/<%= matching.id %>'">취소</button>
+                    <!-- 요청 거절사유 -->
+                    <li class="list-group-item">
+                      <div class="form-row">
+                        <div class="form-inline col-md-1">
+                          <label>거절 사유</label>
+                        </div>
+                        <div class="col-md-8">
+                          <textarea class="form-control" name="description"
+                            rows="5"><%= matching.response_message %></textarea>
+                        </div>
                       </div>
-                    </div>
-                  </li>
-                </ul>
+                    </li>
 
+                    <!-- 수정, 취소 버튼-->
+                    <li class="list-group-item">
+                      <div class="form-row d-flex justify-content-center">
+                        <div class="form-inline ">
+                          <button class="btn btn-primary mx-3" name="updateCommitButton" type="button">수정 완료</button>
+                          <button class="btn btn-secondary mx-3" type="button"
+                            onclick="location.href = '/matching/<%= matching.id %>'">취소</button>
+                        </div>
+                      </div>
+                    </li>
+                  </ul>
+                </form>
               </div>
             </div>
 
@@ -190,6 +198,12 @@
 
   <!-- Logout Modal-->
   <%- include ('../common/logoutModal.ejs') %>
+
+  <script src="/js/bootstrap-datepicker.js"></script>
+  <script src="/js/bootstrap-datepicker.ko.min.js"></script>
+
+  <!-- matching datepicker-->
+  <script src="/js/matching/form-date-picker.js"></script>
 
 </body>
 
