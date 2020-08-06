@@ -34,6 +34,18 @@ permission = ?, \
 type = ? \
 WHERE usn = ?;`;
 
+const updateUserWithoutPW = `
+UPDATE User SET \
+email = ?,\
+name = ?, \
+image_url = ?, \
+description = ?, \
+noti_count = ?, \
+permission = ?, \
+type = ? \
+WHERE usn = ?;`;
+
+
 const updateUserCareerAdd = `
 INSERT INTO Career(user_usn, content) \
 VALUES(?, ?);`;
@@ -68,7 +80,8 @@ DELETE FROM User_Total_Keyword \
 WHERE user_usn = ? and keyword_ID = ?;`;
 
 export default {
-    searchUser, searchAllUser, insertUser, updateUser, deleteUser,updateUserCareerAdd, updateUserCareerModify, updateUserCareerDelete,
+    searchUser, searchAllUser, insertUser, updateUser, updateUserWithoutPW, deleteUser,
+    updateUserCareerAdd, updateUserCareerModify, updateUserCareerDelete,
     updateUserRecommendKeywordCreate, updateUserRecommendKeywordDelete,
     updateUserTotalKeywordCreate, updateUserTotalKeywordDelete,
     searchUserTotalkeywords, searchUserRecommendkeywords

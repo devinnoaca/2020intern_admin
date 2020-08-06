@@ -81,26 +81,49 @@ console.log('controller: deleteUser');
 };
 
 const modifyUser = async (req: express.Request, res: express.Response, next: express.NextFunction) => {
-  const data =
-  [
-    req.body.email,
-    req.body.password,
-    req.body.name,
-    req.body.image,
-    req.body.description,
-    req.body.notification,
-    req.body.permission,
-    req.body.type,
-    parseInt(req.params.usn)
-  ];
-
-  const result = await userQuery.modifyUser(data);
-  res.status(200).send(
+  let data: Array<any>;
+  let result;
+  console.log(req.body.password);
+  if (req.body.password === null) {
+    data = 
+    [
+      req.body.email,
+      req.body.name,
+      req.body.image,
+      req.body.description,
+      req.body.notification,
+      req.body.permission,
+      req.body.type,
+      parseInt(req.params.usn)
+    ];
+    result = await userQuery.modifyUserWithoutPW(data);
+    res.status(200).send(
+        {
+          'message': 'modify user without password success'
+        }
+      );
+    console.log('controller: modifyUserWithoutPW');
+  } else {
+    data =
+    [
+      req.body.email,
+      req.body.password,
+      req.body.name,
+      req.body.image,
+      req.body.description,
+      req.body.notification,
+      req.body.permission,
+      req.body.type,
+      parseInt(req.params.usn)
+    ];
+    result = await userQuery.modifyUser(data);
+    res.status(200).send(
       {
         'message': 'modify user success'
       }
     );
-console.log('controller: modifyUser');
+    console.log('controller: modifyUser');
+  }
 };
 
 const createUserCareer = async (req: express.Request, res: express.Response, next: express.NextFunction) => {
