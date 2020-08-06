@@ -54,7 +54,7 @@ const modifyForm = async (req: express.Request, res: express.Response, next: exp
   res.status(200).render('matching/matchingUpdate',
     {
       message: 'get modify form success',
-      matching: data[0] 
+      matching: data[0]
     }
   )
   console.log('controller: updateMatching');
@@ -62,18 +62,20 @@ const modifyForm = async (req: express.Request, res: express.Response, next: exp
 
 const modifyMatching = async (req: express.Request, res: express.Response, next: express.NextFunction) => {
 
-  console.log(req.body);
+  const data = [
+    req.body.mentor_USN,
+    req.body.mentee_USN,
+    new Date(), //req.body.request_time,
+    new Date(), //req.body.response_time,
+    req.body.state,
+    req.body.request_message,
+    req.body.response_message,
+    req.body.is_checked,
+    parseInt(req.params.id)
+  ];
 
-  let result = {
-      id: req.params.id,
-
-      mentor: 0,
-      mentee: 1,
-      req_date: '2020/07/30',
-      is_checked: false,
-      state: 0,
-    };
-
+  const result = await matchingDAO.modifyMatching(data);
+  console.log(result);
   res.status(200).send(
     {
       message: 'get modify matching success',
