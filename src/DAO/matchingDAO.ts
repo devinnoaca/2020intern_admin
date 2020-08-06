@@ -38,6 +38,15 @@ async function deleteMatching(data: Array<any>) {
   }
 }
 
+async function modifyMatching(data: Array<any>) {
+  try {
+    const [rows, fields] = await db.connection.promise().query(query.modifyMatching, data);
+    return rows;
+  } catch (e) {
+    console.log('dao: modifyMatching error\n' + e);
+  }
+}
+
 export default {
-  getAllMatching, createMatching, deleteMatching, getMatching
+  getAllMatching, createMatching, deleteMatching, getMatching, modifyMatching
 }
