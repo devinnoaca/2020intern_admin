@@ -19,8 +19,8 @@ password VARCHAR(45) NOT NULL,\
 image_url TEXT ,\
 description VARCHAR(1000),\
 company TEXT,\
-permission INT NOT NULL,\
-noti_count INT NOT NULL,\
+permission INT NOT NULL DEFAULT -1,\
+noti_count INT NOT NULL DEFAULT 0,\
 type INT NOT NULL,\
 PRIMARY KEY(USN));`;
 
@@ -112,10 +112,10 @@ CREATE TABLE Matching(\
 ID INT NOT NULL AUTO_INCREMENT,\
 mentee_USN INT NOT NULL,\
 mentor_USN INT NOT NULL,\
-request_time DATETIME,\
+request_time DATETIME DEFAULT NOW(),\
 request_message TEXT,\
-is_checked BOOL NOT NULL,\
-state INT NOT NULL,\
+is_checked BOOL NOT NULL DEFAULT false,\
+state INT NOT NULL DEFAULT 0,\
 response_message TEXT, \
 response_time DATETIME, \
 PRIMARY KEY(ID),\
@@ -153,21 +153,22 @@ VALUES(1, "React", "Web");`;
 CREATE TABLE Notification( \
 ID INT NOT NULL AUTO_INCREMENT, \
 type INT NOT NULL, \
-is_checked BOOL NOT NULL, \
 message TEXT, \
 PRIMARY KEY(ID));`;
 
 	const strInsertNotificationTable = `
-INSERT INTO Notification(type, is_checked) \
-VALUES(0, true);`;
+INSERT INTO Notification(type) \
+VALUES(0);`;
 
 	const strCreateUserNotificationTable = `
 CREATE TABLE User_notification(\
+ID INT NOT NULL AUTO_INCREMENT, \
 noti_ID INT NOT NULL, \
 receiver_USN INT NOT NULL, \
 sender_USN INT NOT NULL, \
-time DATETIME NOT NULL, \
-PRIMARY KEY(noti_ID), \
+is_checked BOOL NOT NULL DEFAULT 0, \
+time DATETIME NOT NULL DEFAULT NOW(), \
+PRIMARY KEY(ID), \
 FOREIGN KEY(noti_ID) \
 REFERENCES Notification(ID) \
 ON DELETE CASCADE \
@@ -182,8 +183,8 @@ ON DELETE CASCADE \
 ON UPDATE CASCADE);`;
 
 	const strInsertUserNotification = `
-INSERT INTO User_notification(noti_ID, receiver_USN, sender_USN, time) \
-VALUES(1,2,1, '2019-10-12 15:18:35')`
+INSERT INTO User_notification(noti_ID, receiver_USN, sender_USN) \
+VALUES(1,2,1)`
 
 	const strCreateRecommendKeywordView = `
 CREATE OR REPLACE VIEW get_recommend_keyword AS \
