@@ -56,10 +56,12 @@ const callback = (xhr) => {
   // console.log(xhr.responseText);
   console.log(xhr)
   alert(`요청성공. ${xhr.status}`)
+
+  window.location.href = '/keyword';
 }
 
 const deleteKeyword = (id, name) => {
-  let delConfirm = confirm(`'${name} 키워드를 삭제하시겠습니까? `);
+  let delConfirm = confirm(`${name} 키워드를 삭제하시겠습니까? `);
   if (!delConfirm) {
     console.log('삭제취소.');
   } else {
@@ -86,4 +88,14 @@ const addCategory = () => {
     name: addForm.inputCategory.value
   }
   sendAjax('POST', `/category/`, JSON.stringify(jsonData), callback);
+}
+
+const deleteCategory = (id, name) => {
+  let delConfirm = confirm(`${name} 카테고리를 삭제하시겠습니까? `);
+  if (!delConfirm) {
+    console.log('삭제취소.');
+  } else {
+    console.log('삭제!');
+    sendAjax('DELETE', `/category/${id}`, null, callback);
+  }
 }
