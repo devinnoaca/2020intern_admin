@@ -16,8 +16,6 @@ const getKeywords = async (req: express.Request, res: express.Response,
     })
 
     const data = Object.fromEntries(keywordMap);
-    console.log(data);
-    // console.log(Object.keys(data));
     res.status(200).render('keyword/keyword',
       {
         'message': 'get keywords success',

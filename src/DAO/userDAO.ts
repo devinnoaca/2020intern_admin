@@ -16,9 +16,6 @@ async function getUserKeywords(data: Array<any>) {
     const [totalKeywords] = await db.connection.promise().query(query.searchUserTotalkeywords, data);
     const [recommendKeywords] = await db.connection.promise().query(query.searchUserRecommendkeywords, data);
     return {'totalKeywords': totalKeywords, 'recommendKeywords': recommendKeywords};
-    // console.log(totalKeywords);
-    // console.log(recommendKeywords);
-    // // return rows;
   } catch (e) {
     console.log('dao: getUserKeywords error\n' + e);
   }
