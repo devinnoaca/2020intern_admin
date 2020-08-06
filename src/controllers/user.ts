@@ -154,7 +154,6 @@ const modifyUserCareer = async (req: express.Request, res: express.Response, nex
       'message': 'modify user career success'
     }
   );
-  console.log(data);
   console.log('controller: modifyUserCareer');
 }
 
@@ -169,7 +168,6 @@ const deleteUserCareer = async (req: express.Request, res: express.Response, nex
       'message': 'delete user career success'
     }
   );
-  console.log(data);
   console.log('controller: deleteUserCareer');
 }
 
