@@ -1,7 +1,6 @@
 import query from './userQuery';
 import db from '../db';
 
-// TODO(SeongJaeSong): This function have to fetch keywords
 async function getUser(data: Array<any>) {
   try {
     const [rows, fields] = await db.connection.promise().query(query.searchUser, data);
