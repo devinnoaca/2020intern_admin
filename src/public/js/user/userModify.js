@@ -64,6 +64,10 @@ $('[name="updateCommitButton"]').on('click', () => {
     "image" : imageUrl
   };
 
+  if(password.trim().length == 0){
+    data.password = null;
+  }
+
   sendAjax('PUT', `/user/${usn}`, JSON.stringify(data), (xhr) => {
     window.location.href = `/user/${usn}`;
   });
