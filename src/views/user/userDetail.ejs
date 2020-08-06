@@ -121,6 +121,7 @@
                                   disabled>
                               </div>
                             </div>
+                            <input name="originPassword" type="hidden">
                           </li>
                         </ul>
                       </div>
@@ -180,7 +181,7 @@
                       <div class="col-md-10">
                         <% user[0].career.forEach(function(elem, index) { %>
                         <div class="input-group my-sm-1" name="careerDiv">
-                          <input class="form-control" value="<%=elem%>" type="text"
+                          <input class="form-control" value="<%=elem%>" name="career" type="text"
                             aria-describedby="deleteCareerButton" disabled>
                           <div class="input-group-append">
                             <button class="btn btn-outline-secondary" type="button" name="updateCareerButton"
