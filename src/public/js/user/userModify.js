@@ -19,6 +19,8 @@ $('#userUpdateButton').on('click', () => {
   $('#addCareerButton').attr('disabled', false);
   //id는 disabled처리
   $('ul').find('[name="id"]').attr('disabled', true);
+  //button disabled처리
+  $('button').attr('disabled', false);
 });
 
 //커리어 추가 버튼 클릭시 이벤트 ------------ 비동기 처리로 요청 성공시 반환값으로 추가된 커리어 정보를 반환해야함"
