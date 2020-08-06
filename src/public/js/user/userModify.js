@@ -25,8 +25,6 @@ $('#userUpdateButton').on('click', () => {
 $('#addCareerButton').on('click', () => {
   const career = $('[name="addCareerInput"]').val();
 
-  console.log(usn);
-
   const data = {
     "usn": usn,
     "content": career
@@ -60,8 +58,6 @@ $('[name="updateCommitButton"]').on('click', () => {
   const type = $('[name="type"]').val(); 
   const imageUrl = $('[name="image"]').attr('src');
 
-  alert(permission);
-
   const data = {
     "email" : email,
     "password" : password,
@@ -83,7 +79,7 @@ $('[name="updateCommitButton"]').on('click', () => {
 
 const addCareerCallback = (xhr) => {
   const message = xhr.responseText.message;
-  console.log(message);
+  
   /*const career = xhr.responseText.career;
   const careerId = xhr.responseText.careerId;
 
