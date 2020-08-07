@@ -98,9 +98,11 @@
                     <% Object.keys(keywords).forEach(function (elem, index) { %>
                     <% const categoryID = elem.split('_')[0]; %>
                     <% const categoryName = elem.split('_')[1]; %>
+
                     <a class="list-group-item list-group-item-action category-tab" data-toggle="list"
                       id="tab-<%= categoryID %>" name="<%= categoryName %>" href="#category-<%= categoryID %>"
                       role="tab" style="text-transform: capitalize;">
+
                       <div class="d-flex w-100 justify-content-between">
                         <span class="align-self-center"><%= categoryName %></span>
                         <!-- Delete Category -->
@@ -108,10 +110,12 @@
                           onclick="deleteCategory('<%= categoryID %>', '<%= categoryName %>')"><i
                             class="fa fa-trash fa-lg"></i></button>
                       </div>
+
                     </a>
                     <% }) %>
                   </div>
                   <br>
+
                   <!-- Add Category -->
                   <form name="addCategoryForm" onsubmit="addCategory()">
                     <div class="input-group mb-3">
@@ -128,20 +132,24 @@
                 <div class="col-xl-8 col-lg-7">
                   <!-- Tab panes: Keyword -->
                   <div class="tab-content">
+
                     <% Object.keys(keywords).forEach(function (elem, index) { %>
                     <% const categoryID = elem.split('_')[0]; %>
                     <% const categoryName = elem.split('_')[1]; %>
                     <div class="tab-pane" id="category-<%= categoryID %>" role="tabpanel">
+                      
                       <% keywords[elem].forEach(function (key) { %>
                       <a href="#" class="badge badge-info keyword-badge" id="badge-<%= categoryID %>"
                         name="<%= key.keywordName %>"
                         onclick="deleteKeyword('<%= key.keywordID %>', '<%= key.keywordName %>')"><%= key.keywordName %></a>
                       <% }) %>
+                        
                       <!-- Add Keyword -->
                       <a href="#" class="badge badge-primary" data-toggle="modal" data-target="#addKeywordModal"
                         data-category="<%= categoryID %>">+ ADD</a>
                     </div>
                     <% }) %>
+
                   </div>
                 </div>
               </div>
