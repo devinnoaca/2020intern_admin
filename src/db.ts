@@ -191,14 +191,14 @@ CREATE OR REPLACE VIEW get_recommend_keyword AS \
 SELECT t.user_usn mentee_USN, t.keyword_ID keyword_ID, k.name keyword_Name, k.category_ID category_ID, c.name category_Name \
 FROM keyword as k \
 JOIN category as c ON k.category_ID = c.ID \
-JOIN User_total_keyword as t ON k.ID = t.keyword_id;`;
+JOIN recommend_keyword as t ON k.ID = t.keyword_id;`;
 
 	const strCreateTotalKeywordView = `
 CREATE OR REPLACE VIEW get_total_keyword AS \
 SELECT r.user_usn user_usn, r.keyword_ID keyword_ID, k.name keyword_Name, k.category_ID category_ID, c.name category_Name \
 FROM keyword as k \
 JOIN category as c ON k.category_ID = c.ID \
-JOIN Recommend_keyword as r ON k.ID = r.keyword_ID;`;
+JOIN User_total_keyword as r ON k.ID = r.keyword_ID;`;
 
 	const strCreateAllKeywordView = `
 CREATE OR REPLACE VIEW get_all_keyword AS \
