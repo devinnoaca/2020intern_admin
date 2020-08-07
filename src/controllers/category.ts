@@ -8,6 +8,7 @@ const createCategory = async (req: express.Request, res: express.Response, next:
   [
     req.body.name
   ];
+
   const result = await categoryQuery.createCategory(data);
   res.status(200).send(
     {
