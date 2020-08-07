@@ -6,7 +6,7 @@ const router = express.Router();
 const getKeywords = async (req: express.Request, res: express.Response, 
   next: express.NextFunction) => {
     const result = await keywordQuery.getKeyword();
-    // let data = new Map();
+
     let keywordMap = new Map();
     result.map((current) => {
       if(!keywordMap.has(`${current.categoryID}_${current.categoryName}`)) {
