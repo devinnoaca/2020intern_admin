@@ -32,7 +32,7 @@ $('#addCareerButton').on('click', () => {
     "content": career
   };
 
-  sendAjax('POST', `/user/${usn}/career`, JSON.stringify(data), addCareerCallback);
+  sendAjax('POST', `/user/career/${usn}`, JSON.stringify(data), addCareerCallback);
 });
 
 // 커리어 수정 혹은 삭제 이벤트
@@ -111,12 +111,12 @@ const careerClickEvent = function(event, careerDiv) {
   };
   
   if(target.is('[name="updateCareerButton"]')){
-    sendAjax('PUT', `/user/${usn}/career`, JSON.stringify(data), (xhr) => {
+    sendAjax('PUT', `/user/career/${usn}`, JSON.stringify(data), (xhr) => {
       const message = xhr.response.message;
       alert(message);
     });
   } else if (target.is('[name="deleteCareerButton"]')){
-    sendAjax('DELETE', `/user/${usn}/career`, JSON.stringify(data), (xhr) => {
+    sendAjax('DELETE', `/user/career/${usn}`, JSON.stringify(data), (xhr) => {
       const message = xhr.response.message;
       alert(message);
       careerDiv.remove();
