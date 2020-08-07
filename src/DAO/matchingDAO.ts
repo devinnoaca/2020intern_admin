@@ -47,6 +47,16 @@ async function modifyMatching(data: Array<any>) {
   }
 }
 
+async function searchMatching(data: Array<any>) {
+  try {
+    const [rows, fields] = await db.connection.promise().query(query.searchMatching, data);
+    return rows;
+  } catch (e) {
+    console.log('dao: searchMatching error\n' + e);
+  }
+}
+
 export default {
-  getAllMatching, createMatching, deleteMatching, getMatching, modifyMatching
+  getAllMatching, createMatching, deleteMatching, getMatching, modifyMatching,
+  searchMatching
 }
