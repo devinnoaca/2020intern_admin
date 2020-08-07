@@ -38,7 +38,7 @@ const search = (type, input) => {
 }
 
 // 키워드-카테고리 검색 폼 제출
-const searchSubmit = () => {
+const onSearch = () => {
   let searchForm = document.searchForm;
   let type = searchForm.searchType.value;
   let searchInput = searchForm.searchInput.value;
@@ -56,15 +56,17 @@ const callback = (xhr) => {
   // console.log(xhr.responseText);
   console.log(xhr)
   alert(`요청성공. ${xhr.status}`)
+
+  window.location.href = '/keyword';
 }
 
 const deleteKeyword = (id, name) => {
-  let delConfirm = confirm(`'${name} 키워드를 삭제하시겠습니까? `);
+  let delConfirm = confirm(`${name} 키워드를 삭제하시겠습니까? `);
   if (!delConfirm) {
     console.log('삭제취소.');
   } else {
     console.log('삭제!');
-    sendAjax('DELETE', `http://localhost:3000/keyword/${id}`, null, callback);
+    sendAjax('DELETE', `/keyword/${id}`, null, callback);
   }
 }
 
@@ -76,7 +78,7 @@ const addKeyword = () => {
     categoryID: addForm.searchType.value
   }
   console.log(jsonData);
-  sendAjax('POST', `http://localhost:3000/keyword/`, JSON.stringify(jsonData), callback);
+  sendAjax('POST', `/keyword/`, JSON.stringify(jsonData), callback);
 }
 
 const addCategory = () => {
@@ -85,5 +87,15 @@ const addCategory = () => {
   let jsonData = {
     name: addForm.inputCategory.value
   }
-  sendAjax('POST', `http://localhost:3000/category/`, JSON.stringify(jsonData), callback);
+  sendAjax('POST', `/category/`, JSON.stringify(jsonData), callback);
+}
+
+const deleteCategory = (id, name) => {
+  let delConfirm = confirm(`${name} 카테고리를 삭제하시겠습니까? `);
+  if (!delConfirm) {
+    console.log('삭제취소.');
+  } else {
+    console.log('삭제!');
+    sendAjax('DELETE', `/category/${id}`, null, callback);
+  }
 }
