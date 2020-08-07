@@ -3,6 +3,31 @@ import keywordQuery from '../dao/keywordDAO'
 
 const router = express.Router();
 
+const renderKeyword = async (req: express.Request, res: express.Response, 
+  next: express.NextFunction) => {
+
+    const result = await keywordQuery.getKeyword();
+
+    //TODO: 중복코드 처리
+    let keywordMap = new Map();
+    result.map((current) => {
+      if(!keywordMap.has(`${current.categoryID}_${current.categoryName}`)) {
+        keywordMap.set(`${current.categoryID}_${current.categoryName}`, new Array());
+      }
+      keywordMap.get(`${current.categoryID}_${current.categoryName}`).push({'keywordID': current.keywordID, 'keywordName': current.keywordName});
+    })
+
+    const data = Object.fromEntries(keywordMap);
+
+    res.status(200).render('keyword/keyword',
+      {
+        'message': 'get keywords success',
+        'keywords': data
+      }
+    );
+    console.log('controller: renderKeyword');
+}
+
 const getKeywords = async (req: express.Request, res: express.Response, 
   next: express.NextFunction) => {
     const result = await keywordQuery.getKeyword();
@@ -58,7 +83,8 @@ const deleteKeyword = async (req: express.Request, res: express.Response,
     console.log('controller: deleteKeyword');
 };
 
-router.get('/', getKeywords);
+router.get('/', renderKeyword);
+router.get('/data', getKeywords);
 router.post('/', createKeyword);
 router.delete('/:id', deleteKeyword);
 
