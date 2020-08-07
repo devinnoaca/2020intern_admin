@@ -51,8 +51,15 @@ const getUser = async (req: express.Request, res: express.Response,
     career.push(current.career);
   })
   result = [result[0]];
-  result[0].careerID = careerID;
-  result[0].career = career;
+  if (careerID.length > 0) {
+    result[0].careerID = careerID;
+    result[0].career = career;
+  }
+  else {
+    result[0].careerID = null;
+    result[0].career = null;
+  }
+  
   result[0].keywords = keywordResult;
 
   res.status(200).render('user/userDetail' ,
