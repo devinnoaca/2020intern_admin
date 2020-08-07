@@ -30,6 +30,7 @@ const createMatching = async (req: express.Request, res: express.Response, next:
   console.log('controller: createMatching');
 };
 
+
 const deleteMatching = async (req: express.Request, res: express.Response, next: express.NextFunction) => {
   const data = [
     req.params.id
@@ -45,25 +46,44 @@ const deleteMatching = async (req: express.Request, res: express.Response, next:
   console.log('controller: deleteCategory');
 };
 
-const updateForm = async (req: express.Request, res: express.Response, next: express.NextFunction) => {
-
-  let result = {
-      id: req.params.id,
-      mentor: 0,
-      mentee: 1,
-      req_date: '2020/07/30',
-      is_checked: false,
-      state: 0,
-    };
-
+const modifyForm = async (req: express.Request, res: express.Response, next: express.NextFunction) => {
+  
+  let data = await matchingDAO.getMatching([req.params.id]);
   res.status(200).render('matching/matchingUpdate',
     {
-      message: 'get update form success',
+      message: 'get modify form success',
+      matching: data[0]
+    }
+  )
+  console.log('controller: updateMatching');
+}
+
+const modifyMatching = async (req: express.Request, res: express.Response, next: express.NextFunction) => {
+
+  const data = [
+    req.body.mentor_USN,
+    req.body.mentee_USN,
+    new Date(), //req.body.request_time,
+    new Date(), //req.body.response_time,
+    req.body.state,
+    req.body.request_message,
+    req.body.response_message,
+    req.body.is_checked,
+    parseInt(req.params.id)
+  ];
+
+  const result = await matchingDAO.modifyMatching(data);
+  console.log(result);
+  res.status(200).send(
+    {
+      message: 'get modify matching success',
       matching: result
     }
   )
   console.log('controller: updateMatching');
 }
+
+
 
 const getMatching = async (req: express.Request, res: express.Response, next: express.NextFunction) => {
 
@@ -93,7 +113,8 @@ const getMatchingDetail = async (req: express.Request, res: express.Response, ne
 
 router.get('/', getMatching);
 router.get('/:id', getMatchingDetail);
-router.get('/update/:id', updateForm);
+router.get('/update/:id', modifyForm);
+router.put('/update/:id', modifyMatching)
 router.post('/', createMatching);
 router.delete('/:id', deleteMatching);
 
