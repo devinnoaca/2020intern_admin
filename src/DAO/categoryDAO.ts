@@ -15,7 +15,8 @@ async function createCategory(data: Array<any>) {
     const [rows, fields] = await db.connection.promise().query(query.createCategory, data);
     return rows;
   } catch (e) {
-    console.log('dao: createcCategory error\n' + e);
+    console.log('dao: createCategory error\n' + e);
+    throw e;
   }
 }
 
@@ -25,6 +26,7 @@ async function deleteCategory(data: Array<any>) {
     return rows;
   } catch (e) {
     console.log('dao: deleteCategory error\n' + e);
+    throw e;
   }
 }
 

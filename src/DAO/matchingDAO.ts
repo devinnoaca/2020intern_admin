@@ -7,6 +7,7 @@ async function getAllMatching() {
     return rows;
   } catch (e) {
     console.log('dao: getAllMatching error\n' + e);
+    throw e;
   }
 }
 
@@ -17,6 +18,7 @@ async function getMatching(data: Array<any>) {
       return rows;
     } catch (e) {
       console.log('dao: getMatching error\n' + e);
+      throw e;
     }
   }
 
@@ -26,6 +28,7 @@ async function createMatching(data: Array<any>) {
     return rows;
   } catch (e) {
     console.log('dao: createMatching error\n' + e);
+    throw e;
   }
 }
 
@@ -35,6 +38,7 @@ async function deleteMatching(data: Array<any>) {
     return rows;
   } catch (e) {
     console.log('dao: deleteMatching error\n' + e);
+    throw e;
   }
 }
 
@@ -44,6 +48,7 @@ async function modifyMatching(data: Array<any>) {
     return rows;
   } catch (e) {
     console.log('dao: modifyMatching error\n' + e);
+    throw e;
   }
 }
 
