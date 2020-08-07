@@ -179,18 +179,18 @@
                         <label>경력</label>
                       </div>
                       <div class="col-md-10">
-                        <% user[0].career.forEach(function(elem, index) { %>
+                        <% for(let i = 0; i < user[0].career.length; ++i) { %>
                         <div class="input-group my-sm-1" name="careerDiv">
-                          <input class="form-control" value="<%=elem%>" name="career" type="text"
+                          <input class="form-control" value="<%=user[0].career[i]%>" name="career" type="text"
                             aria-describedby="deleteCareerButton" disabled>
                           <div class="input-group-append">
                             <button class="btn btn-outline-secondary" type="button" name="updateCareerButton"
-                              value="<%= user[0].careerID[index]%>" disabled>수정</button>
+                              value="<%= user[0].careerID[i]%>" disabled>수정</button>
                             <button class="btn btn-outline-secondary" type="button" name="deleteCareerButton"
-                              value="<%= user[0].careerID[index]%>" disabled>삭제</button>
+                              value="<%= user[0].careerID[i]%>" disabled>삭제</button>
                           </div>
                         </div>
-                        <% }) %>
+                        <% } %>
                         <div class="input-group">
                           <input class="form-control" name="addCareerInput" type="text" aria-describedby="buttonAddon"
                             disabled>
@@ -212,11 +212,14 @@
                       <!-- 키워드 버튼 -->
                       <div class="form-inline col-md-8">
                         <% user[0].keywords.totalKeywords.forEach(function(elem, index) {  %>
-                        <button class="form-control btn btn-info mx-1 my-1" value="<%=elem.keyword_ID%>" type="button">
-                          <h5>
-                            <%=elem.keyword_Name%>
-                          </h5>
-                        </button>
+                        <div class="btn-group mx-1 my-1" name="totalKeywordDeleteDiv">
+                          <button class="form-control btn btn-info" type="button">
+                            <h5><%=elem.keyword_Name%></h5>
+                          </button>
+                          <button class="btn btn-outline-info" value="<%=elem.keyword_ID%>" name="totalKeywordDeleteButton" disabled>
+                            X
+                          </button>
+                        </div>
                         <% }) %>
                       </div>
                       <!-- 토탈 키워드 추가 버튼 -->
@@ -234,11 +237,14 @@
                       </div>
                       <div class="form-inline col-md-8">
                         <% user[0].keywords.recommendKeywords.forEach(function(elem, index) {  %>
-                        <button class="form-control btn btn-info mx-1 my-1" value="<%=elem.keyword_ID%>" type="button">
-                          <h5>
-                            <%=elem.keyword_Name%>
-                          </h5>
-                        </button>
+                        <div class="btn-group mx-1 my-1" name="recommendKeywordDeleteDiv">
+                          <button class="form-control btn btn-info" value="<%=elem.keyword_ID%>" type="button">
+                            <h5><%=elem.keyword_Name%></h5>
+                          </button>
+                          <button class="btn btn-outline-info" value="<%=elem.keyword_ID%>" name="recommendKeywordDeleteButton" disabled>
+                            X
+                          </button>
+                        </div>
                         <% }) %>
                       </div>
                       <div class="col-md-2">
