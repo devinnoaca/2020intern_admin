@@ -210,7 +210,7 @@
                         <label>키워드</label>
                       </div>
                       <!-- 키워드 버튼 -->
-                      <div class="form-inline col-md-8">
+                      <div class="form-inline col-md-8" name="totalKeywordDiv">
                         <% user[0].keywords.totalKeywords.forEach(function(elem, index) {  %>
                         <div class="btn-group mx-1 my-1" name="totalKeywordDeleteDiv">
                           <button class="form-control btn btn-info" type="button">
@@ -235,7 +235,7 @@
                       <div class="form-inline col-md-2">
                         <label>추천 키워드</label>
                       </div>
-                      <div class="form-inline col-md-8">
+                      <div class="form-inline col-md-8" name="recommendKeywordDiv">
                         <% user[0].keywords.recommendKeywords.forEach(function(elem, index) {  %>
                         <div class="btn-group mx-1 my-1" name="recommendKeywordDeleteDiv">
                           <button class="form-control btn btn-info" value="<%=elem.keyword_ID%>" type="button">
@@ -341,9 +341,12 @@
 
   <!-- 유저 키워드 추가 모달 이벤트 처리-->
   <script src="/js/user/userKeyword.js"></script>
-
-  <!-- 키워드 추가 모달-->
-  <%- include ('./userKeywordModal.ejs') %> 
+  
+  <!-- 토탈 키워드 추가 모달-->
+  <%- include ('./userTotalKeywordModal.ejs') %>
+  
+  <!--추천 키워드 추가 모달-->
+  <%- include ('./userRecommendKeywordModal.ejs') %> 
 
   <script type="text/JavaScript">
   //유저 권한 셀렉트 박스 초기화 
