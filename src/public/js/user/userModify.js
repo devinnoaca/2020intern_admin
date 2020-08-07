@@ -1,4 +1,4 @@
-let url = window.location.href;
+const url = window.location.href;
 const urlSplit = url.split('/');
 const usn = urlSplit[urlSplit.length - 1];
 
