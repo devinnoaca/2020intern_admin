@@ -28,8 +28,7 @@ const getKeywords = async (req: express.Request, res: express.Response,
 
 const createKeyword = async (req: express.Request, res: express.Response, 
   next: express.NextFunction) => {
-    const data =
-    [
+    const data = [
       req.body.name,
       req.body.categoryID
     ];

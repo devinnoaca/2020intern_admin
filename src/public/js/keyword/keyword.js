@@ -87,6 +87,7 @@ const addCategory = () => {
   let jsonData = {
     name: addForm.inputCategory.value
   }
+  console.log(jsonData);
   sendAjax('POST', `/category/`, JSON.stringify(jsonData), callback);
 }
 
