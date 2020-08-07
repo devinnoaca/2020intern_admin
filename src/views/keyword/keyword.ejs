@@ -98,14 +98,19 @@
                     <% Object.keys(keywords).forEach(function (elem, index) { %>
                     <% const categoryID = elem.split('_')[0]; %>
                     <% const categoryName = elem.split('_')[1]; %>
-                    <div class="btn-group">
+                    
+                    
                       <a class="list-group-item list-group-item-action category-tab" data-toggle="list"
                         id="tab-<%= categoryID %>" name="<%= categoryName %>" href="#category-<%= categoryID %>"
                         role="tab" style="text-transform: capitalize;">
-                        <%= categoryName %>
+                        <div class="d-flex w-100 justify-content-between">
+                          <span class="align-self-center"><%= categoryName %></span>
+                          <button type="button" class="btn btn-secondary" onclick="deleteCategory('<%= categoryID %>', '<%= categoryName %>')"><i class="fa fa-trash fa-lg"></i></button>
+                        </div>
+                        
                       </a>
-                      <button type="button" class="btn btn-danger" onclick="deleteCategory('<%= categoryID %>', '<%= categoryName %>')"><i class="fa fa-trash fa-lg"></i></button>
-                    </div>
+                      
+                    
                     
                     <% }) %>
                   </div>
