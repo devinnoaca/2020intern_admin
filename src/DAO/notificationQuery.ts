@@ -29,7 +29,7 @@ INSERT INTO Notification(type, message) \
 VALUES(1, ?);`
 
 const createUserNotification = `
-INSERT INTO User_Notification(noti_ID, time, sender_USN, receiver_USN, is_checked) \
+INSERT INTO User_Notification(noti_ID, time, receiver_USN, sender_USN,is_checked) \
 VALUES(?, NOW(), ?, ?, 0);`;
 
 const deleteUserNotification = `
