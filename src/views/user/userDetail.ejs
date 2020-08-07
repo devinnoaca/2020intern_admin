@@ -212,7 +212,7 @@
                       <!-- 키워드 버튼 -->
                       <div class="form-inline col-md-8">
                         <% user[0].keywords.totalKeywords.forEach(function(elem, index) {  %>
-                        <button class="form-control badge badge-info" value="<%=elem.keyword_ID%>" type="button">
+                        <button class="form-control btn btn-info mx-1 my-1" value="<%=elem.keyword_ID%>" type="button">
                           <h5>
                             <%=elem.keyword_Name%>
                           </h5>
@@ -221,8 +221,7 @@
                       </div>
                       <!-- 토탈 키워드 추가 버튼 -->
                       <div class="col-md-2">
-                        <button class="btn btn-primary" name="totalKeywordButton" data-toggle="modal" 
-                        data-target="#userKeywordCreate" disabled>키워드 추가</button>
+                        <button class="btn btn-primary" name="totalKeywordButton" disabled>키워드 추가</button>
                       </div>
                     </div>
                   </li>
@@ -235,7 +234,7 @@
                       </div>
                       <div class="form-inline col-md-8">
                         <% user[0].keywords.recommendKeywords.forEach(function(elem, index) {  %>
-                        <button class="form-control badge badge-info" value="<%=elem.keyword_ID%>" type="button">
+                        <button class="form-control btn btn-info mx-1 my-1" value="<%=elem.keyword_ID%>" type="button">
                           <h5>
                             <%=elem.keyword_Name%>
                           </h5>
@@ -333,6 +332,9 @@
 
   <!-- 유저정보 수정관련 이벤트 처리-->
   <script src="/js/user/userModify.js"></script>
+
+  <!-- 유저 키워드 추가 모달 이벤트 처리-->
+  <script src="/js/user/userKeyword.js"></script>
 
   <!-- 키워드 추가 모달-->
   <%- include ('./userKeywordModal.ejs') %> 
