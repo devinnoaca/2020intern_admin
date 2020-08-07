@@ -1,3 +1,6 @@
+const recommendKeywordUrl = `/keyword/recommend/${usn}`;
+const totlaKeywordUrl = `/keyword/total/${usn}`;
+
 //토탈키워드 추가 이벤트 처리
 $('[name="totalKeywordButton"]').on('click', () => {
   const eventTrigger = $('#categoryList').find('a').length;
@@ -26,11 +29,12 @@ const keywordCallback = function(xhr){
   Object.keys(keywords).forEach(function(elem, index){ 
     const categoryID = elem.split('_')[0];
     const categoryName = elem.split('_')[1];
+    
     const categoryTemplate = `<a class=list-group-item list-group-item-action category-tab
                             data-toggle="list" id="tab-${categoryID}" name="${categoryName}" 
                             href="#category-${categoryID}" role="tab" style="text-transform: capitalize;">
                             ${categoryName}</a>`;
-    console.log(categoryTemplate);
+    
     const keywordPanelTemplate = `<div class="tab-pane" id="category-${categoryID}" role="tabpanel"></div>`;
     
     $('#categoryList').append(categoryTemplate);
@@ -53,6 +57,7 @@ const keywordCallback = function(xhr){
     sendAjax('POST', `/user/keyword/total/${usn}`, JSON.stringify(data), (xhr) => {
       alert(xhr.response.message);
     });
+
   });
 }
 
@@ -61,7 +66,38 @@ const keywordCallback = function(xhr){
 // router.post('/keyword/total/:usn', createUserTotalKeyword);
 // router.delete('/keyword/total/:usn', deleteUserTotalKeyword);
 
+//토탈 키워드 삭제 이벤트 처리
+$('[name="totalKeywordDeleteDiv"]').on('click', function(event){
+  const targetDiv = $(this);
+  const target = $(event.target);
+  const keywordID = target.val();
 
-const keywordClickEvent = function(event){
+  if(target.is('[name="totalKeywordDeleteButton"]')){
+    const data = {
+      "id" : keywordID
+    };
 
-}
+    sendAjax('DELETE', `/user/keyword/total/${usn}`, JSON.stringify(data), (xhr) => {
+      alert(xhr.response.message);
+      targetDiv.remove();
+    });
+  }
+});
+
+//추천 키워드 삭제 이벤트 처리
+$('[name="recommendKeywordDeleteDiv"]').on('click', function(event){
+  const targetDiv = $(this);
+  const target = $(event.target);
+  const keywordID = target.val();
+
+  if(target.is('[name="recommendKeywordDeleteButton"]')){
+    const data = {
+      "id" : keywordID
+    };
+
+    sendAjax('DELETE', `/user/keyword/recommend/${usn}`, JSON.stringify(data), (xhr) => {
+      alert(xhr.response.message);
+      targetDiv.remove();
+    });
+  }
+});
