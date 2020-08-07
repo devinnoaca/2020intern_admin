@@ -17,12 +17,12 @@ const getKeywords = async (req: express.Request, res: express.Response,
 
     const data = Object.fromEntries(keywordMap);
 
-    res.status(200).render('keyword/keyword',
+    res.status(200).send(
       {
         'message': 'get keywords success',
         'keywords': data
       }
-    )
+    );
     console.log('controller: getKeywords');
 }
 
