@@ -12,6 +12,7 @@ async function createNotificationToAll(data: Array<any>) {
     return users;
   } catch (e) {
     console.log('dao: createNotificationToAll error\n' + e);
+    throw e;
   }
 
 }
@@ -27,6 +28,7 @@ async function createNotificationToMentor(data: Array<any>) {
     return users;
   } catch (e) {
     console.log('dao: createNotificationToMentor error\n' + e);
+    throw e;
   }
 
 }
@@ -42,6 +44,7 @@ async function createNotificationToMentee(data: Array<any>) {
     return users;
   } catch (e) {
     console.log('dao: createNotificationToMentee error\n' + e);
+    throw e;
   }
 }
 
@@ -54,6 +57,7 @@ async function createNotification(data: Array<any>) {
     return user;
   } catch (e) {
     console.log('dao: createNotification error\n' + e);
+    throw e;
   }
 
 }
@@ -64,6 +68,7 @@ async function getUserNotification(data: Array<any>) {
     return rows;
   } catch (e) {
     console.log('dao: createNotification error\n' + e);
+    throw e;
   }
 
 }
@@ -74,6 +79,7 @@ async function deleteUserNotification(data: Array<any>) {
     return rows;
   } catch (e) {
     console.log('dao: createNotification error\n' + e);
+    throw e;
   }
 
 }
