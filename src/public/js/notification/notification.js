@@ -7,7 +7,8 @@ $('tbody tr').on('click', function(event){
   
   if(target.is('[name="deleteButton"]')){    
     sendAjax('DELETE', `/notification/${id}`, null, (xhr) => {
-      console.log('삭제');
+      alert(xhr.response.message);
+      window.location.href = '/notification';
     });
   }
 });
