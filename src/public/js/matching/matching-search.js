@@ -15,6 +15,7 @@ isTotal.addEventListener('change', (event) => {
 
 const renderResult = (data) => {
   let result = '';
+
   data.forEach(elem => {
     result += '<tr>';
     result += `
@@ -33,15 +34,16 @@ const renderResult = (data) => {
     result += '</tr>\n';
   });
 
-  let dataTable = document.getElementById(`dataBody`);
-  dataTable.innerHTML = result;
-
-  console.log(data.length);
-
   document.getElementById('resultCount').innerHTML = `Total ${data.length}`;
-
-  tableClickEvent();
-
+  
+  let dataTable = document.getElementById(`dataBody`);
+  if(data.length == 0) {
+    dataTable.innerHTML = '<td colspan="7">조건에 해당되는 데이터가 없습니다.</td>';
+  } else {
+    dataTable.innerHTML = result;
+    tableClickEvent();
+  }  
+  
  }
 
 
@@ -63,29 +65,34 @@ const searchMatchingCallback = (xhr) => {
 const onSearch = () => {
   const searchForm = document.searchForm;
 
+  let formValid = true;
   let startDate;
   let endDate;
   if(searchForm.isTotal.checked) {
-    console.log('total');
     startDate = new Date('1970-01-01');
     endDate = new Date();
     endDate.setDate(endDate.getDate()+1);
   } else {
-    console.log('not total');
+    if(searchForm.startDate.value == '' || searchForm.endDate.value == '') {
+      alert('기간을 정확히 입력해주세요');
+      formValid = false;
+    }
     startDate = new Date(searchForm.startDate.value);
     endDate = new Date(searchForm.endDate.value);
   }
 
-  const jsonData = {
-    mentor_id: searchForm.mentorInput.value,
-    mentee_id: searchForm.menteeInput.value,
-    state: searchForm.state.value, // -1: 전체, 0: 요청, 1: 수락, 2: 거절
-    start_date: startDate,
-    end_date: endDate
-  };
-
-  console.log(jsonData);
-
-  sendAjax('POST', `/matching/search`, JSON.stringify(jsonData), searchMatchingCallback);
+  if(formValid) {
+    const jsonData = {
+      mentor_id: searchForm.mentorInput.value,
+      mentee_id: searchForm.menteeInput.value,
+      state: searchForm.state.value, // -1: 전체, 0: 요청, 1: 수락, 2: 거절
+      start_date: startDate,
+      end_date: endDate
+    };
+  
+    console.log(jsonData);
+  
+    sendAjax('POST', `/matching/search`, JSON.stringify(jsonData), searchMatchingCallback);
+  }
 }
 
