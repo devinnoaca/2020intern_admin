@@ -179,18 +179,18 @@
                         <label>경력</label>
                       </div>
                       <div class="col-md-10">
-                        <% user[0].career.forEach(function(elem, index) { %>
+                        <% for(let i = 0; i < user[0].career.length; ++i) { %>
                         <div class="input-group my-sm-1" name="careerDiv">
-                          <input class="form-control" value="<%=elem%>" name="career" type="text"
+                          <input class="form-control" value="<%=user[0].career[i]%>" name="career" type="text"
                             aria-describedby="deleteCareerButton" disabled>
                           <div class="input-group-append">
                             <button class="btn btn-outline-secondary" type="button" name="updateCareerButton"
-                              value="<%= user[0].careerID[index]%>" disabled>수정</button>
+                              value="<%= user[0].careerID[i]%>" disabled>수정</button>
                             <button class="btn btn-outline-secondary" type="button" name="deleteCareerButton"
-                              value="<%= user[0].careerID[index]%>" disabled>삭제</button>
+                              value="<%= user[0].careerID[i]%>" disabled>삭제</button>
                           </div>
                         </div>
-                        <% }) %>
+                        <% } %>
                         <div class="input-group">
                           <input class="form-control" name="addCareerInput" type="text" aria-describedby="buttonAddon"
                             disabled>
@@ -209,14 +209,22 @@
                       <div class="form-inline col-md-2">
                         <label>키워드</label>
                       </div>
-                      <div class="form-inline col-md-10">
+                      <!-- 키워드 버튼 -->
+                      <div class="form-inline col-md-8" name="totalKeywordDiv">
                         <% user[0].keywords.totalKeywords.forEach(function(elem, index) {  %>
-                        <button class="form-control badge badge-info" value="<%=elem.keyword_ID%>" type="button">
-                          <h5>
-                            <%=elem.keyword_Name%>
-                          </h5>
-                        </button>
+                        <div class="btn-group mx-1 my-1" name="totalKeywordDeleteDiv">
+                          <button class="form-control btn btn-info" type="button">
+                            <h5><%=elem.keyword_Name%></h5>
+                          </button>
+                          <button class="btn btn-outline-info" value="<%=elem.keyword_ID%>" name="totalKeywordDeleteButton" disabled>
+                            X
+                          </button>
+                        </div>
                         <% }) %>
+                      </div>
+                      <!-- 토탈 키워드 추가 버튼 -->
+                      <div class="col-md-2">
+                        <button class="btn btn-primary" name="totalKeywordButton" disabled>키워드 추가</button>
                       </div>
                     </div>
                   </li>
@@ -227,18 +235,22 @@
                       <div class="form-inline col-md-2">
                         <label>추천 키워드</label>
                       </div>
-                      <div class="form-inline col-md-10">
+                      <div class="form-inline col-md-8" name="recommendKeywordDiv">
                         <% user[0].keywords.recommendKeywords.forEach(function(elem, index) {  %>
-                        <button class="form-control badge badge-info" value="<%=elem.keyword_ID%>" type="button">
-                          <h5>
-                            <%=elem.keyword_Name%>
-                          </h5>
-                        </button>
+                        <div class="btn-group mx-1 my-1" name="recommendKeywordDeleteDiv">
+                          <button class="form-control btn btn-info" value="<%=elem.keyword_ID%>" type="button">
+                            <h5><%=elem.keyword_Name%></h5>
+                          </button>
+                          <button class="btn btn-outline-info" value="<%=elem.keyword_ID%>" name="recommendKeywordDeleteButton" disabled>
+                            X
+                          </button>
+                        </div>
                         <% }) %>
                       </div>
-                    </div>
-                    <div class="form-row">
-
+                      <div class="col-md-2">
+                        <button class="btn btn-primary" name="recommendKeywordButton" data-toggle="modal"
+                        data-target="#userKeywordCreate" disabled>추천 키워드 추가</button>
+                      </div>
                     </div>
                   </li>
 
@@ -258,7 +270,7 @@
                   <li class="list-group-item">
                     <div class="form-row d-flex justify-content-center">
                       <div class="form-inline ">
-                        <button class="btn btn-primary mx-3" name="updateCommitButton" type="button">수정</button>
+                        <button class="btn btn-primary mx-3" name="updateCommitButton" type="button" disabled>수정</button>
                         <button class="btn btn-primary mx-3" name="updateCancelButton" type="button">취소</button>
                       </div>
                     </div>
@@ -324,7 +336,17 @@
   <!-- Send Ajax 메소드 처리 script-->
   <script src="/js/common/ajax.js"></script>
 
+  <!-- 유저정보 수정관련 이벤트 처리-->
   <script src="/js/user/userModify.js"></script>
+
+  <!-- 유저 키워드 추가 모달 이벤트 처리-->
+  <script src="/js/user/userKeyword.js"></script>
+  
+  <!-- 토탈 키워드 추가 모달-->
+  <%- include ('./userTotalKeywordModal.ejs') %>
+  
+  <!--추천 키워드 추가 모달-->
+  <%- include ('./userRecommendKeywordModal.ejs') %> 
 
   <script type="text/JavaScript">
   //유저 권한 셀렉트 박스 초기화 
@@ -333,7 +355,7 @@
   $('[name="type"] option:nth-child(<%=user[0].type + 1%>)').attr('selected', true);
 
   $('[name="updateCancelButton"]').on('click', () => {
-    window.location.href = `/user/<%=user[0].usn%>`;
+    window.location.href = `/user`;
   });
   </script>
 </body>

@@ -73,8 +73,6 @@ const deleteUserNotification = async (req: express.Request, res: express.Respons
   )
 }
 
-
-
 router.post('/create', createNotification);
 router.post('/search', searchNotification);
 router.delete('/:id', deleteUserNotification);

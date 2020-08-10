@@ -111,11 +111,40 @@ const getMatchingDetail = async (req: express.Request, res: express.Response, ne
   console.log('controller: getMatching');
 };
 
+const searchMatching = async (req: express.Request, res: express.Response, nex: express.NextFunction) => {
+  let data = 
+  [
+    req.body.start_date,
+    req.body.end_date,
+    ''
+  ];
+  
+  if (req.body.state !== -1 && req.body.state !== null) {
+    data[2].concat(` AND m.state = ${req.body.state}`)
+  }
+  if (req.body.mentee_id !== null) {
+    data[2].concat(` AND mentee.ID = ${req.body.mentee_id}`)
+  }
+  if (req.body.mentor_id !== null) {
+    data[2].concat(` AND mentor.ID = ${req.body.mentor_id}`)
+  }
+  
+  const result = await matchingDAO.searchMatching(data);
+
+  res.status(200).send(
+    {
+      'message': 'search matching success',
+      'result': result
+    }
+  )
+  console.log('controller: searchMatching');
+}
+
 router.get('/', getMatching);
 router.get('/:id', getMatchingDetail);
 router.get('/update/:id', modifyForm);
 router.put('/update/:id', modifyMatching)
 router.post('/', createMatching);
 router.delete('/:id', deleteMatching);
-
+router.post('/search', searchMatching);
 export = router;

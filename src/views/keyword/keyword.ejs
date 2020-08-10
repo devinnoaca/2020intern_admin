@@ -6,11 +6,6 @@
 
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 
-  <!-- Ajax js(sendAjax)-->
-  <script type="text/javascript" src="js/common/ajax.js"></script>
-  <!-- Keyword js -->
-  <script type="text/javascript" src="js/keyword/keyword.js"></script>
-
 </head>
 
 <body id="page-top">
@@ -38,8 +33,6 @@
           <!-- Page Heading -->
           <div class="d-sm-flex align-items-center justify-content-between mb-4">
             <h1 class="h3 mb-0 text-gray-800">Keyword</h1>
-            <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
-                class="fas fa-download fa-sm text-white-50"></i> Generate Report</a>
           </div>
 
           <!-- Content Row -->
@@ -54,9 +47,9 @@
             <div class="card-body">
               <form name="searchForm" onsubmit="onSearch(); return false;" class="form-inline">
                 <select name="searchType" class="custom-select" id="inlineFormCustomSelectPref">
-                  <option selected>Choose...</option>
-                  <option value="category">Category</option>
-                  <option value="keyword">Keyword</option>
+                  <option value="NONE" selected>Choose...</option>
+                  <option value="CATEGORY">Category</option>
+                  <option value="KEYWORD">Keyword</option>
                 </select>
 
                 <div class="custom-control custom-checkbox my-1 mr-sm-2">
@@ -93,31 +86,36 @@
             <div class="card-body">
               <div class="row">
                 <div class="col-xl-4 col-lg-5">
-                  <!-- List group : Category -->
+                  <!-- List group: Category -->
                   <div class="list-group" id="myList" role="tablist">
                     <% Object.keys(keywords).forEach(function (elem, index) { %>
                     <% const categoryID = elem.split('_')[0]; %>
                     <% const categoryName = elem.split('_')[1]; %>
-                    <div class="btn-group">
-                      <a class="list-group-item list-group-item-action category-tab" data-toggle="list"
-                        id="tab-<%= categoryID %>" name="<%= categoryName %>" href="#category-<%= categoryID %>"
-                        role="tab" style="text-transform: capitalize;">
-                        <%= categoryName %>
-                      </a>
-                      <button type="button" class="btn btn-danger" onclick="deleteCategory('<%= categoryID %>', '<%= categoryName %>')"><i class="fa fa-trash fa-lg"></i></button>
-                    </div>
-                    
+
+                    <a class="list-group-item list-group-item-action category-tab" data-toggle="list"
+                      id="tab-<%= categoryID %>" name="<%= categoryName %>" href="#category-<%= categoryID %>"
+                      role="tab" style="text-transform: capitalize;">
+
+                      <div class="d-flex w-100 justify-content-between">
+                        <span class="align-self-center"><%= categoryName %></span>
+                        <!-- Delete Category -->
+                        <button type="button" class="btn btn-secondary"
+                          onclick="deleteCategory('<%= categoryID %>', '<%= categoryName %>')"><i
+                            class="fa fa-trash fa-lg"></i></button>
+                      </div>
+
+                    </a>
                     <% }) %>
                   </div>
                   <br>
 
-                  <form name="addCategoryForm">
+                  <!-- Add Category -->
+                  <form name="addCategoryForm" onsubmit="addCategory(); return false;">
                     <div class="input-group mb-3">
                       <input type="text" class="form-control" name="inputCategory" placeholder="category name"
                         aria-label="category name" aria-describedby="button-addon2" required>
                       <div class="input-group-append">
-                        <button class="btn btn-outline-secondary" type="button" id="button-addon2"
-                          onclick="addCategory()">Add</button>
+                        <button class="btn btn-outline-secondary" type="submit" id="button-addon2">Add</button>
                       </div>
                     </div>
                   </form>
@@ -125,21 +123,26 @@
                 </div>
 
                 <div class="col-xl-8 col-lg-7">
-                  <!-- Tab panes -->
+                  <!-- Tab panes: Keyword -->
                   <div class="tab-content">
+
                     <% Object.keys(keywords).forEach(function (elem, index) { %>
                     <% const categoryID = elem.split('_')[0]; %>
                     <% const categoryName = elem.split('_')[1]; %>
                     <div class="tab-pane" id="category-<%= categoryID %>" role="tabpanel">
+                      
                       <% keywords[elem].forEach(function (key) { %>
                       <a href="#" class="badge badge-info keyword-badge" id="badge-<%= categoryID %>"
                         name="<%= key.keywordName %>"
                         onclick="deleteKeyword('<%= key.keywordID %>', '<%= key.keywordName %>')"><%= key.keywordName %></a>
                       <% }) %>
+                        
+                      <!-- Add Keyword -->
                       <a href="#" class="badge badge-primary" data-toggle="modal" data-target="#addKeywordModal"
                         data-category="<%= categoryID %>">+ ADD</a>
                     </div>
                     <% }) %>
+
                   </div>
                 </div>
               </div>
@@ -174,6 +177,14 @@
   <!-- create keyword Modal -->
   <%- include ('./createKeywordModal.ejs') %>
 
+  <!-- Ajax js(sendAjax)-->
+  <script type="text/javascript" src="js/common/ajax.js"></script>
+  <!-- Keyword event -->
+  <script type="text/javascript" src="js/keyword/keyword.js"></script>
+  <!-- Keyword search event-->
+  <script type="text/javascript" src="js/keyword/keyword-search.js"></script>
+  <!-- Category event -->
+  <script type="text/javascript" src="js/keyword/category.js"></script>
 
 </body>
 
