@@ -1,5 +1,6 @@
 import query from './MatchingQuery';
 import db from '../db';
+import e = require('express');
 
 async function getAllMatching() {
   try {

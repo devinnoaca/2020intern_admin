@@ -15,10 +15,37 @@ isTotal.addEventListener('change', (event) => {
   }
 })
 
+const renderResult = (data) => {
+  let result = '';
+  data.forEach((elem, index) => {
+    result += '<tr>';
+    result += `
+    <td name="id">${elem.id}</td>\n
+    <td name="mentor" id="${elem.mentor_USN}">${elem.mentor_ID}</td>\n
+    <td name="mentee" id="${elem.mentee_USN}">${elem.mentee_ID}</td>\n
+    <td name="requestTime">${elem.request_time}</td>\n
+    <td name="isChecked">${elem.is_checked}</td>\n
+    <td name="state">${elem.state}</td>\n
+    <td></td>\n
+    `;
+    // for(let key in elem) {
+    //   console.log(`${key} : ${elem[key]}`);
+    //   result += `<td>${elem[key]}</td>`;
+    // }
+    result += '</tr>\n';
+  });
+  // console.log(result);
+
+  let dataTable = document.getElementById(`dataBody`);
+    dataTable.innerHTML = result;
+ }
+
+
 const searchMatchingCallback = (xhr) => {
   console.log(xhr.response.message);
   if(xhr.status == 200) {
     console.log(xhr.response.result);
+    renderResult(xhr.response.result);
   } else {
     alert(`매칭 조회실패 [${xhr.status}]`);
     console.log(xhr.response.message);

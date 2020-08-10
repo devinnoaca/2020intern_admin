@@ -111,22 +111,26 @@ const getMatchingDetail = async (req: express.Request, res: express.Response, ne
   console.log('controller: getMatching');
 };
 
+const dateFormatConvert = (date:string):string => {
+  return (new Date(date)).toISOString().slice(0, 19).replace(/-/g, "-").replace("T", " ");
+}
+
 const searchMatching = async (req: express.Request, res: express.Response, nex: express.NextFunction) => {
   let data = 
   [
-    req.body.start_date,
-    req.body.end_date,
+    dateFormatConvert(req.body.start_date),
+    dateFormatConvert(req.body.end_date),
     ''
   ];
-  
-  if (req.body.state !== -1 && req.body.state !== null) {
-    data[2].concat(` AND m.state = ${req.body.state}`)
+
+  if (req.body.state !== '-1' && req.body.state !== null) {
+    data[2] += ` AND m.state = ${req.body.state}`;
   }
-  if (req.body.mentee_id !== null) {
-    data[2].concat(` AND mentee.ID = ${req.body.mentee_id}`)
+  if (req.body.mentee_id !== null && req.body.mentee_id !== '') {
+    data[2] += ` AND mentee.ID = ${req.body.mentee_id}`;
   }
-  if (req.body.mentor_id !== null) {
-    data[2].concat(` AND mentor.ID = ${req.body.mentor_id}`)
+  if (req.body.mentor_id !== null && req.body.mentor_id !== '') {
+    data[2] += ` AND mentor.ID = ${req.body.mentor_id}`;
   }
   
   const result = await matchingDAO.searchMatching(data);
