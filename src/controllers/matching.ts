@@ -118,6 +118,7 @@ const searchMatching = async (req: express.Request, res: express.Response, nex: 
     req.body.end_date,
     ''
   ];
+  
   if (req.body.state !== -1 && req.body.state !== null) {
     data[2].concat(` AND m.state = ${req.body.state}`)
   }
@@ -133,7 +134,7 @@ const searchMatching = async (req: express.Request, res: express.Response, nex: 
   res.status(200).send(
     {
       'message': 'search matching success',
-      'matchings': result
+      'result': result
     }
   )
   console.log('controller: searchMatching');

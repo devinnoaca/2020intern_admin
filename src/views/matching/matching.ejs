@@ -46,7 +46,7 @@
               <h6 class="m-0 font-weight-bold text-primary">매칭정보 조회</h6>
             </div>
             <div class="card-body">
-              <form name="searchForm" onsubmit="searchSubmit(); return false;">
+              <form name="searchForm" onsubmit="onSearch(); return false;">
                 <ul class="list-group list-group-flush">
 
                   <!-- mentor / mentee -->
@@ -206,6 +206,9 @@
   <!-- matching datepicker-->
   <script src="/js/matching/form-date-picker.js"></script>
 
+  <!-- Ajax js(sendAjax)-->
+  <script type="text/javascript" src="js/common/ajax.js"></script>
+  
   <!-- matching js -->
   <script type="text/javascript" src="/js/matching/table-event.js"></script>
   <script type="text/javascript" src="/js/matching/matching-search.js"></script>
