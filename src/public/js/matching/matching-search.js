@@ -6,7 +6,6 @@ const startDate = document.querySelector('.start-date');
 const endDate = document.querySelector('.end-date');
 
 isTotal.addEventListener('change', (event) => {
-  console.log('change checkbox!')
   if (event.target.checked) {
     startDate.disabled = true;
     endDate.disabled = true;
