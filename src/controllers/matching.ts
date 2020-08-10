@@ -3,23 +3,24 @@ import matchingDAO from '../dao/matchingDAO'
 
 const router = express.Router();
 
+//날짜시간 포맷 변환
+const dateFormatConvert = (date:string):string => {
+  return (new Date(date)).toISOString().slice(0, 19).replace(/-/g, "-").replace("T", " ");
+}
+
 const createMatching = async (req: express.Request, res: express.Response, next: express.NextFunction) => {
 
-  let is_checked = true;
-  //매칭요청이 대기 상태로 생성 될 시, 읽지 않음으로 생성
-  if(req.body.state == 0) {
-    is_checked = false;
-  }
-
   const data = [
-    req.body.mentorUSN, //mentor_USN
-    req.body.menteeUSN, //mentee_USN
-    new Date(), //request_time
-    req.body.state, //state
-    is_checked, //is_checked
-    req.body.requestMessage,
-    req.body.responseMessage
+    req.body.mentor_USN, //mentor_USN
+    req.body.mentee_USN, //mentee_USN
+    dateFormatConvert(req.body.request_time),
+    req.body.state,
+    req.body.is_checked,
+    req.body.request_message,
+    req.body.response_message
   ];
+
+  console.log(data);
 
   await matchingDAO.createMatching(data);
 
@@ -107,10 +108,6 @@ const getMatchingDetail = async (req: express.Request, res: express.Response, ne
   )
   console.log('controller: getMatching');
 };
-
-const dateFormatConvert = (date:string):string => {
-  return (new Date(date)).toISOString().slice(0, 19).replace(/-/g, "-").replace("T", " ");
-}
 
 const searchMatching = async (req: express.Request, res: express.Response, nex: express.NextFunction) => {
   let data = 
