@@ -1,5 +1,3 @@
-
-
 // checkbox check event
 const isTotal = document.querySelector('#isTotal');
 const startDate = document.querySelector('.start-date');
@@ -17,7 +15,7 @@ isTotal.addEventListener('change', (event) => {
 
 const renderResult = (data) => {
   let result = '';
-  data.forEach((elem, index) => {
+  data.forEach(elem => {
     result += '<tr>';
     result += `
     <td name="id">${elem.id}</td>\n
@@ -34,10 +32,12 @@ const renderResult = (data) => {
     // }
     result += '</tr>\n';
   });
-  // console.log(result);
 
   let dataTable = document.getElementById(`dataBody`);
-    dataTable.innerHTML = result;
+  dataTable.innerHTML = result;
+
+  tableClickEvent();
+
  }
 
 
@@ -65,6 +65,7 @@ const onSearch = () => {
     console.log('total');
     startDate = new Date('1970-01-01');
     endDate = new Date();
+    endDate.setDate(endDate.getDate()+1);
   } else {
     console.log('not total');
     startDate = new Date(searchForm.startDate.value);

@@ -21,11 +21,8 @@ const createMatching = async (req: express.Request, res: express.Response, next:
     req.body.responseMessage
   ];
 
-  const result = await matchingDAO.createMatching(data);
+  await matchingDAO.createMatching(data);
 
-  // res.status(200).send({
-  //   'message': 'create category success',
-  // });
   res.redirect('/matching');
   console.log('controller: createMatching');
 };
@@ -51,8 +48,8 @@ const modifyForm = async (req: express.Request, res: express.Response, next: exp
   let data = await matchingDAO.getMatching([req.params.id]);
   res.status(200).render('matching/matchingUpdate',
     {
-      message: 'get modify form success',
-      matching: data[0]
+      'message': 'get modify form success',
+      'matching': data[0]
     }
   )
   console.log('controller: updateMatching');
@@ -76,8 +73,8 @@ const modifyMatching = async (req: express.Request, res: express.Response, next:
   console.log(result);
   res.status(200).send(
     {
-      message: 'get modify matching success',
-      matching: result
+      'message': 'get modify matching success',
+      'matching': result
     }
   )
   console.log('controller: updateMatching');
@@ -91,8 +88,8 @@ const getMatching = async (req: express.Request, res: express.Response, next: ex
 
   res.status(200).render('matching/matching',
     {
-      message: 'get category success',
-      matching: data
+      'message': 'get category success',
+      'matching': data
     }
   )
   console.log('controller: getMatching');
@@ -104,8 +101,8 @@ const getMatchingDetail = async (req: express.Request, res: express.Response, ne
 
   res.status(200).render('matching/matchingDetail',
     {
-      message: 'get category success',
-      matching: data[0]
+      'message': 'get category success',
+      'matching': data[0]
     }
   )
   console.log('controller: getMatching');
