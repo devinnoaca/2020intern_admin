@@ -7,7 +7,7 @@ $('[name="totalKeywordButton"]').on('click', () => {
 
   if(eventTrigger == 0){
     console.log('dd');
-    sendAjax('GET', '/keyword', null, totalKeywordCallback);
+    sendAjax('GET', '/keyword/data', null, totalKeywordCallback);
   }
 
   $('#userTotalKeywordCreate').modal('show');
@@ -18,7 +18,7 @@ $('[name="recommendKeywordButton"]').on('click', () => {
   const eventTrigger = $('#userRecommendKeywordCreate #categoryList').find('a').length;
   
   if(eventTrigger == 0){
-    sendAjax('GET', '/keyword', null, recommendKeywordCallback);
+    sendAjax('GET', '/keyword/data', null, recommendKeywordCallback);
   }
 
   $('#userRecommendKeywordCreate').modal('show');
