@@ -1,11 +1,27 @@
-const callback = (xhr) => {
-  // console.log(xhr.status);
-  // console.log(xhr.responseText);
-  console.log(xhr)
-  alert(`요청성공. ${xhr.status}`)
-
+const deleteKeywordCallback = (xhr) => {
+  console.log(xhr.response.message);
+  if(xhr.status == 200) {
+    alert(`키워드가 정상적으로 삭제되었습니다`);
+  } else {
+    alert(`키워드 삭제실패 [${xhr.status}]`);
+    console.log(xhr.response.message);
+  }  
   window.location.href = '/keyword';
 }
+
+const addKeywordCallback = (xhr) => {
+  console.log(xhr.response.message);
+  if(xhr.status == 200) {
+    alert(`키워드가 정상적으로 생성되었습니다`);
+  } else {
+    alert(`키워드 생성실패 [${xhr.status}]`);
+    console.log(xhr.response.message);
+  }
+  
+  window.location.href = '/keyword';
+  // activeTab(xhr.response.result.id); 
+}
+
 
 const deleteKeyword = (id, name) => {
   let delConfirm = confirm(`${name} 키워드를 삭제하시겠습니까? `);
@@ -13,7 +29,7 @@ const deleteKeyword = (id, name) => {
     console.log('삭제취소.');
   } else {
     console.log('삭제!');
-    sendAjax('DELETE', `/keyword/${id}`, null, callback);
+    sendAjax('DELETE', `/keyword/${id}`, null, deleteKeywordCallback);
   }
 }
 
@@ -25,5 +41,5 @@ const addKeyword = () => {
     categoryID: addForm.searchType.value
   }
   console.log(jsonData);
-  sendAjax('POST', `/keyword/`, JSON.stringify(jsonData), callback);
+  sendAjax('POST', `/keyword/`, JSON.stringify(jsonData), addKeywordCallback);
 }

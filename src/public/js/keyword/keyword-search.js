@@ -3,7 +3,7 @@ const activeTab = (categoryId) => {
   $(`#myList a[href='#category-${categoryId}']`).tab("show");
 }
 
-//keyword badge 태그 생성함수(검색결과 뱃지)
+// badge 태그 생성함수 (검색결과 뱃지)
 const badgeFactory = (categoryId, name) => {
   // console.log(`run badgeFactory -> ${categoryId} | ${name}`);
   return `<a href="#" class="badge badge-info result-badge" onclick="activeTab('${categoryId}')">${name}</a>`
@@ -11,18 +11,22 @@ const badgeFactory = (categoryId, name) => {
 
 // 검색 로직
 const search = (type, input) => {
-  let targetList = [];
+  
   let resultDiv = document.querySelector('.search-result');
   console.log(`${type} search`);
+
+  // 타입에 따라 각 데이터들 가져옴.
+  let targetList = [];  
   switch (type) {
-    case 'category':
+    case 'CATEGORY':
       targetList = document.querySelectorAll('.category-tab');
       break;
-    case 'keyword':
+    case 'KEYWORD':
       targetList = document.querySelectorAll('.keyword-badge');
       break;
   }
 
+  // 가져온 데이터 중 검색인자에 해당하는 데이터 추출.
   let results = [];
   targetList.forEach(elem => {
     if (elem.name.toLowerCase().includes(input.toLowerCase())) {
@@ -30,6 +34,7 @@ const search = (type, input) => {
     }
   });
 
+  // 검색결과 분기처리 및 표시.
   if (results.length == 0) {
     alert('해당하는 데이터가 존재하지 않습니다.');
     resultDiv.innerHTML = '';
@@ -44,7 +49,7 @@ const onSearch = () => {
   let type = searchForm.searchType.value;
   let searchInput = searchForm.searchInput.value;
 
-  if (type == 'Choose...') {
+  if (type == 'NONE') {
     alert('검색타입을 선택해주세요.')
   } else {
     search(type, searchInput);
