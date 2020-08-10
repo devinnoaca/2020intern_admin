@@ -7,12 +7,12 @@ WHERE u.usn = ?;`;
 const searchUserTotalkeywords = `
 SELECT keyword_ID, keyword_Name, category_ID, category_Name \
 FROM get_total_keyword \
-WHERE utk_usn = ?;`
+WHERE user_USN = ?;`
 
 const searchUserRecommendkeywords = `
 SELECT keyword_ID, keyword_Name, category_ID, category_Name \
 FROM get_recommend_keyword \
-WHERE rk_usn = ?;`;
+WHERE mentee_USN = ?;`;
 
 const searchAllUser = `
 SELECT * \
