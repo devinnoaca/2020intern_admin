@@ -36,6 +36,10 @@ const renderResult = (data) => {
   let dataTable = document.getElementById(`dataBody`);
   dataTable.innerHTML = result;
 
+  console.log(data.length);
+
+  document.getElementById('resultCount').innerHTML = `Total ${data.length}`;
+
   tableClickEvent();
 
  }
