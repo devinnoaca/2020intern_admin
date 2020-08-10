@@ -1,20 +1,20 @@
-window.onload = () => {
 
-  // checkbox check event
-  const isTotal = document.querySelector('#isTotal');
-  const startDate = document.querySelector('.start-date');
-  const endDate = document.querySelector('.end-date');
 
-  isTotal.addEventListener('change', (event) => {
-    if (event.target.checked) {
-      startDate.disabled = true;
-      endDate.disabled = true;
-    } else {
-      startDate.disabled = false;
-      endDate.disabled = false;
-    }
-  })
-}
+// checkbox check event
+const isTotal = document.querySelector('#isTotal');
+const startDate = document.querySelector('.start-date');
+const endDate = document.querySelector('.end-date');
+
+isTotal.addEventListener('change', (event) => {
+  if (event.target.checked) {
+    startDate.disabled = true;
+    endDate.disabled = true;
+  } else {
+    startDate.disabled = false;
+    endDate.disabled = false;
+  }
+})
+
 
 // search form
 const searchSubmit = () => {

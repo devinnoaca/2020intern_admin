@@ -44,8 +44,8 @@ const getKeywords = async (req: express.Request, res: express.Response,
 
     res.status(200).send(
       {
-        'message': 'get keywords success',
-        'keywords': data
+        message: 'get keywords success',
+        keywords: data
       }
     );
     console.log('controller: getKeywords');
@@ -60,7 +60,8 @@ const createKeyword = async (req: express.Request, res: express.Response,
     const result = keywordQuery.createKeyword(data);
     res.status(200).send(
       {
-        'message': 'create keyword success',
+        message: 'create keyword success',
+        result: result
       }
     );
     console.log('controller: createKeyword');

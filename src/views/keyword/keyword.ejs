@@ -6,11 +6,6 @@
 
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 
-  <!-- Ajax js(sendAjax)-->
-  <script type="text/javascript" src="js/common/ajax.js"></script>
-  <!-- Keyword js -->
-  <script type="text/javascript" src="js/keyword/keyword.js"></script>
-
 </head>
 
 <body id="page-top">
@@ -38,8 +33,6 @@
           <!-- Page Heading -->
           <div class="d-sm-flex align-items-center justify-content-between mb-4">
             <h1 class="h3 mb-0 text-gray-800">Keyword</h1>
-            <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
-                class="fas fa-download fa-sm text-white-50"></i> Generate Report</a>
           </div>
 
           <!-- Content Row -->
@@ -54,9 +47,9 @@
             <div class="card-body">
               <form name="searchForm" onsubmit="onSearch(); return false;" class="form-inline">
                 <select name="searchType" class="custom-select" id="inlineFormCustomSelectPref">
-                  <option selected>Choose...</option>
-                  <option value="category">Category</option>
-                  <option value="keyword">Keyword</option>
+                  <option value="NONE" selected>Choose...</option>
+                  <option value="CATEGORY">Category</option>
+                  <option value="KEYWORD">Keyword</option>
                 </select>
 
                 <div class="custom-control custom-checkbox my-1 mr-sm-2">
@@ -117,7 +110,7 @@
                   <br>
 
                   <!-- Add Category -->
-                  <form name="addCategoryForm" onsubmit="addCategory()">
+                  <form name="addCategoryForm" onsubmit="addCategory(); return false;">
                     <div class="input-group mb-3">
                       <input type="text" class="form-control" name="inputCategory" placeholder="category name"
                         aria-label="category name" aria-describedby="button-addon2" required>
@@ -184,6 +177,14 @@
   <!-- create keyword Modal -->
   <%- include ('./createKeywordModal.ejs') %>
 
+  <!-- Ajax js(sendAjax)-->
+  <script type="text/javascript" src="js/common/ajax.js"></script>
+  <!-- Keyword event -->
+  <script type="text/javascript" src="js/keyword/keyword.js"></script>
+  <!-- Keyword search event-->
+  <script type="text/javascript" src="js/keyword/keyword-search.js"></script>
+  <!-- Category event -->
+  <script type="text/javascript" src="js/keyword/category.js"></script>
 
 </body>
 
