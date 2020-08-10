@@ -15,28 +15,45 @@ isTotal.addEventListener('change', (event) => {
   }
 })
 
+const searchMatchingCallback = (xhr) => {
+  console.log(xhr.response.message);
+  if(xhr.status == 200) {
+    console.log(xhr.response.result);
+  } else {
+    alert(`매칭 조회실패 [${xhr.status}]`);
+    console.log(xhr.response.message);
+  }
+  
+  // window.location.href = '/keyword';
+}
+
 
 // search form
-const searchSubmit = () => {
+const onSearch = () => {
   const searchForm = document.searchForm;
 
-  console.log('매칭검색 실행');
-console.log(searchForm.isTotal.checked);
+  let startDate;
+  let endDate;
   if(searchForm.isTotal.checked) {
-    console.log(' total ')
+    console.log('total');
+    startDate = new Date('1970-01-01');
+    endDate = new Date();
   } else {
-    console.log(' not total ')
+    console.log('not total');
+    startDate = new Date(searchForm.startDate.value);
+    endDate = new Date(searchForm.endDate.value);
   }
 
-  // const jsonData = {
-  //   mentor_id: searchForm.mentorInput.value,
-  //   mentee_id: searchForm.menteeInput.value,
-  //   state: searchForm.state.value, // -1: 전체, 0: 요청, 1: 수락, 2: 거절
-  //   is_total_period: searchForm.isTotal.value,
-  //   start_date: searchForm.startDate.value,
-  //   end_date: searchForm.end_date.value
-  // };
+  const jsonData = {
+    mentor_id: searchForm.mentorInput.value,
+    mentee_id: searchForm.menteeInput.value,
+    state: searchForm.state.value, // -1: 전체, 0: 요청, 1: 수락, 2: 거절
+    start_date: startDate,
+    end_date: endDate
+  };
 
-  // console.log(jsonData);
+  console.log(jsonData);
+
+  sendAjax('POST', `/matching/search`, JSON.stringify(jsonData), searchMatchingCallback);
 }
 
