@@ -1,6 +1,4 @@
 import * as express from 'express';
-import * as url from 'url';
-import * as querystring from 'querystring';
 
 import matchingDAO from '../dao/matchingDAO'
 
