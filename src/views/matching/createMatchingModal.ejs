@@ -8,9 +8,8 @@
         </button>
       </div>
 
-      <!-- onsubmit="createSubmit(); return false;" -->
       <!-- create form -->
-      <form id="create-form" name="createForm" method="POST", action="/matching"> 
+      <form id="create-form" name="createForm" onsubmit="onCreate(); return false;"> 
         <div class="modal-body">
           <div class="container-fluid">
             <ul class="list-group list-group-flush">

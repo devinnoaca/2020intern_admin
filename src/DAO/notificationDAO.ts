@@ -12,6 +12,7 @@ async function createNotificationToAll(data: Array<any>) {
     return users;
   } catch (e) {
     console.log('dao: createNotificationToAll error\n' + e);
+    throw e;
   }
 
 }
@@ -27,6 +28,7 @@ async function createNotificationToMentor(data: Array<any>) {
     return users;
   } catch (e) {
     console.log('dao: createNotificationToMentor error\n' + e);
+    throw e;
   }
 
 }
@@ -42,6 +44,7 @@ async function createNotificationToMentee(data: Array<any>) {
     return users;
   } catch (e) {
     console.log('dao: createNotificationToMentee error\n' + e);
+    throw e;
   }
 }
 
@@ -54,6 +57,7 @@ async function createNotification(data: Array<any>) {
     return user;
   } catch (e) {
     console.log('dao: createNotification error\n' + e);
+    throw e;
   }
 
 }
@@ -63,9 +67,19 @@ async function getUserNotification(data: Array<any>) {
     const [rows] = await db.connection.promise().query(query.searchUserNotification, data);
     return rows;
   } catch (e) {
-    console.log('dao: createNotification error\n' + e);
+    console.log('dao: getUserNotification error\n' + e);
+    throw e;
   }
 
+}
+
+async function getNotifications(){
+  try {
+    const [rows] = await db.connection.promise().query(query.getNotifications);
+    return rows;
+  } catch (e) {
+    console.log('dao: getNotifications error\n' + e);
+  }
 }
 
 async function deleteUserNotification(data: Array<any>) {
@@ -74,12 +88,13 @@ async function deleteUserNotification(data: Array<any>) {
     return rows;
   } catch (e) {
     console.log('dao: createNotification error\n' + e);
+    throw e;
   }
 
 }
 
 export default {
   createNotification, createNotificationToAll, createNotificationToMentor, createNotificationToMentee,
-  getUserNotification, deleteUserNotification
+  getUserNotification, deleteUserNotification, getNotifications
 
 }
