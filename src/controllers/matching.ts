@@ -3,6 +3,12 @@ import matchingDAO from '../dao/matchingDAO'
 
 const router = express.Router();
 
+
+//날짜시간 포맷 변환
+const dateFormatConvert = (date:string):string => {
+  return (new Date(date)).toISOString().slice(0, 19).replace(/-/g, "-").replace("T", " ");
+}
+
 const createMatching = async (req: express.Request, res: express.Response, next: express.NextFunction) => {
   console.log('controller: createMatching');
   if (req.body.mentorUSN === null || req.body.mentorUSN === '') {
@@ -26,20 +32,15 @@ const createMatching = async (req: express.Request, res: express.Response, next:
       }
     )
   }
-  let is_checked = true;
-  //매칭요청이 대기 상태로 생성 될 시, 읽지 않음으로 생성
-  if(req.body.state == 0) {
-    is_checked = false;
-  }
 
   const data = [
-    req.body.mentorUSN, //mentor_USN
-    req.body.menteeUSN, //mentee_USN
-    new Date(), //request_time
-    req.body.state, //state
-    is_checked, //is_checked
-    req.body.requestMessage,
-    req.body.responseMessage
+    req.body.mentor_USN, //mentor_USN
+    req.body.mentee_USN, //mentee_USN
+    dateFormatConvert(req.body.request_time),
+    req.body.state,
+    req.body.is_checked,
+    req.body.request_message,
+    req.body.response_message
   ];
 
   try {
@@ -93,8 +94,8 @@ const modifyForm = async (req: express.Request, res: express.Response, next: exp
   let data = await matchingDAO.getMatching([req.params.id]);
   res.status(200).render('matching/matchingUpdate',
     {
-      message: 'get modify form success',
-      matching: data[0]
+      'message': 'get modify form success',
+      'matching': data[0]
     }
   )
   console.log('controller: updateMatching');
@@ -167,8 +168,8 @@ const getMatching = async (req: express.Request, res: express.Response, next: ex
 
   res.status(200).render('matching/matching',
     {
-      message: 'get category success',
-      matching: data
+      'message': 'get category success',
+      'matching': data
     }
   )
   console.log('controller: getMatching');
@@ -180,8 +181,8 @@ const getMatchingDetail = async (req: express.Request, res: express.Response, ne
 
   res.status(200).render('matching/matchingDetail',
     {
-      message: 'get category success',
-      matching: data[0]
+      'message': 'get category success',
+      'matching': data[0]
     }
   )
   console.log('controller: getMatching');
@@ -190,19 +191,19 @@ const getMatchingDetail = async (req: express.Request, res: express.Response, ne
 const searchMatching = async (req: express.Request, res: express.Response, nex: express.NextFunction) => {
   let data = 
   [
-    req.body.start_date,
-    req.body.end_date,
+    dateFormatConvert(req.body.start_date),
+    dateFormatConvert(req.body.end_date),
     ''
   ];
-  
-  if (req.body.state !== -1 && req.body.state !== null) {
-    data[2].concat(` AND m.state = ${req.body.state}`)
+
+  if (req.body.state !== '-1' && req.body.state !== null) {
+    data[2] += ` AND m.state = ${req.body.state}`;
   }
-  if (req.body.mentee_id !== null) {
-    data[2].concat(` AND mentee.ID = ${req.body.mentee_id}`)
+  if (req.body.mentee_id !== null && req.body.mentee_id !== '') {
+    data[2] += ` AND mentee.ID = ${req.body.mentee_id}`;
   }
-  if (req.body.mentor_id !== null) {
-    data[2].concat(` AND mentor.ID = ${req.body.mentor_id}`)
+  if (req.body.mentor_id !== null && req.body.mentor_id !== '') {
+    data[2] += ` AND mentor.ID = ${req.body.mentor_id}`;
   }
   
   const result = await matchingDAO.searchMatching(data);
