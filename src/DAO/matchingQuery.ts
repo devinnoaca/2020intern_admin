@@ -35,8 +35,7 @@ FROM Matching as m \
 JOIN User as mentor ON mentor.USN = m.mentor_USN \
 JOIN User as mentee ON mentee.USN = m.mentee_USN \
 WHERE m.request_time >= ? \
-AND m.request_time <= ? \
-?;`;
+AND m.request_time <= ?`;
 
 export default {
     getAllMatching, createMatching, deleteMatching, getMatching, modifyMatching,
