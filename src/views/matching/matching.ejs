@@ -46,7 +46,7 @@
               <h6 class="m-0 font-weight-bold text-primary">매칭정보 조회</h6>
             </div>
             <div class="card-body">
-              <form name="searchForm" onsubmit="onSearch(); return false;">
+              <form name="searchForm" onsubmit="onSearch()" method="POST" action="/matching/search">
                 <ul class="list-group list-group-flush">
 
                   <!-- mentor / mentee -->
@@ -57,7 +57,7 @@
                           <span>멘토</span>
                         </div>
                         <div class="col-auto">
-                          <input type="text" class="form-control" name="mentorInput" placeholder="Mentor ID">
+                          <input type="text" class="form-control" name="mentorId" placeholder="Mentor ID">
                         </div>
                       </div>
 
@@ -66,7 +66,7 @@
                           <span>멘티</span>
                         </div>
                         <div class="col-auto">
-                          <input type="text" class="form-control" name="menteeInput" placeholder="Mentee ID">
+                          <input type="text" class="form-control" name="menteeId" placeholder="Mentee ID">
                         </div>
                       </div>
                     </div>
@@ -120,6 +120,8 @@
                         <input type="text" id="datePicker" name="endDate" class="form-control end-date" disabled>
                       </div>
                     </div>
+                    <input type="hidden" name="start_date">
+                    <input type="hidden" name="end_date">
                   </li>
                 </ul>
                 <!-- 조회 버튼 -->
@@ -136,7 +138,7 @@
           <div class="card shadow mb-4">
             <div class="card-header py-3">
               <h6 class="m-0 font-weight-bold text-primary">검색 결과</h6>
-              <small id="resultCount"></small>
+              <small id="resultCount">Total <%= matching.length %></small>
             </div>
             <div class="card-body">
               <div class="table-responsive">
@@ -153,6 +155,9 @@
                     </tr>
                   </thead>
                   <tbody id='dataBody'>
+                    <% if(matching.length == 0) { %>
+                      <td colspan="7">조건에 해당되는 데이터가 없습니다.</td>
+                    <% } %>
                     <% matching.forEach(elem => { %>
                     <tr>
                       <td><%= elem.id %></td>
@@ -202,11 +207,9 @@
 
   <!-- matching datepicker-->
   <script src="/js/matching/form-date-picker.js"></script>
-
-  <!-- Ajax js(sendAjax)-->
-  <script type="text/javascript" src="js/common/ajax.js"></script>
   
   <!-- matching js -->
+  <script type="text/javascript" src="/js/common/ajax.js"></script>
   
   <script type="text/javascript" src="/js/matching/matching-search.js"></script>
 

@@ -39,7 +39,7 @@ PRIMARY KEY(ID));`;
 
 	const strInsertCategory = `
 INSERT INTO CATEGORY(name) \
-VALUES ("Security");`;
+VALUES ("Security"), ("DataScience"), ("Algorithm"), ("Graphics");`;
 
 	const strCreateKeywordTable = `
 CREATE TABLE Keyword(\
@@ -54,7 +54,7 @@ ON UPDATE CASCADE);`;
 
 	const strInsertKeyword = `
 INSERT INTO KEYWORD(name, category_id) \
-VALUES("SQL Injection", 1), ("XSS", 1);`;
+VALUES("SQL Injection", 1), ("XSS", 1), ("Spark", 2), ("Hadoop", 2), ("SQL", 2), ("Python", 3), ("Java", 3), ("C++", 3), ("OpenGL", 4), ("DX", 4), ("3DsMax", 4);`;
 
 	const strCreateCareerTable = `
 CREATE TABLE Career(\

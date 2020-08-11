@@ -10,6 +10,6 @@ const deleteMatchingCallback = (xhr) => {
 
 const onDelete = (id) => {
     if(confirm('해당 매칭정보를 삭제하시겠습니까?')) {
-        sendAjax('DELETE', `http://localhost:3000/matching/${id}`, null, deleteMatchingCallback);
+        sendAjax('DELETE', `/matching/${id}`, null, deleteMatchingCallback);
     }
 }

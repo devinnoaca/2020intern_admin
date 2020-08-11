@@ -6,8 +6,7 @@ const deleteKeywordCallback = (xhr) => {
   } else {
     alert(`키워드 삭제실패 [${xhr.status}]`);
     console.log(xhr.response.message);
-  }  
-  
+  }
 }
 
 const addKeywordCallback = (xhr) => {

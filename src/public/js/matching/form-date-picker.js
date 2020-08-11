@@ -8,7 +8,6 @@ $(function () {
   }).on('changeDate', function (selected) {
     var startDate = new Date(selected.date.valueOf());
     $('.end-date').datepicker('setStartDate', startDate);
-    // $('.end-date').datepicker('setDate', startDate);
   }).on('clearDate', function (selected) {
     $('.end-date').datepicker('setStartDate', null);
   });
@@ -25,5 +24,5 @@ $(function () {
   }).on('clearDate', function (selected) {
     $('.start-date').datepicker('setEndDate', null);
   });
-});//ready end
+});
 
