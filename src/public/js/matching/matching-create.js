@@ -18,10 +18,11 @@ for (var i = 0; i < stateRadio.length; ++i) {
 
 createMatchingCallback = (xhr) => {
   if (xhr.status == 200) {
-    alert(`요청성공. ${xhr.status}`);
+    alert(`매칭정보가 정상적으로 생성되었습니다.`);
     window.location.href = '/matching';
   } else {
-    alert(`요청실패. ${xhr.status}`);
+    alert(`매칭정보 생성 실패 [${xhr.status}]`);
+    console.log(xhr.response.message);
   }
 }
 

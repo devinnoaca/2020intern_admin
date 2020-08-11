@@ -46,7 +46,7 @@ const renderResult = (data) => {
 
 // 매칭정보 검색 API callback
 const searchMatchingCallback = (xhr) => {
-  console.log(xhr.response.message);
+
   if(xhr.status == 200) {
     console.log(xhr.response.result);
     renderResult(xhr.response.result);

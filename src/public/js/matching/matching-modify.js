@@ -1,11 +1,10 @@
-const modifyCallback = (xhr) => {
-  // console.log(xhr.status);
-  // console.log(xhr.responseText);
-  if (xhr.status == 200) {
-    alert(`요청성공. ${xhr.status}`);
+const modifyMatchingCallback = (xhr) => {
+  if(xhr.status == 200) {
+    alert(`매칭정보가 정상적으로 수정되었습니다`);
     window.location.href = '/matching';
   } else {
-    alert(`요청실패. ${xhr.status}`);
+    alert(`매칭정보 수정 실패 [${xhr.status}]`);
+    console.log(xhr.response.message);
   }
 }
 
@@ -25,6 +24,5 @@ const onModify = (id) => {
 
   console.log(jsonData);
 
-  sendAjax('PUT', `/matching/update/${modifyForm.id.value}`, JSON.stringify(jsonData), modifyCallback);
-
+  sendAjax('PUT', `/matching/update/${modifyForm.id.value}`, JSON.stringify(jsonData), modifyMatchingCallback);
 }
