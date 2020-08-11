@@ -41,7 +41,7 @@
               <h6 class="m-0 font-weight-bold text-primary">회원 조회</h6>
             </div>
             <div class="card-body">
-              <form>
+              <form action="/notification/search" method="POST">
                 <ul class="list-group list-group-flush">
 
                   <!-- 알림 종류, 열람 여부-->
@@ -54,9 +54,7 @@
                        </div>
                        <div class="form-group form-inline col-md-10">
                         <select class="form-control" name="type">
-                          <option>메세지</option>
-                          <option>문데</option>
-                          <option>몬데</option>
+                          <option value="1">메세지</option>
                         </select>
                        </div> 
                       </div>
@@ -69,15 +67,15 @@
                           </label>
                         </div>
                         <div class="form-check form-check-inline col-md-2">
-                          <input class="form-check-input" type="radio" name="isChecked" id="isChecked1" value="all">
+                          <input class="form-check-input" type="radio" name="is_checked" id="isChecked1" value="all">
                           <label class="form-check-label" for="isChecked1">전체</label>
                         </div>
                         <div class="form-check form-check-inline col-md-2">
-                          <input class="form-check-input" type="radio" name="isChecked" id="isChecked2" value="1">
+                          <input class="form-check-input" type="radio" name="is_checked" id="isChecked2" value="1">
                           <label class="form-check-label" for="isChecked2">열람</label>
                         </div>
                         <div class="form-check form-check-inline col-md-2">
-                          <input class="form-check-input" type="radio" name="isChecked" id="isChecked3" value="2">
+                          <input class="form-check-input" type="radio" name="is_checked" id="isChecked3" value="0">
                           <label class="form-check-label" for="isChecked3">미열람</label>
                         </div>
                       </div>
@@ -94,13 +92,11 @@
                       </div>
                       <div class="form-group form-inline col-md-1">
                         <select class="form-control" name="sender">
-                          <option>email</option>
                           <option>ID</option>
-                          <option>이름</option>
                         </select>
                       </div>
                       <div class="form-group form-inline col-md-6">
-                        <input class="form-control col-md-12" type="text" name="senderQuery">
+                        <input class="form-control col-md-12" type="text" name="sender_ID">
                       </div>
                     </div>
                   </li>
@@ -115,13 +111,11 @@
                       </div>
                       <div class="form-group form-inline col-md-1">
                         <select class="form-control" name="receiver">
-                          <option>email</option>
                           <option>ID</option>
-                          <option>이름</option>
                         </select>
                       </div>
                       <div class="form-group form-inline col-md-6">
-                        <input class="form-control col-md-12" type="text" name="receiverQuery">
+                        <input class="form-control col-md-12" type="text" name="receiver_ID">
                       </div>
                     </div>
                   </li>
@@ -144,7 +138,7 @@
             </div>
             <div class="card-body">
               <div class="table-responsive">
-                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                <table class="table table-bordered table-hover" id="dataTable" width="100%" cellspacing="0">
                   <thead>
                     <tr>
                       <th>알림번호</th>
@@ -157,19 +151,19 @@
                     </tr>
                   </thead>
                   <tbody>
-                    <% for (let i = 0; i < notifications.length; i++) { %>
+                    <% notifications.forEach(function(elem, index) { %>
                     <tr>
-                      <td><%= notifications[i].id %></td>
-                      <td><%= notifications[i].type %></td>
-                      <td><%= notifications[i].receiver %></td>
-                      <td><%= notifications[i].sender %></td>
-                      <td><%= notifications[i].creationTime %></td>
-                      <td><%= notifications[i].isChecked %></td>
+                      <td><%= elem.id %></td>
+                      <td><%= elem.type %></td>
+                      <td><%= elem.sender_ID %></td>
+                      <td><%= elem.receiver_ID %></td>
+                      <td><%= elem.time %></td>
+                      <td><%= elem.is_checked %></td>
                       <td>
-                        <button class="btn btn-primary d-inline" name="deleteButton" type="button" value="<%=notifications[i].id%>">삭제</button>
+                        <button class="btn btn-primary d-inline" name="deleteButton" type="button" value="<%=elem.id%>">삭제</button>
                       </td>
                     </tr>
-                    <% } %>
+                    <% }) %>
                   </tbody>
                 </table>
               </div>
@@ -227,18 +221,13 @@
   <!-- Custom scripts for all pages-->
   <script src="/js/sb-admin-2.min.js"></script>
 
-  <!-- Page level plugins -->
-  <script src="/vendor/chart.js/Chart.min.js"></script>
-
-  <!-- Page level custom scripts -->
-  <script src="/js/demo/chart-area-demo.js"></script>
-  <script src="/js/demo/chart-pie-demo.js"></script>
-
   <!-- Send Ajax 메소드 추가 -->
   <script src="/js/common/ajax.js"></script>
 
-  <!--  -->
+  <!-- notification 추가 모달 -->
   <%- include ('./createNotificationModal.ejs') %> 
+
+  <script src="/js/notification/notification.js"></script>
 
   <script type="text/JavaScript">
     $('[name="receiver"]').on('click', function(){

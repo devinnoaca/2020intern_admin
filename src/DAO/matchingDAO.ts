@@ -52,9 +52,9 @@ async function modifyMatching(data: Array<any>) {
   }
 }
 
-async function searchMatching(data: Array<any>) {
+async function searchMatching(data: Array<any>, extraQuery: String) {
   try {
-    const [rows, fields] = await db.connection.promise().query(query.searchMatching, data);
+    const [rows, fields] = await db.connection.promise().query(query.searchMatching+extraQuery, data);
     return rows;
   } catch (e) {
     console.log('dao: searchMatching error\n' + e);

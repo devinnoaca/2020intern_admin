@@ -193,22 +193,23 @@ const searchMatching = async (req: express.Request, res: express.Response, nex: 
   let data = 
   [
     dateFormatConvert(req.body.start_date),
-    dateFormatConvert(req.body.end_date),
-    ''
+    dateFormatConvert(req.body.end_date)
   ];
-  console.log(req.body);
+
+  let extraQuery ='';
 
   if (req.body.state !== '-1' && req.body.state !== null) {
-    data[2] += ` AND m.state = ${req.body.state}`;
+    extraQuery += ` AND m.state = ${req.body.state}`;
   }
-  if (req.body.mentee_id !== null && req.body.menteeId !== '') {
-    data[2] += ` AND mentee.ID = ${req.body.menteeId}`;
+
+  if (req.body.mentee_id !== null && req.body.mentee_id !== '') {
+    extraQuery += ` AND mentee.ID = '${req.body.mentee_id}'`;
   }
-  if (req.body.mentor_id !== null && req.body.mentorId !== '') {
-    data[2] += ` AND mentor.ID = ${req.body.mentorId}`;
+  if (req.body.mentor_id !== null && req.body.mentor_id !== '') {
+    extraQuery += ` AND mentor.ID = '${req.body.mentor_id}'`;
   }
-  console.log(data);
-  const result = await matchingDAO.searchMatching(data);
+  extraQuery += ';';
+  const result = await matchingDAO.searchMatching(data, extraQuery);
 
   res.status(200).render('matching/matching',
     {
