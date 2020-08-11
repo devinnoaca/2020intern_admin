@@ -195,7 +195,6 @@ const searchMatching = async (req: express.Request, res: express.Response, nex: 
     dateFormatConvert(req.body.start_date),
     dateFormatConvert(req.body.end_date)
   ];
-  console.log(req.body);
 
   let extraQuery ='';
 
