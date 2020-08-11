@@ -55,11 +55,7 @@ const createUser = async (req: express.Request, res: express.Response, next: exp
   try {
     const result = await userQuery.createUser(data);
 
-    res.status(200).send(
-      {
-        'message': 'create user success'
-      }
-    ).redirect('user');
+    res.status(200).redirect('user');
   } catch (e) {
     res.status(500).send(
       {
@@ -89,40 +85,8 @@ const getUsers = async (req: express.Request, res: express.Response, next: expre
   }
 };
 
-<<<<<<< HEAD
 const getUser = async (req: express.Request, res: express.Response, 
   next: express.NextFunction) => {
-    const param = 
-    [
-      parseInt(req.params.usn)
-    ];
-  let result = await userQuery.getUser(param);
-  let keywordResult = await userQuery.getUserKeywords(param);
-  let careerID: Array<Number> = new Array();
-  let career: Array<String | Number> = new Array(); 
-  result.map( (current, index, result) => {
-    if(current.careerID != null){
-      careerID.push(current.careerID);
-    }
-
-    if(current.career != null){
-      career.push(current.career);
-    }
-  })
-  result = [result[0]];
-  result[0].careerID = careerID;
-  result[0].career = career;
-  result[0].keywords = keywordResult;
-
-  res.status(200).render('user/userDetail' ,
-    {
-      'message': 'success',
-      'user': result
-    }
-  )
-=======
-const getUser = async (req: express.Request, res: express.Response, next: express.NextFunction) => {
->>>>>>> develop
   console.log('controller: getUser');
   if (req.params.usn === null || req.params.usn === '') {
     res.status(400).send(
@@ -141,8 +105,12 @@ const getUser = async (req: express.Request, res: express.Response, next: expres
     let careerID: Array<Number> = new Array();
     let career: Array<String | Number> = new Array(); 
     result.map( (current, index, result) => {
-      careerID.push(current.careerID);
-      career.push(current.career);
+      if (current.careerID != null) {
+        careerID.push(current.careerID);
+      }
+      if (current.career != null) {
+        career.push(current.career);
+      }
     })
     result = [result[0]];
     result[0].careerID = careerID;
