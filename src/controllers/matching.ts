@@ -209,6 +209,7 @@ const searchMatching = async (req: express.Request, res: express.Response, nex: 
     extraQuery += ` AND mentor.ID = '${req.body.mentor_id}'`;
   }
   extraQuery += ';';
+  console.log(extraQuery);
   const result = await matchingDAO.searchMatching(data, extraQuery);
 
   res.status(200).render('matching/matching',
