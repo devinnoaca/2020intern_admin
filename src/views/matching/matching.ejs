@@ -46,7 +46,8 @@
               <h6 class="m-0 font-weight-bold text-primary">매칭정보 조회</h6>
             </div>
             <div class="card-body">
-              <form name="searchForm" onsubmit="onSearch()" method="POST" action="/matching/search">
+              <form name="searchForm" onsubmit="onSearch()" method="GET" action="/matching">
+                <input type="hidden" name="query_type" value="SEARCH">
                 <ul class="list-group list-group-flush">
 
                   <!-- mentor / mentee -->
