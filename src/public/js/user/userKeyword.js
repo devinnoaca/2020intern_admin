@@ -7,7 +7,7 @@ $('[name="totalKeywordButton"]').on('click', () => {
 
   if(eventTrigger == 0){
     console.log('dd');
-    sendAjax('GET', '/keyword', null, totalKeywordCallback);
+    sendAjax('GET', '/keyword/data', null, totalKeywordCallback);
   }
 
   $('#userTotalKeywordCreate').modal('show');
@@ -18,7 +18,7 @@ $('[name="recommendKeywordButton"]').on('click', () => {
   const eventTrigger = $('#userRecommendKeywordCreate #categoryList').find('a').length;
   
   if(eventTrigger == 0){
-    sendAjax('GET', '/keyword', null, recommendKeywordCallback);
+    sendAjax('GET', '/keyword/data', null, recommendKeywordCallback);
   }
 
   $('#userRecommendKeywordCreate').modal('show');
@@ -64,7 +64,7 @@ const totalKeywordCallback = function(xhr){
     sendAjax('POST', `/user/keyword/total/${usn}`, JSON.stringify(data), (xhr) => {
       alert(xhr.response.message);
       
-      const recommendKeywordTemplate = `<div class="btn-group mx-1 my-1" name="totalKeywordDeleteDiv">
+      const totalKeywordTemplate = `<div class="btn-group mx-1 my-1" name="totalKeywordDeleteDiv">
                                           <button class="form-control btn btn-info" type="button">
                                             <h5>${keywordName}</h5>
                                           </button>
@@ -74,11 +74,30 @@ const totalKeywordCallback = function(xhr){
                                           </button>
                                         </div>`;
       
-      //토탈, 추천 키워드 컨트롤러에 추가 요청 후 성공시에 키워드 컴포넌트 추가 
-      $('#userTotalKeywordCreate [name="recommendKeywordDiv"]').append(recommendKeywordTemplate);
-    });
+      //토탈 키워드 컨트롤러에 추가 요청 후 성공시에 키워드 컴포넌트 추가 
+      $('[name="totalKeywordDiv"]').append(totalKeywordTemplate);
 
-  });
+      //추가된 토탈 키워드 컴포넌트에 대한 삭제 이벤트 추가
+      $('[name="totalKeywordDeleteDiv"]:last-child').on('click', function(event){
+        const targetDiv = $(this);
+        const target = $(event.target);
+        const keywordID = target.val();
+      
+        if(target.is('[name="totalKeywordDeleteButton"]')){
+          const data = {
+            "id" : keywordID
+          };
+      
+          sendAjax('DELETE', `/user/keyword/total/${usn}`, JSON.stringify(data), (xhr) => {
+            alert(xhr.response.message);
+            targetDiv.remove();
+          });
+        }
+      });//추가된 토탈 키워드 컴포넌트에 대한 삭제 이벤트 end
+
+    });//모달의 키워드 버튼 클릭시 이벤트
+
+  });//모달 이벤트 end
 }
 
 //추천 키워드 모달 클릭시 콜백
@@ -121,21 +140,41 @@ const recommendKeywordCallback = function(xhr){
     sendAjax('POST', `/user/keyword/recommend/${usn}`, JSON.stringify(data), (xhr) => {
       alert(xhr.response.message);
       
-      const recommendKeywordTemplate = `<div class="btn-group mx-1 my-1" name="totalKeywordDeleteDiv">
+      const recommendKeywordTemplate = `<div class="btn-group mx-1 my-1" name="recommendKeywordDeleteDiv">
                                           <button class="form-control btn btn-info" type="button">
                                             <h5>${keywordName}</h5>
                                           </button>
                                           <button class="btn btn-outline-info" value="${keywordID}"
-                                          name="totalKeywordDeleteButton">
+                                          name="recommendKeywordDeleteButton">
                                             X
                                           </button>
                                         </div>`;
       
       //토탈, 추천 키워드 컨트롤러에 추가 요청 후 성공시에 키워드 컴포넌트 추가 
       $('[name="recommendKeywordDiv"]').append(recommendKeywordTemplate);
-    });
 
-  });
+      //추가된 추천 키워드 컴포넌트에 대한 삭제 이벤트 추가
+      $('[name="recommendKeywordDeleteDiv"]:last-child').on('click', function(event){
+        const targetDiv = $(this);
+        const target = $(event.target);
+        const keywordID = target.val();
+        
+        if(target.is('[name="recommendKeywordDeleteButton"]')){
+          
+          const data = {
+            "id" : keywordID
+          };
+      
+          sendAjax('DELETE', `/user/keyword/recommend/${usn}`, JSON.stringify(data), (xhr) => {
+            alert(xhr.response.message);
+            targetDiv.remove();
+          });
+        }
+      });//추가된 추천 키워드 컴포넌트에 대한 삭제 이벤트 end
+
+    });//모달 추천 키워드 클릭시 추가 이벤트 end
+
+  });//모달 키워드 클릭시 이벤트 end
 }
 
 //토탈 키워드 삭제 이벤트 처리
