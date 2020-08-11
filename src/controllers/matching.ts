@@ -3,47 +3,90 @@ import matchingDAO from '../dao/matchingDAO'
 
 const router = express.Router();
 
-const createMatching = async (req: express.Request, res: express.Response, next: express.NextFunction) => {
 
-  let is_checked = true;
-  //매칭요청이 대기 상태로 생성 될 시, 읽지 않음으로 생성
-  if(req.body.state == 0) {
-    is_checked = false;
+//날짜시간 포맷 변환
+const dateFormatConvert = (date:string):string => {
+  return (new Date(date)).toISOString().slice(0, 19).replace(/-/g, "-").replace("T", " ");
+}
+
+const createMatching = async (req: express.Request, res: express.Response, next: express.NextFunction) => {
+  console.log('controller: createMatching');
+  if (req.body.mentorUSN === null || req.body.mentorUSN === '') {
+    res.status(400).send(
+      {
+        'message': 'create matching fail - please input mentor usn'
+      }
+    )
+  }
+  if (req.body.menteeUSN === null || req.body.menteeUSN === '') {
+    res.status(400).send(
+      {
+        'message': 'create matching fail - please input mentee usn'
+      }
+    )
+  }
+  if (req.body.state === null || req.body.state === '') {
+    res.status(400).send(
+      {
+        'message': 'create matching fail - please input state'
+      }
+    )
   }
 
   const data = [
-    req.body.mentorUSN, //mentor_USN
-    req.body.menteeUSN, //mentee_USN
-    new Date(), //request_time
-    req.body.state, //state
-    is_checked, //is_checked
-    req.body.requestMessage,
-    req.body.responseMessage
+    req.body.mentor_USN, //mentor_USN
+    req.body.mentee_USN, //mentee_USN
+    dateFormatConvert(req.body.request_time),
+    req.body.state,
+    req.body.is_checked,
+    req.body.request_message,
+    req.body.response_message
   ];
 
-  const result = await matchingDAO.createMatching(data);
-
-  // res.status(200).send({
-  //   'message': 'create category success',
-  // });
-  res.redirect('/matching');
-  console.log('controller: createMatching');
+  try {
+    const result = await matchingDAO.createMatching(data);
+    res.status(200).send(
+      {
+        'message': 'create matching success'
+      }
+    ).redirect('/matching');
+  } catch (e) {
+    res.status(500).send(
+      {
+        'message': 'create matching fail - unexpected errors occur in db'
+      }
+    )
+  }
 };
 
 
 const deleteMatching = async (req: express.Request, res: express.Response, next: express.NextFunction) => {
+  console.log('controller: deleteCategory');
+  if (req.params.id === null || req.params.id === '') {
+    res.status(400).send(
+      {
+        'message': 'delete matching fail - please input matching id'
+      }
+    )
+  }
   const data = [
     req.params.id
   ];
 
-  const result = await matchingDAO.deleteMatching(data);
-  (result);
-  res.status(200).send(
+  try {
+    const result = await matchingDAO.deleteMatching(data);
+    res.status(200).send(
     {
-      'message': 'delete category success'
+      'message': 'delete matching success'
     }
   )
-  console.log('controller: deleteCategory');
+  } catch (e) {
+    res.status(500).send(
+      {
+        'message': 'delete matching fail - unexpected errors occur in db'
+      }
+    )
+  }
 };
 
 const modifyForm = async (req: express.Request, res: express.Response, next: express.NextFunction) => {
@@ -51,15 +94,43 @@ const modifyForm = async (req: express.Request, res: express.Response, next: exp
   let data = await matchingDAO.getMatching([req.params.id]);
   res.status(200).render('matching/matchingUpdate',
     {
-      message: 'get modify form success',
-      matching: data[0]
+      'message': 'get modify form success',
+      'matching': data[0]
     }
   )
   console.log('controller: updateMatching');
 }
 
 const modifyMatching = async (req: express.Request, res: express.Response, next: express.NextFunction) => {
-
+  console.log('controller: updateMatching');
+  if (req.body.mentor_USN === null || req.body.mentor_USN === '') {
+    res.status(400).send(
+      {
+        'message': 'modify matching fail - please input mentor usn'
+      }
+    )
+  }
+  if (req.body.mentee_USN === null || req.body.mentee_USN === '') {
+    res.status(400).send(
+      {
+        'message': 'modify matching fail - please input mentee usn'
+      }
+    )
+  }
+  if (req.body.state === null || req.body.state === '') {
+    res.status(400).send(
+      {
+        'message': 'modify matching fail - please input state'
+      }
+    )
+  }
+  if (req.body.is_checked === null || req.body.is_checked === '') {
+    res.status(400).send(
+      {
+        'message': 'modify matching fail - please input isChecked'
+      }
+    )
+  }
   const data = [
     req.body.mentor_USN,
     req.body.mentee_USN,
@@ -72,15 +143,21 @@ const modifyMatching = async (req: express.Request, res: express.Response, next:
     parseInt(req.params.id)
   ];
 
-  const result = await matchingDAO.modifyMatching(data);
-  console.log(result);
-  res.status(200).send(
-    {
-      message: 'get modify matching success',
-      matching: result
-    }
-  )
-  console.log('controller: updateMatching');
+  try {
+    const result = await matchingDAO.modifyMatching(data);
+    res.status(200).send(
+      {
+        message: 'get modify matching success',
+        matching: result
+      }
+    )
+  } catch (e) {
+    res.status(500).send(
+      {
+        'message': 'modify matching fail - unexpected errors occur in db'
+      }
+    )
+  }
 }
 
 
@@ -91,8 +168,8 @@ const getMatching = async (req: express.Request, res: express.Response, next: ex
 
   res.status(200).render('matching/matching',
     {
-      message: 'get category success',
-      matching: data
+      'message': 'get category success',
+      'matching': data
     }
   )
   console.log('controller: getMatching');
@@ -104,8 +181,8 @@ const getMatchingDetail = async (req: express.Request, res: express.Response, ne
 
   res.status(200).render('matching/matchingDetail',
     {
-      message: 'get category success',
-      matching: data[0]
+      'message': 'get category success',
+      'matching': data[0]
     }
   )
   console.log('controller: getMatching');
@@ -114,22 +191,21 @@ const getMatchingDetail = async (req: express.Request, res: express.Response, ne
 const searchMatching = async (req: express.Request, res: express.Response, nex: express.NextFunction) => {
   let data = 
   [
-    req.body.start_date,
-    req.body.end_date,
-    ''
+    dateFormatConvert(req.body.start_date),
+    dateFormatConvert(req.body.end_date)
   ];
-  
-  if (req.body.state !== -1 && req.body.state !== null) {
-    data[2].concat(` AND m.state = ${req.body.state}`)
+  let extraQuery ='';
+  if (req.body.state !== '-1' && req.body.state !== null) {
+    extraQuery += ` AND m.state = ${req.body.state}`;
   }
-  if (req.body.mentee_id !== null) {
-    data[2].concat(` AND mentee.ID = ${req.body.mentee_id}`)
+  if (req.body.mentee_id !== null && req.body.mentee_id !== '') {
+    extraQuery += ` AND mentee.ID = '${req.body.mentee_id}'`;
   }
-  if (req.body.mentor_id !== null) {
-    data[2].concat(` AND mentor.ID = ${req.body.mentor_id}`)
+  if (req.body.mentor_id !== null && req.body.mentor_id !== '') {
+    extraQuery += ` AND mentor.ID = '${req.body.mentor_id}'`;
   }
-  
-  const result = await matchingDAO.searchMatching(data);
+  extraQuery += ';';
+  const result = await matchingDAO.searchMatching(data, extraQuery);
 
   res.status(200).send(
     {

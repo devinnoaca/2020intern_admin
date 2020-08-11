@@ -2,24 +2,23 @@ const deleteKeywordCallback = (xhr) => {
   console.log(xhr.response.message);
   if(xhr.status == 200) {
     alert(`키워드가 정상적으로 삭제되었습니다`);
+    window.location.href = '/keyword';
   } else {
     alert(`키워드 삭제실패 [${xhr.status}]`);
     console.log(xhr.response.message);
   }  
-  window.location.href = '/keyword';
+  
 }
 
 const addKeywordCallback = (xhr) => {
   console.log(xhr.response.message);
   if(xhr.status == 200) {
     alert(`키워드가 정상적으로 생성되었습니다`);
+    window.location.href = '/keyword';
   } else {
     alert(`키워드 생성실패 [${xhr.status}]`);
     console.log(xhr.response.message);
   }
-  
-  window.location.href = '/keyword';
-  // activeTab(xhr.response.result.id); 
 }
 
 
