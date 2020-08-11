@@ -68,6 +68,15 @@ async function getUserNotification(data: Array<any>) {
 
 }
 
+async function getNotifications(){
+  try {
+    const [rows] = await db.connection.promise().query(query.getNotifications);
+    return rows;
+  } catch (e) {
+    console.log('dao: getNotification error\n' + e);
+  }
+}
+
 async function deleteUserNotification(data: Array<any>) {
   try {
     const [rows] = await db.connection.promise().query(query.deleteUserNotification, data);
@@ -80,6 +89,6 @@ async function deleteUserNotification(data: Array<any>) {
 
 export default {
   createNotification, createNotificationToAll, createNotificationToMentor, createNotificationToMentee,
-  getUserNotification, deleteUserNotification
+  getUserNotification, deleteUserNotification, getNotifications
 
 }
