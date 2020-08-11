@@ -93,7 +93,14 @@ const addCareerCallback = (xhr) => {
 
   alert(message);
 
-  $('[name="careerDiv"]').last().after(careerTemplate);
+  const careerDivLength = $('[name="careerDiv"]').length;
+
+  if (careerDivLength != 0){
+    $('[name="careerDiv"]').last().after(careerTemplate);
+  } else {
+    $('[name="careerWrapper"]').prepend(careerTemplate);
+  }
+
   $('[name="addCareerInput"]').val('');
   $('[name="careerDiv"]').last().on('click', function(event){
     careerClickEvent(event, $(this));
