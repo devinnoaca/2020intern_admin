@@ -184,9 +184,9 @@
                           <input class="form-control" value="<%=user[0].career[i]%>" name="career" type="text"
                             aria-describedby="deleteCareerButton" disabled>
                           <div class="input-group-append">
-                            <button class="btn btn-outline-secondary" type="button" name="updateCareerButton"
+                            <button class="btn btn-outline-primary" type="button" name="updateCareerButton"
                               value="<%= user[0].careerID[i]%>" disabled>수정</button>
-                            <button class="btn btn-outline-secondary" type="button" name="deleteCareerButton"
+                            <button class="btn btn-danger" type="button" name="deleteCareerButton"
                               value="<%= user[0].careerID[i]%>" disabled>삭제</button>
                           </div>
                         </div>
@@ -195,7 +195,7 @@
                           <input class="form-control" name="addCareerInput" type="text" aria-describedby="buttonAddon"
                             disabled>
                           <div class="input-group-append">
-                            <button class="btn btn-outline-secondary" type="button" id="addCareerButton"
+                            <button class="btn btn-primary" type="button" id="addCareerButton"
                               disabled>추가</button>
                           </div>
                         </div>
