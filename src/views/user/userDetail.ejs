@@ -214,7 +214,7 @@
                         <% user[0].keywords.totalKeywords.forEach(function(elem, index) {  %>
                         <div class="btn-group mx-1 my-1" name="totalKeywordDeleteDiv">
                           <button class="form-control btn btn-info" type="button">
-                            <h5><%=elem.keyword_Name%></h5>
+                            <h5><%=elem.keyword_name%></h5>
                           </button>
                           <button class="btn btn-outline-info" value="<%=elem.keyword_ID%>" name="totalKeywordDeleteButton" disabled>
                             X
@@ -239,7 +239,7 @@
                         <% user[0].keywords.recommendKeywords.forEach(function(elem, index) {  %>
                         <div class="btn-group mx-1 my-1" name="recommendKeywordDeleteDiv">
                           <button class="form-control btn btn-info" value="<%=elem.keyword_ID%>" type="button">
-                            <h5><%=elem.keyword_Name%></h5>
+                            <h5><%=elem.keyword_name%></h5>
                           </button>
                           <button class="btn btn-outline-info" value="<%=elem.keyword_ID%>" name="recommendKeywordDeleteButton" disabled>
                             X
