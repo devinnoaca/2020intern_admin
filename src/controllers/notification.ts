@@ -29,6 +29,15 @@ const createNotification = async (req: express.Request, res: express.Response, n
   );
   console.log('controller: createNotification');
 }
+const getNotifications = async (req: express.Request, res: express.Response, next: express.NextFunction) => {
+  const result = await notificationQuery.getNotifications();
+
+  console.log(result);
+
+  res.status(200).render('notification/notification', {
+    "notifications" : result   
+  });
+}
 
 const searchNotification = async (req: express.Request, res: express.Response, next: express.NextFunction) => {
   let data;
@@ -73,6 +82,7 @@ const deleteUserNotification = async (req: express.Request, res: express.Respons
   )
 }
 
+router.get('/', getNotifications);
 router.post('/create', createNotification);
 router.post('/search', searchNotification);
 router.delete('/:id', deleteUserNotification);
