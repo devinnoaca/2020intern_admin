@@ -47,8 +47,13 @@ const getUser = async (req: express.Request, res: express.Response,
   let careerID: Array<Number> = new Array();
   let career: Array<String | Number> = new Array(); 
   result.map( (current, index, result) => {
-    careerID.push(current.careerID);
-    career.push(current.career);
+    if(current.careerID != null){
+      careerID.push(current.careerID);
+    }
+
+    if(current.career != null){
+      career.push(current.career);
+    }
   })
   result = [result[0]];
   result[0].careerID = careerID;
@@ -104,9 +109,9 @@ const modifyUser = async (req: express.Request, res: express.Response, next: exp
   } else {
     data =
     [
+      req.body.name,
       req.body.email,
       req.body.password,
-      req.body.name,
       req.body.image,
       req.body.description,
       req.body.company,
