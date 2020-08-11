@@ -49,7 +49,7 @@ const createMatching = async (req: express.Request, res: express.Response, next:
       {
         'message': 'create matching success'
       }
-    ).redirect('/matching');
+    )
   } catch (e) {
     res.status(500).send(
       {
@@ -189,15 +189,20 @@ const getMatchingDetail = async (req: express.Request, res: express.Response, ne
 };
 
 const searchMatching = async (req: express.Request, res: express.Response, nex: express.NextFunction) => {
+
   let data = 
   [
     dateFormatConvert(req.body.start_date),
     dateFormatConvert(req.body.end_date)
   ];
+  console.log(req.body);
+
   let extraQuery ='';
+
   if (req.body.state !== '-1' && req.body.state !== null) {
     extraQuery += ` AND m.state = ${req.body.state}`;
   }
+
   if (req.body.mentee_id !== null && req.body.mentee_id !== '') {
     extraQuery += ` AND mentee.ID = '${req.body.mentee_id}'`;
   }
@@ -205,12 +210,13 @@ const searchMatching = async (req: express.Request, res: express.Response, nex: 
     extraQuery += ` AND mentor.ID = '${req.body.mentor_id}'`;
   }
   extraQuery += ';';
+  console.log(extraQuery);
   const result = await matchingDAO.searchMatching(data, extraQuery);
 
-  res.status(200).send(
+  res.status(200).render('matching/matching',
     {
       'message': 'search matching success',
-      'result': result
+      'matching': result
     }
   )
   console.log('controller: searchMatching');
