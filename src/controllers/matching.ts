@@ -49,7 +49,7 @@ const createMatching = async (req: express.Request, res: express.Response, next:
       {
         'message': 'create matching success'
       }
-    ).redirect('/matching');
+    )
   } catch (e) {
     res.status(500).send(
       {
@@ -189,29 +189,31 @@ const getMatchingDetail = async (req: express.Request, res: express.Response, ne
 };
 
 const searchMatching = async (req: express.Request, res: express.Response, nex: express.NextFunction) => {
+
   let data = 
   [
     dateFormatConvert(req.body.start_date),
     dateFormatConvert(req.body.end_date),
     ''
   ];
+  console.log(req.body);
 
   if (req.body.state !== '-1' && req.body.state !== null) {
     data[2] += ` AND m.state = ${req.body.state}`;
   }
-  if (req.body.mentee_id !== null && req.body.mentee_id !== '') {
-    data[2] += ` AND mentee.ID = ${req.body.mentee_id}`;
+  if (req.body.mentee_id !== null && req.body.menteeId !== '') {
+    data[2] += ` AND mentee.ID = ${req.body.menteeId}`;
   }
-  if (req.body.mentor_id !== null && req.body.mentor_id !== '') {
-    data[2] += ` AND mentor.ID = ${req.body.mentor_id}`;
+  if (req.body.mentor_id !== null && req.body.mentorId !== '') {
+    data[2] += ` AND mentor.ID = ${req.body.mentorId}`;
   }
-  
+  console.log(data);
   const result = await matchingDAO.searchMatching(data);
 
-  res.status(200).send(
+  res.status(200).render('matching/matching',
     {
       'message': 'search matching success',
-      'result': result
+      'matching': result
     }
   )
   console.log('controller: searchMatching');
