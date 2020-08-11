@@ -59,6 +59,15 @@ const searchNotification = async (req: express.Request, res: express.Response, n
 
   const result = await notificationQuery.getUserNotification(data);
 
+  if (result === undefined) {
+    res.status(200).render('notification/notification',
+      {
+        'message': 'no result',
+        'notifications': new Array()
+      }
+    );
+  }
+
   res.status(200).render('notification/notification',
     {
       'message': 'get notifiation success',
