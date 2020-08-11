@@ -20,8 +20,6 @@ const createMatching = async (req: express.Request, res: express.Response, next:
     req.body.response_message
   ];
 
-  console.log(data);
-
   await matchingDAO.createMatching(data);
 
   res.redirect('/matching');
