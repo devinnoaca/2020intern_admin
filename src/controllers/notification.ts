@@ -31,11 +31,7 @@ const createNotification = async (req: express.Request, res: express.Response, n
       result = await notificationQuery.createNotification(data);
     }
 
-    res.status(200).send(
-      {
-        'message': 'create notification success'
-      }
-    );
+    res.status(200).redirect('/notification');
   } catch (e) {
     res.status(500).send(
       {
@@ -102,7 +98,7 @@ const getNotification = async (req: express.Request, res: express.Response, next
 
     const result = await notificationQuery.getUserNotification(data);
     
-    res.status(200).send(
+    res.status(200).render('notification/notification',
       {
         'message': 'get notifiation success',
         'notifications': result
