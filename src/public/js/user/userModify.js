@@ -84,9 +84,9 @@ const addCareerCallback = (xhr) => {
                             <input class="form-control" value="${content}" name="career" type="text"
                             aria-describedby="deleteCareerButton">
                             <div class="input-group-append">
-                              <button class="btn btn-outline-secondary" type="button" name="updateCareerButton"
+                              <button class="btn btn-outline-primary" type="button" name="updateCareerButton"
                               value="${careerID}">수정</button>
-                              <button class="btn btn-outline-secondary" type="button" name="deleteCareerButton"
+                              <button class="btn btn-danger" type="button" name="deleteCareerButton"
                               value="${careerID}">삭제</button>
                             </div>
                           </div>`;
