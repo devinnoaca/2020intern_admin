@@ -165,8 +165,17 @@
                       <td><%= elem.mentor_ID %></td>
                       <td><%= elem.mentee_ID %></td>
                       <td><%= elem.request_time %></td>
-                      <td><%= elem.is_checked %></td>
-                      <td><%= elem.state %></td>
+                      <td>
+                        <% if(elem.is_checked == 1) { %> 열람
+                        <% } else { %> 미열람
+                        <% } %>
+                      </td>
+                      <td>
+                        <% if(elem.state == 0) { %> 대기
+                        <% } else if(elem.state == 1) { %> 수락
+                        <% } else { %> 거절
+                        <% } %>
+                      </td>
                       <td></td>
                     </tr>
                     <% }) %>

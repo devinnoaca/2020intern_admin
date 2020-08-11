@@ -63,7 +63,12 @@
                           <lable>상태</lable>
                         </div>
                         <div class="form-inline col-md-6">
-                          <span><%= matching.state %></span>
+                          <span>
+                            <% if(matching.state == 0) { %> 대기
+                            <% } else if(matching.state == 1) { %> 수락
+                            <% } else { %> 거절
+                            <% } %>
+                          </span>
                         </div>
                       </div>
                     </div>
@@ -101,7 +106,11 @@
                         <lable>열람 여부</lable>
                       </div>
                       <div class="form-inline">
-                        <span><%= matching.is_checked %></span>
+                        <span>
+                          <% if(matching.is_checked == 1) { %> 열람
+                          <% } else { %> 미열람
+                          <% } %>
+                        </span>
                       </div>
                     </div>
                   </li>
