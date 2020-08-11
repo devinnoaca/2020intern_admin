@@ -67,7 +67,7 @@ async function getUserNotification(data: Array<any>) {
     const [rows] = await db.connection.promise().query(query.searchUserNotification, data);
     return rows;
   } catch (e) {
-    console.log('dao: createNotification error\n' + e);
+    console.log('dao: getUserNotification error\n' + e);
     throw e;
   }
 
@@ -78,7 +78,7 @@ async function getNotifications(){
     const [rows] = await db.connection.promise().query(query.getNotifications);
     return rows;
   } catch (e) {
-    console.log('dao: getNotification error\n' + e);
+    console.log('dao: getNotifications error\n' + e);
   }
 }
 

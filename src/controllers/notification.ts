@@ -54,6 +54,7 @@ const getNotifications = async (req: express.Request, res: express.Response, nex
 
 const getNotification = async (req: express.Request, res: express.Response, next: express.NextFunction) => {
   console.log('controller: getNotification')
+  
   if (req.body.type === null || req.body.type === '') {
     res.status(400).send(
       {
@@ -78,7 +79,7 @@ const getNotification = async (req: express.Request, res: express.Response, next
   }
   try {
     let data;
-    if (req.body.is_checked === null){
+    if (req.body.is_checked === 'all'){
       data = 
       [
         req.body.type,
@@ -87,6 +88,7 @@ const getNotification = async (req: express.Request, res: express.Response, next
         req.body.receiver_ID,
         req.body.sender_ID
       ]
+      
     } else {
       data = 
       [
@@ -97,7 +99,9 @@ const getNotification = async (req: express.Request, res: express.Response, next
         req.body.sender_ID
       ]
     }
+
     const result = await notificationQuery.getUserNotification(data);
+    
     res.status(200).send(
       {
         'message': 'get notifiation success',
@@ -144,6 +148,6 @@ const deleteUserNotification = async (req: express.Request, res: express.Respons
 
 router.get('/', getNotifications);
 router.post('/', createNotification);
-router.post('/search', searchNotification);
+router.post('/search', getNotification);
 router.delete('/:id', deleteUserNotification);
 export = router;
