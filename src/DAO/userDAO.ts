@@ -7,6 +7,7 @@ async function getUser(data: Array<any>) {
     return rows;
   } catch (e) {
     console.log('dao: getUser error\n' + e);
+    throw e;
   }
 }
 
@@ -17,6 +18,7 @@ async function getUserKeywords(data: Array<any>) {
     return {'totalKeywords': totalKeywords, 'recommendKeywords': recommendKeywords};
   } catch (e) {
     console.log('dao: getUserKeywords error\n' + e);
+    throw e;
   }
 }
 
@@ -26,6 +28,7 @@ async function createUser(data: Array<any>) {
     return rows;
   } catch (e) {
     console.log('dao: createUser error\n' + e);
+    throw e;
   }
 }
 
@@ -35,6 +38,7 @@ async function getUsers() {
     return rows;
   } catch (e) {
     console.log('dao: getUsers error\n' + e);
+    throw e;
   }
 }
 
@@ -44,6 +48,7 @@ async function deleteUser(data: Array<any>) {
     return rows;
   } catch (e) {
     console.log('dao: deleteUser error\n' + e)
+    throw e;
   }
 }
 
@@ -53,6 +58,7 @@ async function modifyUser(data: Array<any>) {
     return rows;
   } catch (e) {
     console.log('dao: modifyUser error\n' + e);
+    throw e;
   }
 }
 
@@ -62,6 +68,7 @@ async function modifyUserWithoutPW(data: Array<any>) {
     return rows;
 } catch (e) {
     console.log('dao: modifyUser error\n' + e);
+    throw e;
 }}
 
 async function createUserCareer(data: Array<any>) {
@@ -70,6 +77,7 @@ async function createUserCareer(data: Array<any>) {
     return rows;
   } catch (e) {
     console.log('dao: createUserCareer error\n' + e);
+    throw e;
   }
 }
 
@@ -79,6 +87,7 @@ async function modifyUserCareer(data: Array<any>) {
     return rows;
   } catch (e) {
     console.log('dao: modifyUserCareer error\n' + e);
+    throw e;
   }
 }
 
@@ -88,6 +97,7 @@ async function deleteUserCareer(data: Array<any>) {
     return rows;
   } catch (e) {
     console.log('dao: modifyUserCareer error\n' + e);
+    throw e;
   }
 }
 
@@ -97,6 +107,7 @@ async function createUserRecommendKeyword(data: Array<any>) {
     return rows;
   } catch (e) {
     console.log('dao: createUserRecommendKeyword error\n' + e);
+    throw e;
   }
 }
 
@@ -106,6 +117,7 @@ async function deleteUserRecommendKeyword(data: Array<any>) {
     return rows;
   } catch (e) {
     console.log('dao: deleteUserRecommendKeyword error\n' + e);
+    throw e;
   }
 }
 
@@ -115,6 +127,7 @@ async function createUserTotalKeyword(data: Array<any>) {
     return rows;
   } catch (e) {
     console.log('dao: createUserTotalKeyword error\n' + e);
+    throw e;
   }
 }
 
@@ -124,6 +137,7 @@ async function deleteUserTotalKeyword(data: Array<any>) {
     return rows;
   } catch (e) {
     console.log('dao: deleteUserTotalKeyword error\n' + e);
+    throw e;
   }
 }
 

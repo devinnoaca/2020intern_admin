@@ -7,6 +7,7 @@ async function getKeyword() {
     return rows;
   } catch (e) {
     console.log('dao: getKeyword error\n' + e);
+    throw e;
   }
 }
 
@@ -16,6 +17,7 @@ async function createKeyword(data: Array<any>) {
     return rows;
   } catch (e) {
     console.log('dao: createcKeyword error\n' + e);
+    throw e;
   }
 }
 
@@ -25,6 +27,7 @@ async function deleteKeyword(data: Array<any>) {
     return rows;
   } catch (e) {
     console.log('dao: deleteKeyword error\n' + e);
+    throw e;
   }
 }
 
