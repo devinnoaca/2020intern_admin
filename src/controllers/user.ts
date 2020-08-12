@@ -55,7 +55,9 @@ const createUser = async (req: express.Request, res: express.Response, next: exp
   try {
     const result = await userQuery.createUser(data);
 
-    res.status(200).redirect('user');
+    res.status(200).send({
+      'message': 'crerate user success' 
+    });
   } catch (e) {
     res.status(500).send(
       {
