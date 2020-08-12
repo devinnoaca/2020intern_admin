@@ -1,7 +1,7 @@
 import * as express from 'express';
 
 const fs = require('fs');
-const jwt = require('jsonwebtoken'); // module import
+const jwt = require('jsonwebtoken');
 const readline = require('readline');
 
 const router = express.Router();

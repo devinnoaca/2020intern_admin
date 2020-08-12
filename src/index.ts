@@ -13,8 +13,8 @@ const app = express();
 app.use(cookieParser());
 app.use(bodyparser.json());
 app.use(bodyparser.urlencoded({extended: true}));
-// app.use(morgan('dev'));
-// app.use(morgan('combined', {stream}));
+app.use(morgan('dev'));
+app.use(morgan('combined', {stream}));
 
 app.set('views', path.join(__dirname, '/views'))
 app.set("view engine", "ejs");
