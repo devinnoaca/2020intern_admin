@@ -55,11 +55,7 @@ const createUser = async (req: express.Request, res: express.Response, next: exp
   try {
     const result = await userQuery.createUser(data);
 
-    res.status(200).send(
-      {
-        'message': 'create user success'
-      }
-    ).redirect('user');
+    res.status(200).redirect('user');
   } catch (e) {
     res.status(500).send(
       {
@@ -89,7 +85,8 @@ const getUsers = async (req: express.Request, res: express.Response, next: expre
   }
 };
 
-const getUser = async (req: express.Request, res: express.Response, next: express.NextFunction) => {
+const getUser = async (req: express.Request, res: express.Response, 
+  next: express.NextFunction) => {
   console.log('controller: getUser');
   if (req.params.usn === null || req.params.usn === '') {
     res.status(400).send(
@@ -108,8 +105,12 @@ const getUser = async (req: express.Request, res: express.Response, next: expres
     let careerID: Array<Number> = new Array();
     let career: Array<String | Number> = new Array(); 
     result.map( (current, index, result) => {
-      careerID.push(current.careerID);
-      career.push(current.career);
+      if (current.careerID != null) {
+        careerID.push(current.careerID);
+      }
+      if (current.career != null) {
+        career.push(current.career);
+      }
     })
     result = [result[0]];
     result[0].careerID = careerID;
@@ -216,9 +217,9 @@ const modifyUser = async (req: express.Request, res: express.Response, next: exp
   } else {
     data =
     [
+      req.body.name,
       req.body.email,
       req.body.password,
-      req.body.name,
       req.body.image,
       req.body.description,
       req.body.company,
