@@ -4,6 +4,7 @@ const modifyMatchingCallback = (xhr) => {
     window.location.href = '/matching';
   } else {
     alert(`매칭정보 수정 실패 [${xhr.status}]`);
+    console.log(xhr.response.message);
   }
 }
 

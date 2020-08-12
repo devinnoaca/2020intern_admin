@@ -1,4 +1,5 @@
 const deleteMatchingCallback = (xhr) => {
+  console.log(xhr);
     if (xhr.status == 200) {
         alert(`매칭정보가 정상적으로 삭제되었습니다.`);
         window.location.href = '/matching';

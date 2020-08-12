@@ -18,6 +18,7 @@ for (var i = 0; i < stateRadio.length; ++i) {
 
 createMatchingCallback = (xhr) => {
   if (xhr.status == 200) {
+    console.log(xhr.response.message);
     alert(`매칭정보가 정상적으로 생성되었습니다.`);
     window.location.href = '/matching';
   } else {
@@ -38,8 +39,8 @@ const onCreate = () => {
 
   const jsonData = {
     state: formData.state.value,
-    mentee_id: formData.menteeId.value,
-    mentor_id: formData.mentorId.value, 
+    mentee_ID: formData.menteeId.value,
+    mentor_ID: formData.mentorId.value, 
     request_time: new Date(),
     is_checked: isChecked,
     request_message: formData.requestMessage.value,

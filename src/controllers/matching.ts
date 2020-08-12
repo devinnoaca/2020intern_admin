@@ -40,13 +40,14 @@ const createMatching = async (req: express.Request, res: express.Response, next:
   if (req.body.is_checked === null || req.body.is_checked === '' || req.body.is_checked === undefined) {
     req.body.is_checked = 0;
   }
+
   let data;
   try {
     const mentor_USN = await matchingDAO.searchUSN([req.body.mentor_ID]);
     const mentee_USN = await matchingDAO.searchUSN([req.body.mentee_ID]);
     data = [
-      mentor_USN, //mentor_USN
-      mentee_USN, //mentee_USN
+      mentor_USN[0].usn, //mentor_USN
+      mentee_USN[0].usn, //mentee_USN
       dateFormatConvert(req.body.request_time),
       req.body.state,
       req.body.is_checked,
@@ -54,7 +55,7 @@ const createMatching = async (req: express.Request, res: express.Response, next:
       req.body.response_message
     ];
   } catch (e) {
-
+    console.log(e);
   }
 
   try {
