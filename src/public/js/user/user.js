@@ -38,10 +38,26 @@ $('#createUserButton').on('click', () => {
   };
 
   if(userDataValidation(userData)){
-    userForm.submit();
+    sendAjax('POST', '/user', JSON.stringify(userData), createUserCallback);
   }
 });
 
+const createUserCallback = function(xhr) {
+  const message = xhr.response.message;
+
+  if (xhr.status === 200) {
+    alert(message);
+    window.location.href = '/user';
+  } else if (xhr.status === 400) {
+    alert(message);
+    window.location.href = '/user';
+  } else if (xhr.status === 500) {
+    alert(message);
+    window.location.href = '/user';
+  }
+};
+
+//각 유저 폼 데이터에 대한 정규표현식과 에러처리
 const userDataValidation = function(userData) {
   //각 유저 데이터에 대한 정규 표현식
   const idReg = /^[a-z]+[a-z0-9]{5,20}/;
