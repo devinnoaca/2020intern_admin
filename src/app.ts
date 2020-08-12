@@ -5,6 +5,7 @@ import * as categoryRoute from './controllers/category';
 import * as matchingRoute from './controllers/matching';
 import * as notificationRoute from './controllers/notification';
 import * as loginRoute from './controllers/logIn';
+import * as logRoute from './controllers/log';
 
 const router = Router();
 router.use('/user', userRoute);
@@ -13,5 +14,6 @@ router.use('/category', categoryRoute);
 router.use('/matching', matchingRoute);
 router.use('/notification', notificationRoute);
 router.use('/login', loginRoute);
+router.use('/log', logRoute)
 
 export default router;

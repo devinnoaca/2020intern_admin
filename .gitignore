@@ -1,6 +1,8 @@
 node_modules
 .vscode
+config/logger.ts
 config/db.config.ts
 config/config.ts
 *.DS_Store
 test.rest
+logs
