@@ -16,7 +16,7 @@ const logIn = async (req: express.Request, res: express.Response, next: express.
   } else if (req.body.password === null || req.body.password === '' || req.body.password === undefined) {
     res.status(400).send(
       {
-        'message': 'log in fail = please input password'
+        'message': 'log in fail - please input password'
       }
     )
   }
@@ -36,8 +36,9 @@ const logIn = async (req: express.Request, res: express.Response, next: express.
         expiresIn: '1h'
       }
     )
+    console.log(token);
     res.cookie('token', token)
-    res.status(200).send()
+    res.status(200).redirect('/dashboard')
   } catch (e) {
     res.status(500).send()
   }

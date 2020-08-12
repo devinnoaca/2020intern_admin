@@ -29,9 +29,9 @@ app.use('/*', (req, res, next) => {
 	const token = req.cookies.token;
 	try {
 		jwt.verify(token, secretObj.secret);
-		next();
+		res.redirect('dashboard')
 	} catch {
-		res.send('token is invalid');
+		res.redirect('login');
 	}
 })
 
