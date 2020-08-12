@@ -37,7 +37,11 @@ JOIN User as mentee ON mentee.USN = m.mentee_USN \
 WHERE m.request_time >= ? \
 AND m.request_time <= ?`;
 
+const searchUSNbyID = `
+SELECT usn FROM User \
+WHERE ID = ?;`;
+
 export default {
     getAllMatching, createMatching, deleteMatching, getMatching, modifyMatching,
-    searchMatching
+    searchMatching, searchUSNbyID
 }
