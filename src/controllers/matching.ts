@@ -12,17 +12,17 @@ const dateFormatConvert = (date: string): string => {
 
 const createMatching = async (req: express.Request, res: express.Response, next: express.NextFunction) => {
   console.log('controller: createMatching');
-  if (req.body.mentor_USN === null || req.body.mentor_USN === '' || req.body.mentor_USN === undefined) {
+  if (req.body.mentor_ID === null || req.body.mentor_ID === '' || req.body.mentor_ID === undefined) {
     res.status(400).send(
       {
-        'message': 'create matching fail - please input mentor usn'
+        'message': 'create matching fail - please input mentor ID'
       }
     )
   }
-  else if (req.body.mentee_USN === null || req.body.mentee_USN === '' || req.body.mentee_USN === undefined) {
+  else if (req.body.mentee_ID === null || req.body.mentee_ID === '' || req.body.mentee_ID === undefined) {
     res.status(400).send(
       {
-        'message': 'create matching fail - please input mentee usn'
+        'message': 'create matching fail - please input mentee ID'
       }
     )
   }
@@ -39,16 +39,22 @@ const createMatching = async (req: express.Request, res: express.Response, next:
   if (req.body.is_checked === null || req.body.is_checked === '' || req.body.is_checked === undefined) {
     req.body.is_checked = 0;
   }
+  let data;
+  try {
+    const mentor_USN = await matchingDAO.searchUSN([req.body.mentor_ID]);
+    const mentee_USN = await matchingDAO.searchUSN([req.body.mentee_ID]);
+    data = [
+      mentor_USN, //mentor_USN
+      mentee_USN, //mentee_USN
+      dateFormatConvert(req.body.request_time),
+      req.body.state,
+      req.body.is_checked,
+      req.body.request_message,
+      req.body.response_message
+    ];
+  } catch (e) {
 
-  const data = [
-    req.body.mentor_USN, //mentor_USN
-    req.body.mentee_USN, //mentee_USN
-    dateFormatConvert(req.body.request_time),
-    req.body.state,
-    req.body.is_checked,
-    req.body.request_message,
-    req.body.response_message
-  ];
+  }
 
   try {
     const result = await matchingDAO.createMatching(data);
