@@ -37,7 +37,7 @@ const logIn = async (req: express.Request, res: express.Response, next: express.
       }
     )
     res.cookie('token', token)
-    res.status(200).redirect('/dashboard')
+    res.status(200).redirect('/')
   } catch (e) {
     res.status(500).send()
   }
