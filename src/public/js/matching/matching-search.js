@@ -11,6 +11,10 @@ const radioCheck = (radioGroup) => {
   return false;
 }
 
+const dateFormatConvert = (date) => {
+  return (new Date(date)).toISOString().slice(0, 19).replace(/-/g, "-").replace("T", " ");
+}
+
 // submit search form
 const onSearch = () => {
   let formData = document.searchingForm;
@@ -38,8 +42,8 @@ const onSearch = () => {
       endDate = new Date(formData.endDate.value);
     }
   }
-    formData.start_date.value = startDate;
-    formData.end_date.value = endDate;
+    formData.start_date.value = dateFormatConvert(startDate);
+    formData.end_date.value = dateFormatConvert(endDate);
 
     formData.submit();
 }
