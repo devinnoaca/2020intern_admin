@@ -27,7 +27,6 @@ const logIn = async (req: express.Request, res: express.Response, next: express.
   ]
   try {
     const result = await loginQuery.logIn(data);
-    console.log(result[0].usn);
     const token = jwt.sign(
       {
         'usn': `${result[0].usn}`,
