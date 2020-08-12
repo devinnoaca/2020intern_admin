@@ -1,10 +1,12 @@
+import {userDetailDataValidation} from "./userValidation.js";
+import {careerValidation} from "../career/careerValidation.js"
+
 const url = window.location.href;
 const urlSplit = url.split('/');
 const usn = urlSplit[urlSplit.length - 1];
 
 //회원 수정 버튼 클릭 이벤트 
 $('#userUpdateButton').on('click', () => {
-
   //input disable 해제
   $('ul').find('input').attr('disabled', false);
   //textarea disable 해제
@@ -28,11 +30,13 @@ $('#addCareerButton').on('click', () => {
   const career = $('[name="addCareerInput"]').val();
 
   const data = {
-    "usn": usn,
-    "content": career
+    usn: usn,
+    content: career
   };
 
-  sendAjax('POST', `/user/career/${usn}`, JSON.stringify(data), addCareerCallback);
+  if(careerValidation(data.content)){
+    sendAjax('POST', `/user/career/${usn}`, JSON.stringify(data), addCareerCallback);
+  }
 });
 
 // 커리어 수정 혹은 삭제 이벤트
@@ -52,30 +56,49 @@ $('[name="updateCommitButton"]').on('click', () => {
   const type = $('[name="type"]').val(); 
   const imageUrl = $('[name="image"]').attr('src');
 
-  const data = {
-    "email" : email,
-    "password" : password,
-    "name" : name,
-    "description" : description,
-    "id" : id,
-    "type" : type,
-    "company" : company,
-    "permission" : permission,
-    "usn" : usn,
-    "notification" : "0",
-    "image" : imageUrl
+  const userData = {
+    email : email,
+    password : password,
+    name : name,
+    description : description,
+    id : id,
+    type : type,
+    company : company,
+    permission : permission,
+    usn : usn,
+    notification : "0",
+    image : imageUrl
   };
 
   if(password.trim().length == 0){
-    data.password = null;
+    userData.password = null;
   }
 
-  sendAjax('PUT', `/user/${usn}`, JSON.stringify(data), (xhr) => {
-    window.location.href = `/user/${usn}`;
-  });
+  if (userDetailDataValidation(userData)) {
+    sendAjax('PUT', `/user/${usn}`, JSON.stringify(userData), modifyUserCallback);
+  }
 });
 
-const addCareerCallback = (xhr) => {
+//유저 기본정보 수정시 콜백 함수
+const modifyUserCallback = function(xhr) {
+  const status = xhr.status;
+  const message = xhr.response.message;
+
+  switch(status) {
+    case 200:
+      alert(message);
+      window.location.href = `/user/${usn}`;
+      break;
+
+    case 400:
+      alert(message);
+      break;
+  }
+};
+
+//커리어 추가시 콜백 함수
+const addCareerCallback = function(xhr) {
+  const status = xhr.status;
   const message = xhr.response.message;
   const content = xhr.response.content;
   const careerID = xhr.response.careerID;
@@ -91,20 +114,31 @@ const addCareerCallback = (xhr) => {
                             </div>
                           </div>`;
 
-  alert(message);
-
   const careerDivLength = $('[name="careerDiv"]').length;
 
-  if (careerDivLength != 0){
-    $('[name="careerDiv"]').last().after(careerTemplate);
-  } else {
-    $('[name="careerWrapper"]').prepend(careerTemplate);
-  }
+  alert(message);
 
-  $('[name="addCareerInput"]').val('');
-  $('[name="careerDiv"]').last().on('click', function(event){
-    careerClickEvent(event, $(this));
-  });
+  switch (status) {
+    case 200:
+      if (careerDivLength != 0) {
+        $('[name="careerDiv"]').last().after(careerTemplate);
+      } else {
+        $('[name="careerWrapper"]').prepend(careerTemplate);
+      }
+
+      $('[name="addCareerInput"]').val('');
+      $('[name="careerDiv"]').last().on('click', function (event) {
+        careerClickEvent(event, $(this));
+      });
+      
+      break;
+    
+    case 400:
+      break;
+    
+    case 500:
+      break;
+  }
 }
 
 //커리어 항목 클릭시 이벤트 처리
@@ -118,15 +152,55 @@ const careerClickEvent = function(event, careerDiv) {
   };
   
   if(target.is('[name="updateCareerButton"]')){
-    sendAjax('PUT', `/user/career/${usn}`, JSON.stringify(data), (xhr) => {
-      const message = xhr.response.message;
-      alert(message);
-    });
+    if (careerValidation(data.content)) {
+      sendAjax('PUT', `/user/career/${usn}`, JSON.stringify(data), modifyCareerCallback);
+    }
+
   } else if (target.is('[name="deleteCareerButton"]')){
+    
     sendAjax('DELETE', `/user/career/${usn}`, JSON.stringify(data), (xhr) => {
-      const message = xhr.response.message;
-      alert(message);
+      deleteCareerCallback(xhr);
       careerDiv.remove();
     });
   }
 }
+
+//커리어 수정 콜백 함수
+const modifyCareerCallback = function(xhr) {
+  const status = xhr.status;
+  const message = xhr.response.message;
+
+  switch(status) {
+    case 200:
+      alert(message);
+      break;
+    
+    case 400:
+      alert(message);
+      break;
+
+    case 500:
+      alert(message);
+      break;
+  }
+};
+
+//커리어 삭제 콜백 함수
+const deleteCareerCallback = function(xhr) {
+  const status = xhr.status;
+  const message = xhr.response.message;
+
+  switch(status) {
+    case 200:
+      alert(message);
+      break;
+    
+    case 400:
+      alert(message);
+      break;
+
+    case 500:
+      alert(message);
+      break;
+  }
+};
