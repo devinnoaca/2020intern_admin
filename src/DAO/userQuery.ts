@@ -7,12 +7,12 @@ WHERE u.usn = ?;`;
 const searchUserTotalkeywords = `
 SELECT keyword_ID, keyword_Name, category_ID, category_Name \
 FROM get_total_keyword \
-WHERE user_USN = ?;`
+WHERE utk_USN = ?;`
 
 const searchUserRecommendkeywords = `
 SELECT keyword_ID, keyword_Name, category_ID, category_Name \
 FROM get_recommend_keyword \
-WHERE mentee_USN = ?;`;
+WHERE rk_USN = ?;`;
 
 const searchAllUser = `
 SELECT * \
@@ -36,8 +36,8 @@ WHERE usn = ?;`;
 
 const updateUserWithoutPW = `
 UPDATE User SET \
-email = ?,\
 name = ?, \
+email = ?,\
 image_url = ?, \
 description = ?, \
 company = ?, \

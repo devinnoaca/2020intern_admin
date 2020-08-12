@@ -1,13 +1,13 @@
 import * as mysql from 'mysql2';
 import { dbConfig } from '../config/db.config';
 
-const connection = mysql.createConnection(dbConfig.conf);
-
+let connection = mysql.createPool(dbConfig.conf);
 // 로컬 환경 DB 사용시 initialize
-if (dbConfig.branch === 'LOCAL') {
+if (dbConfig.branch === 'LOCAL' || dbConfig.branch === 'TEST') {
 (() => {
-	const strDropDB	= `  
-DROP DATABASE test; CREATE DATABASE test; USE test`;
+	connection = mysql.createConnection(dbConfig.conf);
+	
+	const strDropDB = `DROP DATABASE ${dbConfig.branch}; CREATE DATABASE ${dbConfig.branch}; USE ${dbConfig.branch}`
 
 	const strCreateUserTable = `
 CREATE TABLE User(\
@@ -19,8 +19,8 @@ password VARCHAR(45) NOT NULL,\
 image_url TEXT ,\
 description VARCHAR(1000),\
 company TEXT,\
-permission INT NOT NULL DEFAULT -1,\
-noti_count INT NOT NULL DEFAULT 0,\
+permission INT DEFAULT -1,\
+noti_count INT DEFAULT 0,\
 type INT NOT NULL,\
 PRIMARY KEY(USN));`;
 
@@ -229,7 +229,7 @@ JOIN User_Total_Keyword as utk ON k.id = utk.keyword_id \
 JOIN User as u ON utk.user_USN = u.usn \
 JOIN Career as cr ON u.usn = cr.user_USN;`;
 
-	connection.query(
+	connection.promise().query(
 		strDropDB, (error: mysql.Error) => {
 			console.log('DB is dropping...');
 			if (error) {

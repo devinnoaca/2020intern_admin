@@ -4,6 +4,9 @@ import db from '../db';
 async function getUser(data: Array<any>) {
   try {
     const [rows, fields] = await db.connection.promise().query(query.searchUser, data);
+    if (rows.length === 0) {
+      throw 'cannot find'
+    }
     return rows;
   } catch (e) {
     console.log('dao: getUser error\n' + e);
@@ -45,6 +48,9 @@ async function getUsers() {
 async function deleteUser(data: Array<any>) {
   try {
     const [rows, fields] = await db.connection.promise().query(query.deleteUser, data);
+    if (rows.affectedRows === 0) {
+      throw 'cannot find'
+    }
     return rows;
   } catch (e) {
     console.log('dao: deleteUser error\n' + e)
@@ -55,6 +61,9 @@ async function deleteUser(data: Array<any>) {
 async function modifyUser(data: Array<any>) {
   try {
     const [rows, fields] = await db.connection.promise().query(query.updateUser, data);
+    if (rows.affectedRows === 0) {
+      throw 'cannot find'
+    }
     return rows;
   } catch (e) {
     console.log('dao: modifyUser error\n' + e);
@@ -65,6 +74,9 @@ async function modifyUser(data: Array<any>) {
 async function modifyUserWithoutPW(data: Array<any>) {
   try {
     const [rows, fields] = await db.connection.promise().query(query.updateUserWithoutPW, data);
+    if (rows.affectedRows === 0) {
+      throw 'cannot find'
+    }
     return rows;
 } catch (e) {
     console.log('dao: modifyUser error\n' + e);
@@ -84,6 +96,9 @@ async function createUserCareer(data: Array<any>) {
 async function modifyUserCareer(data: Array<any>) {
   try {
     const [rows, fields] = await db.connection.promise().query(query.updateUserCareerModify, data);
+    if (rows.affectedRows === 0) {
+      throw 'cannot find'
+    }
     return rows;
   } catch (e) {
     console.log('dao: modifyUserCareer error\n' + e);
@@ -94,6 +109,9 @@ async function modifyUserCareer(data: Array<any>) {
 async function deleteUserCareer(data: Array<any>) {
   try {
     const [rows, fields] = await db.connection.promise().query(query.updateUserCareerDelete, data);
+    if (rows.affectedRows === 0) {
+      throw 'cannot find'
+    }
     return rows;
   } catch (e) {
     console.log('dao: modifyUserCareer error\n' + e);
@@ -114,6 +132,9 @@ async function createUserRecommendKeyword(data: Array<any>) {
 async function deleteUserRecommendKeyword(data: Array<any>) {
   try {
     const [rows, fields] = await db.connection.promise().query(query.updateUserRecommendKeywordDelete, data);
+    if (rows.affectedRows === 0) {
+      throw 'cannot find'
+    }
     return rows;
   } catch (e) {
     console.log('dao: deleteUserRecommendKeyword error\n' + e);
@@ -134,6 +155,9 @@ async function createUserTotalKeyword(data: Array<any>) {
 async function deleteUserTotalKeyword(data: Array<any>) {
   try {
     const [rows, fields] = await db.connection.promise().query(query.updateUserTotalKeywordDelete, data);
+    if (rows.affectedRows === 0) {
+      throw 'cannot find'
+    }
     return rows;
   } catch (e) {
     console.log('dao: deleteUserTotalKeyword error\n' + e);

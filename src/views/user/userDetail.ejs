@@ -178,15 +178,15 @@
                       <div class="col-md-2">
                         <label>경력</label>
                       </div>
-                      <div class="col-md-10">
+                      <div class="col-md-10" name="careerWrapper">
                         <% for(let i = 0; i < user[0].career.length; ++i) { %>
                         <div class="input-group my-sm-1" name="careerDiv">
                           <input class="form-control" value="<%=user[0].career[i]%>" name="career" type="text"
                             aria-describedby="deleteCareerButton" disabled>
                           <div class="input-group-append">
-                            <button class="btn btn-outline-secondary" type="button" name="updateCareerButton"
+                            <button class="btn btn-outline-primary" type="button" name="updateCareerButton"
                               value="<%= user[0].careerID[i]%>" disabled>수정</button>
-                            <button class="btn btn-outline-secondary" type="button" name="deleteCareerButton"
+                            <button class="btn btn-danger" type="button" name="deleteCareerButton"
                               value="<%= user[0].careerID[i]%>" disabled>삭제</button>
                           </div>
                         </div>
@@ -195,7 +195,7 @@
                           <input class="form-control" name="addCareerInput" type="text" aria-describedby="buttonAddon"
                             disabled>
                           <div class="input-group-append">
-                            <button class="btn btn-outline-secondary" type="button" id="addCareerButton"
+                            <button class="btn btn-primary" type="button" id="addCareerButton"
                               disabled>추가</button>
                           </div>
                         </div>
@@ -214,7 +214,7 @@
                         <% user[0].keywords.totalKeywords.forEach(function(elem, index) {  %>
                         <div class="btn-group mx-1 my-1" name="totalKeywordDeleteDiv">
                           <button class="form-control btn btn-info" type="button">
-                            <h5><%=elem.keyword_Name%></h5>
+                            <h5><%=elem.keyword_name%></h5>
                           </button>
                           <button class="btn btn-outline-info" value="<%=elem.keyword_ID%>" name="totalKeywordDeleteButton" disabled>
                             X
@@ -239,7 +239,7 @@
                         <% user[0].keywords.recommendKeywords.forEach(function(elem, index) {  %>
                         <div class="btn-group mx-1 my-1" name="recommendKeywordDeleteDiv">
                           <button class="form-control btn btn-info" value="<%=elem.keyword_ID%>" type="button">
-                            <h5><%=elem.keyword_Name%></h5>
+                            <h5><%=elem.keyword_name%></h5>
                           </button>
                           <button class="btn btn-outline-info" value="<%=elem.keyword_ID%>" name="recommendKeywordDeleteButton" disabled>
                             X
