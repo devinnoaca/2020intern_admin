@@ -45,26 +45,18 @@
                   <!-- 회원 종류-->
                   <li class="list-group-item">
                     <div class="form-row">
-                      <div class="form-check form-check-inline col-md-1">
-                        <label class="form-check-label">
+                      <div class="form-inline col-md-1">
+                        <label>
                           <h5>회원 종류</h5>
                         </label>
                       </div>
-                      <div class="form-check form-check-inline col-md-1">
-                        <input class="form-check-input" type="radio" name="userType" id="search-userType1" value="all">
-                        <label class="form-check-label" for="userType1">전체</label>
-                      </div>
-                      <div class="form-check form-check-inline col-md-1">
-                        <input class="form-check-input" type="radio" name="userType" id="search-userType2" value="1">
-                        <label class="form-check-label" for="userType2">멘티</label>
-                      </div>
-                      <div class="form-check form-check-inline col-md-1">
-                        <input class="form-check-input" type="radio" name="userType" id="search-userType3" value="2">
-                        <label class="form-check-label" for="userType3">멘토</label>
-                      </div>
-                      <div class="form-check form-check-inline col-md-1">
-                        <input class="form-check-input" type="radio" name="userType" id="search-userType4" value="3">
-                        <label class="form-check-label" for="userType4">관리자</label>
+                      <div class="form-inline col-md-1">
+                        <select class="form-control" name="type">
+                          <option value="all">전체</option>
+                          <option vale="0">멘티</option>
+                          <option value="1">멘토</option>
+                          <option value="2">관리자</option>
+                        </select>
                       </div>
                     </div>
                   </li>
@@ -79,9 +71,9 @@
                       </div>
                       <div class="form-group form-inline col-md-1">
                         <select class="form-control" id="searchOption">
-                          <option>아이디</option>
-                          <option>조건</option>
-                          <option>etc</option>
+                          <option value="id">ID</option>
+                          <option value="name">이름</option>
+                          <option value="email">이메일</option>
                         </select>
                       </div>
                       <div class="form-group form-inline col-md-6">
