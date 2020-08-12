@@ -58,7 +58,7 @@
                           <span>멘토</span>
                         </div>
                         <div class="col-auto">
-                          <input type="text" class="form-control" name="mentor_id" placeholder="Mentor ID" value="<%= searchForm.mentor_id %>">
+                          <input type="text" class="form-control" name="mentor_id" placeholder="Mentor ID">
                         </div>
                       </div>
 
@@ -67,7 +67,7 @@
                           <span>멘티</span>
                         </div>
                         <div class="col-auto">
-                          <input type="text" class="form-control" name="mentee_id" placeholder="Mentee ID" value="<%= searchForm.mentee_id %>">
+                          <input type="text" class="form-control" name="mentee_id" placeholder="Mentee ID">
                         </div>
                       </div>
                     </div>
@@ -83,9 +83,8 @@
                       </div>
                       <% const radios = ['전체', '대기', '수락', '거절'] %>
                       <% for(let i = -1; i < radios.length-1; ++i) { %>
-                        <% let isCheck = (searchForm.state == i) ? 'checked' : '' %>
                         <div class="form-check form-check-inline col-md-1">
-                          <input class="form-check-input" type="radio" name="state" id="state-<%= i %>" value="<%= i %>" <%= isCheck %>>
+                          <input class="form-check-input state-radio" type="radio" name="state" id="state-<%= i %>" value="<%= i %>">
                           <label class="form-check-label" for="state-<%= i %>"><%= radios[i+1] %></label>
                         </div>
                       <% } %>
@@ -101,17 +100,15 @@
                         </label>
                       </div>
                       <div class="col-md-1 form-check">
-                        <% let isTotal = (searchForm.is_total == 'on') ? 'checked': '' %>
-                        <% let disable = (searchForm.is_total == 'on') ? 'disabled': '' %>
-                          <input type="checkbox" class="form-check-input" id="isTotal" name="is_total" <%= isTotal %>>
+                          <input type="checkbox" class="form-check-input" id="isTotal" name="is_total">
                           <label class="form-check-label" for="isTotal">전체 기간</label>
                       </div>
                       <div class="col-auto">
-                         <input type="text" id="datePicker" name="startDate" class="form-control start-date" value="<%= searchForm.start_date %>" <%= disable %>>
+                         <input type="text" id="datePicker" name="startDate" class="form-control start-date">
                       </div>
                       ~
                       <div class="col-auto">
-                        <input type="text" id="datePicker" name="endDate" class="form-control end-date" value="<%= searchForm.end_date %>" <%= disable %>>
+                        <input type="text" id="datePicker" name="endDate" class="form-control end-date">
                       </div>
                     </div>
                     <input type="hidden" name="start_date">
@@ -211,9 +208,13 @@
   <!-- matching datepicker-->
   <script src="/js/matching/form-date-picker.js"></script>
   
-  <!-- matching js -->
+  <!-- ajax -->
   <script type="text/javascript" src="/js/common/ajax.js"></script>
-  
+
+  <!-- parse querystring -->
+  <script type="text/javascript" src="/js/common/parse-query.js"></script>
+
+  <!-- matching js -->
   <script type="text/javascript" src="/js/matching/matching-search.js"></script>
 
   <script type="text/javascript" src="/js/matching/table-event.js"></script>

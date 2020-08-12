@@ -166,70 +166,45 @@ const modifyMatching = async (req: express.Request, res: express.Response, next:
 }
 
 const getMatching = async (req: express.Request, res: express.Response, next: express.NextFunction) => {
-
-  let resultData = [];
-  let searchForm = {
-    mentor_id: '',
-    mentee_id: '',
-    state: '-1',
-    start_date: '',
-    end_date: '',
-    is_total: 'on'
-  }
-
-  if (req.query.query_type === 'SEARCH') { //추후 페이징 쿼리와 구분하기 위해 임시로 구분자쿼리를 함께 보냈습니다.
-    // 매칭정보 검색
-    let inputData = [
-        dateFormatConvert(String(req.query.start_date)),
-        dateFormatConvert(String(req.query.end_date))
-      ];
-
-    let extraQuery = '';
-
-    if (req.query.state !== '-1' && req.query.state !== null) {
-      extraQuery += ` AND m.state = ${req.query.state}`;
-    }
-    if (req.query.mentee_id !== null && req.query.mentee_id !== '') {
-      extraQuery += ` AND mentee.ID = '${req.query.mentee_id}'`;
-    }
-    if (req.query.mentor_id !== null && req.query.mentor_id !== '') {
-      extraQuery += ` AND mentor.ID = '${req.query.mentor_id}'`;
-    }
-    extraQuery += ';';
-
-    resultData = await matchingDAO.searchMatching(inputData, extraQuery);
-
-    searchForm.mentor_id = String(req.query.mentor_id);
-    searchForm.mentee_id = String(req.query.mentee_id);
-    searchForm.state = String(req.query.state);
-    searchForm.is_total = String(req.query.is_total);
-    if(searchForm.is_total !== 'on') {
-      searchForm.start_date = inputData[0];
-      searchForm.end_date = inputData[1];
-    }
-    
-    
-  } else {
-    // 매칭정보 리스트 요청
-    resultData = await matchingDAO.getAllMatching();
-  }
-
-  res.status(200).render('matching/matching',
-    {
-      'message': 'get category success',
-      'matching': resultData,
-      'searchForm': searchForm
-    }
-  )
   console.log('controller: getMatching');
+  
   try {
-    const result = await matchingDAO.getAllMatching();
+    let resultData = [];
+    
+    if (req.query.query_type === 'SEARCH') { //추후 페이징 쿼리와 구분하기 위해 임시로 구분자쿼리를 함께 보냈습니다.
+      console.log('controller: getMatching [SEARCH]');
+      // 매칭정보 검색
+      let inputData = [
+          dateFormatConvert(String(req.query.start_date)),
+          dateFormatConvert(String(req.query.end_date))
+        ];
+  
+      let extraQuery = '';
+  
+      if (req.query.state !== '-1' && req.query.state !== null) {
+        extraQuery += ` AND m.state = ${req.query.state}`;
+      }
+      if (req.query.mentee_id !== null && req.query.mentee_id !== '') {
+        extraQuery += ` AND mentee.ID = '${req.query.mentee_id}'`;
+      }
+      if (req.query.mentor_id !== null && req.query.mentor_id !== '') {
+        extraQuery += ` AND mentor.ID = '${req.query.mentor_id}'`;
+      }
+      extraQuery += ';';
+      
+      resultData = await matchingDAO.searchMatching(inputData, extraQuery);
+    } else {
+      // 매칭정보 리스트 요청
+      resultData = await matchingDAO.getAllMatching();
+    }
+
     res.status(200).render('matching/matching',
       {
-        'message': 'get matching success',
-        'matching': result
+        'message': 'get category success',
+        'matching': resultData,
       }
-    )
+    );
+
   } catch (e) {
     res.status(500).send()
   }
@@ -257,57 +232,6 @@ const getMatchingDetail = async (req: express.Request, res: express.Response, ne
     res.status(500).send('get matching detail fail - unexpected errors occur in db')
   }
 };
-
-const searchMatching = async (req: express.Request, res: express.Response, nex: express.NextFunction) => {
-  console.log('controller: searchMatching');
-  if (req.body.start_date === null || req.body.start_date === '' || req.body.start_date === undefined) {
-    res.status(400).send(
-      {
-        'message': 'search matching fail - please input start date'
-      }
-    )
-  }
-  if (req.body.end_date === null || req.body.end_date === '' || req.body.end_date === undefined) {
-    res.status(400).send(
-      {
-        'message': 'search matching fail - please input end date'
-      }
-    )
-  }
-
-  let data = 
-  [
-    dateFormatConvert(req.body.start_date),
-    dateFormatConvert(req.body.end_date)
-  ];
-  let extraQuery ='';
-  if (req.body.state !== '-1' && req.body.state !== null) {
-    extraQuery += ` AND m.state = ${req.body.state}`;
-  }
-  if (req.body.mentee_id !== null && req.body.mentee_id !== '') {
-    extraQuery += ` AND mentee.ID = '${req.body.mentee_id}'`;
-  }
-  if (req.body.mentor_id !== null && req.body.mentor_id !== '') {
-    extraQuery += ` AND mentor.ID = '${req.body.mentor_id}'`;
-  }
-  extraQuery += ';';
-  try {
-    const result = await matchingDAO.searchMatching(data, extraQuery);
-
-    res.status(200).send(
-      {
-        'message': 'search matching success',
-        'result': result
-      }
-    )
-  } catch (e) {
-    res.status(500).send(
-      {
-        'message': 'search matching fail - unexpected errors occur in db'
-      }
-    )
-  }
-}
 
 router.get('/', getMatching);
 router.get('/:id', getMatchingDetail);
