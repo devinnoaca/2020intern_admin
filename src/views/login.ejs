@@ -24,12 +24,12 @@
                   <div class="text-center">
                     <h1 class="h4 text-gray-900 mb-4">Administration</h1>
                   </div>
-                  <form class="user" method="POST" action="/login">
+                  <form name="loginForm" class="user" onsubmit="onLogin(); return false;">
                     <div class="form-group">
-                      <input type="text" name="id" class="form-control form-control-user" id="exampleInputEmail" aria-describedby="emailHelp" placeholder="Username">
+                      <input type="text" name="id" class="form-control form-control-user" id="exampleInputEmail" placeholder="Username" required>
                     </div>
                     <div class="form-group">
-                      <input type="password" name="password" class="form-control form-control-user" id="exampleInputPassword" placeholder="Password">
+                      <input type="password" name="password" class="form-control form-control-user" id="exampleInputPassword" placeholder="Password" required>
                     </div>
                     <div class="form-group">
                       <div class="custom-control custom-checkbox small">
@@ -66,6 +66,12 @@
 
   <!-- Custom scripts for all pages-->
   <script src="js/sb-admin-2.min.js"></script>
+
+  <!-- login js -->
+  <script type="text/javascript" src="/js/login/login.js"></script>
+
+  <!-- ajax -->
+  <script type="text/javascript" src="/js/common/ajax.js"></script>
 
 </body>
 
