@@ -20,13 +20,11 @@ const addKeywordCallback = (xhr) => {
   }
 }
 
-
 const deleteKeyword = (id, name) => {
   let delConfirm = confirm(`${name} 키워드를 삭제하시겠습니까? `);
   if (!delConfirm) {
-    console.log('삭제취소.');
+    console.log('삭제취소');
   } else {
-    console.log('삭제!');
     sendAjax('DELETE', `/keyword/${id}`, null, deleteKeywordCallback);
   }
 }
@@ -38,6 +36,8 @@ const addKeyword = () => {
     name: addForm.inputKeyword.value,
     categoryID: addForm.searchType.value
   }
-  console.log(jsonData);
-  sendAjax('POST', `/keyword/`, JSON.stringify(jsonData), addKeywordCallback);
+
+  if(keywordDataValidation(jsonData)) {
+    sendAjax('POST', `/keyword/`, JSON.stringify(jsonData), addKeywordCallback);
+  }
 }
