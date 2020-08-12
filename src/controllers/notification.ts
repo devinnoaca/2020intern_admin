@@ -6,7 +6,7 @@ const router = express.Router();
 
 const createNotification = async (req: express.Request, res: express.Response, next: express.NextFunction) => {
   console.log('controller: createNotification');
-  if (req.body.message === null || req.body.message === '') {
+  if (req.body.message === null || req.body.message === '' || req.body.message === undefined) {
     res.status(400).send(
       {
         'message': 'create notification fail - please input message'
@@ -37,31 +37,27 @@ const createNotification = async (req: express.Request, res: express.Response, n
       }
     );
   } catch (e) {
-    res.status(500).send(
-      {
-        'message': 'create notification fail - unexpected errors occur in db'
-      }
-    )
+    res.status(500).send()
   }
 }
 
 const getNotification = async (req: express.Request, res: express.Response, next: express.NextFunction) => {
   console.log('controller: getNotification')
-  if (req.body.type === null || req.body.type === '') {
+  if (req.body.type === null || req.body.type === '' || req.body.type === undefined) {
     res.status(400).send(
       {
         'message': 'get notification fail - please input type'
       }
     )
   }
-  if (req.body.receiver_ID === null || req.body.receiver_ID === '') {
+  else if (req.body.receiver_ID === null || req.body.receiver_ID === '' || req.body.receiver_ID === undefined) {
     res.status(400).send(
       {
         'message': 'get notification fail - please input receiver id'
       }
     )
   }
-  if (req.body.sender_ID === null || req.body.sender_ID === '') {
+  else if (req.body.sender_ID === null || req.body.sender_ID === '' || req.body.sender_ID === undefined) {
   
     res.status(400).send(
       {
@@ -71,7 +67,7 @@ const getNotification = async (req: express.Request, res: express.Response, next
   }
   try {
     let data;
-    if (req.body.is_checked === null){
+    if (req.body.is_checked === null || req.body.is_checked === undefined){
       data = 
       [
         req.body.type,
@@ -98,17 +94,13 @@ const getNotification = async (req: express.Request, res: express.Response, next
       }
     )
   } catch (e) {
-    res.status(500).send(
-      {
-        'message': 'get notification fail - unexpected errors occur in db'
-      }
-    )
+    res.status(500).send()
   }
 }
 
 const deleteUserNotification = async (req: express.Request, res: express.Response, next: express.NextFunction) => {
   console.log('controller: deleteUserNotification')
-  if (req.params.id === null || req.params.id === '') {
+  if (req.params.id === null || req.params.id === '' || req.params.id === undefined) {
     res.status(400).send(
       {
         'message': 'delete user notification fail - please input id'
@@ -127,11 +119,7 @@ const deleteUserNotification = async (req: express.Request, res: express.Respons
       }
     )
   } catch {
-    res.status(500).send(
-      {
-        'message': 'delete notification fail - unexpected errors occur in db'
-      }
-    )
+    res.status(500).send()
   }
 }
 

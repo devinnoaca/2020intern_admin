@@ -24,7 +24,7 @@ async function getMatching(data: Array<any>) {
 
 async function createMatching(data: Array<any>) {
   try {
-    const [rows, fields] = await db.connection.promise().query(query.createMatching, data);
+    const [rows, fields] = await db.connection.promise().query(query.createMatching, data );
     return rows;
   } catch (e) {
     console.log('dao: createMatching error\n' + e);
@@ -35,6 +35,9 @@ async function createMatching(data: Array<any>) {
 async function deleteMatching(data: Array<any>) {
   try {
     const [rows, fields] = await db.connection.promise().query(query.deleteMatching, data);
+    if (rows.affectedRows === 0) {
+      throw 'cannot find'
+    }
     return rows;
   } catch (e) {
     console.log('dao: deleteMatching error\n' + e);
@@ -45,6 +48,9 @@ async function deleteMatching(data: Array<any>) {
 async function modifyMatching(data: Array<any>) {
   try {
     const [rows, fields] = await db.connection.promise().query(query.modifyMatching, data);
+    if (rows.affectedRows === 0) {
+      throw 'cannot find'
+    }
     return rows;
   } catch (e) {
     console.log('dao: modifyMatching error\n' + e);

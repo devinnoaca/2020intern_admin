@@ -36,8 +36,8 @@ WHERE usn = ?;`;
 
 const updateUserWithoutPW = `
 UPDATE User SET \
-email = ?,\
 name = ?, \
+email = ?,\
 image_url = ?, \
 description = ?, \
 company = ?, \

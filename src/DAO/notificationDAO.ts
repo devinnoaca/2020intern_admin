@@ -52,7 +52,12 @@ async function createNotification(data: Array<any>) {
   try {
     const [user] = await db.connection.promise().query(query.searchUserByID, data);
     const [notification] = await db.connection.promise().query(query.createNotification, data)
-    db.connection.query(query.createUserNotification, [parseInt(notification.insertId), parseInt(user.USN), 1])
+    user.map( (c) => {
+      db.connection.query(query.createUserNotification, [parseInt(notification.insertId), parseInt(c.USN), 1])
+    })
+    if (user.length === 0) {
+      throw 'cannot find'
+    }
     // TODO(SeongJaeSong): Update noti_count of User table
     return user;
   } catch (e) {
@@ -65,6 +70,9 @@ async function createNotification(data: Array<any>) {
 async function getUserNotification(data: Array<any>) {
   try {
     const [rows] = await db.connection.promise().query(query.searchUserNotification, data);
+    if (rows.length === 0) {
+      throw 'cannot find';
+    }
     return rows;
   } catch (e) {
     console.log('dao: createNotification error\n' + e);
@@ -76,6 +84,9 @@ async function getUserNotification(data: Array<any>) {
 async function deleteUserNotification(data: Array<any>) {
   try {
     const [rows] = await db.connection.promise().query(query.deleteUserNotification, data);
+    if (rows.affectedRows === 0) {
+      throw 'cannot find'
+    }
     return rows;
   } catch (e) {
     console.log('dao: createNotification error\n' + e);

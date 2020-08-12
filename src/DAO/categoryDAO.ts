@@ -23,6 +23,9 @@ async function createCategory(data: Array<any>) {
 async function deleteCategory(data: Array<any>) {
   try {
     const [rows, fields] = await db.connection.promise().query(query.deleteCategory, data);
+    if (rows.affectedRows === 0) {
+      throw 'cannot find';
+    }
     return rows;
   } catch (e) {
     console.log('dao: deleteCategory error\n' + e);

@@ -59,4 +59,6 @@ app.get('/notification', (req: express.Request, res: express.Response) => {
 	res.render('notification/notification', data);
 });
 
-app.listen(3000, () => console.log(`start`));
+const server = app.listen(3000, () => console.log(`start`));
+
+export default server
