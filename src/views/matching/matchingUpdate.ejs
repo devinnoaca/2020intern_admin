@@ -62,7 +62,13 @@
                             <lable>상태</lable>
                           </div>
                           <div class="form-inline col-md-6">
-                            <input class="form-control" name="state" value="<%= matching.state %>" type="text">
+                            <select name="state" class="custom-select">
+                              <% const options = ['대기', '수락', '거절']; %>
+                              <% for(var i = 0; i < options.length; i++) { %>
+                                <% let isSelected = (matching.state == i) ? 'selected' : ''; %>
+                                <option value='<%= i %>' <%= isSelected %> ><%= options[i] %></option>
+                              <% } %>
+                            </select>
                           </div>
                         </div>
                       </div>
