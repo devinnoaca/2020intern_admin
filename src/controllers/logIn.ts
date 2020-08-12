@@ -37,11 +37,8 @@ const logIn = async (req: express.Request, res: express.Response, next: express.
         expiresIn: '1h'
       }
     )
-    res.status(200).send(
-      {
-        'token': token
-      }
-    )
+    res.cookie('token', token)
+    res.status(200).send()
   } catch (e) {
     res.status(500).send()
   }

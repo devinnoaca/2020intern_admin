@@ -2,10 +2,12 @@ import router from './app';
 import * as express from 'express';
 import * as path from 'path';
 import * as bodyparser from 'body-parser';
+import * as cookieParser from 'cookie-parser';
 import { secretObj } from '../config/config';
 const jwt = require('jsonwebtoken');
 
 const app = express();
+app.use(cookieParser());
 app.use(bodyparser.json());
 app.use(bodyparser.urlencoded({extended: true}));
 
@@ -24,7 +26,7 @@ app.get('/forgot-password', (request: express.Request, response: express.Respons
 app.post('/login', router);
 
 app.use('/*', (req, res, next) => {
-	const token = req.body.token;
+	const token = req.cookies.token;
 	try {
 		jwt.verify(token, secretObj.secret);
 		next();
