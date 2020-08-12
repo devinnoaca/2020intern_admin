@@ -1,3 +1,6 @@
+const url = window.location.href;
+const urlSplit = url.split('/');
+const usn = urlSplit[urlSplit.length - 1];
 const recommendKeywordUrl = `/keyword/recommend/${usn}`;
 const totlaKeywordUrl = `/keyword/total/${usn}`;
 
