@@ -20,6 +20,8 @@ const onSearch = () => {
   let startDate;
   let endDate;
 
+  let formValid = true;
+
   // 검색기간[전체] 체크박스 값 확인
   if(searchForm.isTotal.checked) {
     startDate = new Date('1970-01-01');
@@ -28,8 +30,8 @@ const onSearch = () => {
   } else {
     // 검색기간 폼 유효성 체크.
     if(searchForm.startDate.value == '' || searchForm.endDate.value == '') {
+      formValid = false;
       alert('기간을 정확히 입력해주세요');
-      return false;
     }
     startDate = new Date(searchForm.startDate.value);
     endDate = new Date(searchForm.endDate.value);
@@ -38,6 +40,12 @@ const onSearch = () => {
     searchForm.start_date.value = startDate;
     searchForm.end_date.value = endDate;
     
-    searchForm.submit();
+    if(formValid) {
+      searchForm.submit();
+      return true;
+    } else {
+      return false;
+    }
+    
 }
 
