@@ -7,7 +7,7 @@ if (dbConfig.branch === 'LOCAL' || dbConfig.branch === 'TEST') {
 (() => {
 	connection = mysql.createConnection(dbConfig.conf);
 	
-	const strDropDB = `DROP DATABASE ${dbConfig.branch}; CREATE DATABASE ${dbConfig.branch}; USE ${dbConfig.branch}`
+	const strDropDB = `DROP DATABASE ${dbConfig.conf.database}; CREATE DATABASE ${dbConfig.conf.database}; USE ${dbConfig.conf.database};`
 
 	const strCreateUserTable = `
 CREATE TABLE User(\
