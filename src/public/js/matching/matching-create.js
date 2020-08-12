@@ -38,16 +38,16 @@ const onCreate = () => {
 
   const jsonData = {
     state: formData.state.value,
-    mentee_USN: formData.menteeUSN.value,
-    mentor_USN: formData.mentorUSN.value, 
+    mentee_id: formData.menteeId.value,
+    mentor_id: formData.mentorId.value, 
     request_time: new Date(),
     is_checked: isChecked,
     request_message: formData.requestMessage.value,
     response_message: formData.responseMessage.value
   }
 
-  console.log(jsonData);
-
-  sendAjax('POST', `/matching`, JSON.stringify(jsonData), createMatchingCallback);
+  if(matchingDataValidation(jsonData)) {
+    sendAjax('POST', `/matching`, JSON.stringify(jsonData), createMatchingCallback);
+  }
 
 }

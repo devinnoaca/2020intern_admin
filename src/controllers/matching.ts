@@ -12,17 +12,17 @@ const dateFormatConvert = (date: string): string => {
 
 const createMatching = async (req: express.Request, res: express.Response, next: express.NextFunction) => {
   console.log('controller: createMatching');
-  if (req.body.mentor_USN === null || req.body.mentor_USN === '' || req.body.mentor_USN === undefined) {
+  if (req.body.mentor_Id === null || req.body.mentor_Id === '' || req.body.mentor_Id === undefined) {
     res.status(400).send(
       {
-        'message': 'create matching fail - please input mentor usn'
+        'message': 'create matching fail - please input mentor Id'
       }
     )
   }
-  else if (req.body.mentee_USN === null || req.body.mentee_USN === '' || req.body.mentee_USN === undefined) {
+  else if (req.body.mentee_Id === null || req.body.mentee_Id === '' || req.body.mentee_Id === undefined) {
     res.status(400).send(
       {
-        'message': 'create matching fail - please input mentee usn'
+        'message': 'create matching fail - please input mentee Id'
       }
     )
   }
@@ -41,8 +41,8 @@ const createMatching = async (req: express.Request, res: express.Response, next:
   }
 
   const data = [
-    req.body.mentor_USN, //mentor_USN
-    req.body.mentee_USN, //mentee_USN
+    req.body.mentor_Id, //mentor_Id
+    req.body.mentee_Id, //mentee_Id
     dateFormatConvert(req.body.request_time),
     req.body.state,
     req.body.is_checked,
