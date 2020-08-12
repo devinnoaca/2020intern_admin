@@ -1,4 +1,4 @@
-<div class="modal fade" id="usercreate" tabindex="-1" aria-hidden="true">
+<div class="modal fade" id="userCreate" tabindex="-1" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
     <div class="modal-content">
       <div class="modal-header">
@@ -14,18 +14,15 @@
               <!-- 회원 종류 -->
               <li class="list-group-item">
                 <div class="row form-group">
-                  <div class="form-check form-check-inline col-md-2">
-                    <label class="form-check-label">
-                      <h5>회원 종류</h5>
-                    </label>
+                  <div class="form-inline col-md-2">
+                    <label>회원 종류</label>
                   </div>
-                  <div class="form-check form-check-inline col-md-2">
-                    <input class="form-check-input" type="radio" name="type" id="userType1" value="1">
-                    <label class="form-check-label" for="userType1">멘티</label>
-                  </div>
-                  <div class="form-check form-check-inline col-md-2">
-                    <input class="form-check-input" type="radio" name="type" id="userType2" value="0">
-                    <label class="form-check-label" for="userType2">멘토</label>
+                  <div class="form-inline col-md-6">
+                    <select class="form-control" name="type">
+                      <option value="2" selected>없음</option>
+                      <option value="1">멘토</option>
+                      <option value="0">멘티</option>
+                    </select>
                   </div>
                 </div>
               </li>
@@ -97,7 +94,7 @@
           </div>
         </div>
         <div class="modal-footer">
-          <button type="submit" class="btn btn-primary align-self-center" id="createUserButton">생성</button>
+          <button type="button" class="btn btn-primary align-self-center" id="createUserButton">생성</button>
         </div>
       </form>
     </div>
