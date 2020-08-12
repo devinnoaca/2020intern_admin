@@ -16,6 +16,4 @@ const tableClickEvent = () => {
   });
 }
 
-window.onload = () => {
-  tableClickEvent();
-}
+tableClickEvent();

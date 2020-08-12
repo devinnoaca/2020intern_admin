@@ -88,8 +88,8 @@ const deleteMatching = async (req: express.Request, res: express.Response, next:
   }
 };
 
-const modifyForm = async (req: express.Request, res: express.Response, next: express.NextFunction) => {
-  console.log('controller: modifyForm');
+const renderModifyForm = async (req: express.Request, res: express.Response, next: express.NextFunction) => {
+
   if (req.params.id === null || req.params.id === '' || req.params.id === undefined) {
     res.status(400).send(
       {
@@ -143,8 +143,8 @@ const modifyMatching = async (req: express.Request, res: express.Response, next:
   const data = [
     req.body.mentor_USN,
     req.body.mentee_USN,
-    new Date(), //req.body.request_time,
-    new Date(), //req.body.response_time,
+    dateFormatConvert(req.body.request_time),
+    dateFormatConvert(req.body.response_time),
     req.body.state,
     req.body.request_message,
     req.body.response_message,
@@ -168,6 +168,14 @@ const modifyMatching = async (req: express.Request, res: express.Response, next:
 const getMatching = async (req: express.Request, res: express.Response, next: express.NextFunction) => {
 
   let resultData = [];
+  let searchForm = {
+    mentor_id: '',
+    mentee_id: '',
+    state: '-1',
+    start_date: '',
+    end_date: '',
+    is_total: 'on'
+  }
 
   if (req.query.query_type === 'SEARCH') { //추후 페이징 쿼리와 구분하기 위해 임시로 구분자쿼리를 함께 보냈습니다.
     // 매칭정보 검색
@@ -181,7 +189,6 @@ const getMatching = async (req: express.Request, res: express.Response, next: ex
     if (req.query.state !== '-1' && req.query.state !== null) {
       extraQuery += ` AND m.state = ${req.query.state}`;
     }
-
     if (req.query.mentee_id !== null && req.query.mentee_id !== '') {
       extraQuery += ` AND mentee.ID = '${req.query.mentee_id}'`;
     }
@@ -191,6 +198,17 @@ const getMatching = async (req: express.Request, res: express.Response, next: ex
     extraQuery += ';';
 
     resultData = await matchingDAO.searchMatching(inputData, extraQuery);
+
+    searchForm.mentor_id = String(req.query.mentor_id);
+    searchForm.mentee_id = String(req.query.mentee_id);
+    searchForm.state = String(req.query.state);
+    searchForm.is_total = String(req.query.is_total);
+    if(searchForm.is_total !== 'on') {
+      searchForm.start_date = inputData[0];
+      searchForm.end_date = inputData[1];
+    }
+    
+    
   } else {
     // 매칭정보 리스트 요청
     resultData = await matchingDAO.getAllMatching();
@@ -199,7 +217,8 @@ const getMatching = async (req: express.Request, res: express.Response, next: ex
   res.status(200).render('matching/matching',
     {
       'message': 'get category success',
-      'matching': resultData
+      'matching': resultData,
+      'searchForm': searchForm
     }
   )
   console.log('controller: getMatching');
@@ -292,7 +311,7 @@ const searchMatching = async (req: express.Request, res: express.Response, nex: 
 
 router.get('/', getMatching);
 router.get('/:id', getMatchingDetail);
-router.get('/update/:id', modifyForm);
+router.get('/update/:id', renderModifyForm);
 router.put('/update/:id', modifyMatching)
 router.post('/', createMatching);
 router.delete('/:id', deleteMatching);

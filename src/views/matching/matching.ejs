@@ -35,7 +35,7 @@
           <!-- Page Heading -->
           <div class="d-sm-flex align-items-center justify-content-between mb-4">
             <h1 class="h3 mb-0 text-gray-800">Matching</h1>
-            <button class="btn btn-warning shadow-sm" data-toggle="modal" data-target="#matching-create">
+            <button class="btn btn-primary shadow-sm" data-toggle="modal" data-target="#matching-create">
               매칭정보 생성
             </button>
           </div>
@@ -46,7 +46,7 @@
               <h6 class="m-0 font-weight-bold text-primary">매칭정보 조회</h6>
             </div>
             <div class="card-body">
-              <form name="searchForm" onsubmit="onSearch()" method="GET" action="/matching">
+              <form name="searchingForm" onsubmit="onSearch(); return false;" method="GET" action="/matching">
                 <input type="hidden" name="query_type" value="SEARCH">
                 <ul class="list-group list-group-flush">
 
@@ -58,7 +58,7 @@
                           <span>멘토</span>
                         </div>
                         <div class="col-auto">
-                          <input type="text" class="form-control" name="mentor_id" placeholder="Mentor ID">
+                          <input type="text" class="form-control" name="mentor_id" placeholder="Mentor ID" value="<%= searchForm.mentor_id %>">
                         </div>
                       </div>
 
@@ -67,7 +67,7 @@
                           <span>멘티</span>
                         </div>
                         <div class="col-auto">
-                          <input type="text" class="form-control" name="mentee_id" placeholder="Mentee ID">
+                          <input type="text" class="form-control" name="mentee_id" placeholder="Mentee ID" value="<%= searchForm.mentee_id %>">
                         </div>
                       </div>
                     </div>
@@ -81,25 +81,16 @@
                           상태
                         </label>
                       </div>
-                      <div class="form-check form-check-inline col-md-1">
-                        <input class="form-check-input" type="radio" name="state" id="state1" value="-1" checked>
-                        <label class="form-check-label" for="state1">전체</label>
-                      </div>
-                      <div class="form-check form-check-inline col-md-1">
-                        <input class="form-check-input" type="radio" name="state" id="state2" value="0">
-                        <label class="form-check-label" for="state2">요청</label>
-                      </div>
-                      <div class="form-check form-check-inline col-md-1">
-                        <input class="form-check-input" type="radio" name="state" id="state3" value="1">
-                        <label class="form-check-label" for="state3">수락</label>
-                      </div>
-                      <div class="form-check form-check-inline col-md-1">
-                        <input class="form-check-input" type="radio" name="state" id="state4" value="2">
-                        <label class="form-check-label" for="state4">거절</label>
-                      </div>
+                      <% const radios = ['전체', '대기', '수락', '거절'] %>
+                      <% for(let i = -1; i < radios.length-1; ++i) { %>
+                        <% let isCheck = (searchForm.state == i) ? 'checked' : '' %>
+                        <div class="form-check form-check-inline col-md-1">
+                          <input class="form-check-input" type="radio" name="state" id="state-<%= i %>" value="<%= i %>" <%= isCheck %>>
+                          <label class="form-check-label" for="state-<%= i %>"><%= radios[i+1] %></label>
+                        </div>
+                      <% } %>
                     </div>
                   </li>
-
 
                   <!-- 관계생성 일자 -->
                   <li class="list-group-item">
@@ -110,15 +101,17 @@
                         </label>
                       </div>
                       <div class="col-md-1 form-check">
-                          <input type="checkbox" class="form-check-input" id="isTotal" name="isTotal" checked>
+                        <% let isTotal = (searchForm.is_total == 'on') ? 'checked': '' %>
+                        <% let disable = (searchForm.is_total == 'on') ? 'disabled': '' %>
+                          <input type="checkbox" class="form-check-input" id="isTotal" name="is_total" <%= isTotal %>>
                           <label class="form-check-label" for="isTotal">전체 기간</label>
                       </div>
                       <div class="col-auto">
-                        <input type="text" id="datePicker" name="startDate" class="form-control start-date" disabled>
+                         <input type="text" id="datePicker" name="startDate" class="form-control start-date" value="<%= searchForm.start_date %>" <%= disable %>>
                       </div>
                       ~
                       <div class="col-auto">
-                        <input type="text" id="datePicker" name="endDate" class="form-control end-date" disabled>
+                        <input type="text" id="datePicker" name="endDate" class="form-control end-date" value="<%= searchForm.end_date %>" <%= disable %>>
                       </div>
                     </div>
                     <input type="hidden" name="start_date">
@@ -165,8 +158,17 @@
                       <td><%= elem.mentor_ID %></td>
                       <td><%= elem.mentee_ID %></td>
                       <td><%= elem.request_time %></td>
-                      <td><%= elem.is_checked %></td>
-                      <td><%= elem.state %></td>
+                      <td>
+                        <% if(elem.is_checked == 1) { %> 열람
+                        <% } else { %> 미열람
+                        <% } %>
+                      </td>
+                      <td>
+                        <% if(elem.state == 0) { %> 대기
+                        <% } else if(elem.state == 1) { %> 수락
+                        <% } else { %> 거절
+                        <% } %>
+                      </td>
                       <td></td>
                     </tr>
                     <% }) %>
