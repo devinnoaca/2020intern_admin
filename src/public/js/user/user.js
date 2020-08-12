@@ -1,3 +1,5 @@
+import {userDataValidation} from "./userValidation.js";
+
 const deleteUserCallback = (xhr) => {
   const status = xhr.status;
   const message = xhr.response.message;
@@ -75,7 +77,7 @@ const createUserCallback = function(xhr) {
 };
 
 //각 유저 폼 데이터에 대한 정규표현식과 에러처리
-const userDataValidation = function(userData) {
+/*const userDataValidation = function(userData) {
   //각 유저 데이터에 대한 정규 표현식
   const idReg = /^[a-z]+[a-z0-9]{5,20}/;
   const nameReg = /^[가-힣]{1,40}/;
@@ -113,4 +115,4 @@ const userDataValidation = function(userData) {
   }
   
   return true;
-}
+}*/
