@@ -44,7 +44,7 @@
 		$('#addKeywordModal').on('show.bs.modal', (event) => {
 			let addBadge = $(event.relatedTarget);
 			let categoryId = addBadge.data('category');
-			// console.log(categoryId);
+			
 			$("#addKeywordModalSelect").val(categoryId).prop("selected", true);
 		})
 	});
