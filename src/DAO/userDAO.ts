@@ -35,9 +35,9 @@ async function createUser(data: Array<any>) {
   }
 }
 
-async function getUsers() {
+async function getUsers(extraQuery: String) {
   try {
-    const [rows, fields] = await db.connection.promise().query(query.searchAllUser);
+    const [rows, fields] = await db.connection.promise().query(query.searchAllUser + extraQuery);
     return rows;
   } catch (e) {
     console.log('dao: getUsers error\n' + e);
