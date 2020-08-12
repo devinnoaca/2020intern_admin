@@ -141,8 +141,8 @@ const modifyMatching = async (req: express.Request, res: express.Response, next:
     )
   }
   const data = [
-    req.body.mentor_USN,
-    req.body.mentee_USN,
+    req.body.mentor_ID,
+    req.body.mentee_ID,
     dateFormatConvert(req.body.request_time),
     dateFormatConvert(req.body.response_time),
     req.body.state,
