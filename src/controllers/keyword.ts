@@ -63,14 +63,14 @@ const renderKeyword = async (req: express.Request, res: express.Response, next: 
 
 const createKeyword = async (req: express.Request, res: express.Response, next: express.NextFunction) => {
   console.log('controller: createKeyword');
-  if (req.body.name === null || req.body.name === '') {
+  if (req.body.name === null || req.body.name === '' || req.body.name === undefined === undefined) {
     res.status(400).send(
       {
         'message': 'create keyword fail - please input name'
       }
     )
   }
-  if (req.body.categoryID === null || req.body.categoryID === '') {
+  if (req.body.categoryID === null || req.body.categoryID === '' || req.body.categoryID === undefined) {
     res.status(400).send(
       {
         'message': 'create keyword fail - please input category ID'
@@ -83,24 +83,20 @@ const createKeyword = async (req: express.Request, res: express.Response, next: 
     req.body.categoryID
   ];
   try {
-  const result = keywordQuery.createKeyword(data);
+  const result = await keywordQuery.createKeyword(data);
   res.status(200).send(
     {
       'message': 'create keyword success',
     }
   );
   } catch (e) {
-    res.status(500).send(
-      {
-        'message': 'create keyword fail - unexpected errors occur in db'
-      }
-    )
+    res.status(500).send()
   }
 };
 
 const deleteKeyword = async (req: express.Request, res: express.Response, next: express.NextFunction) => {
   console.log('controller: deleteKeyword');
-  if (req.params.id === null || req.params.id === '') {
+  if (req.params.id === null || req.params.id === '' || req.params.id === undefined) {
     res.status(400).send(
       {
         'message': 'delete keyword fail - please input keyword id'
@@ -111,20 +107,15 @@ const deleteKeyword = async (req: express.Request, res: express.Response, next: 
   [
     req.params.id
   ];
-
   try {
-    const result = keywordQuery.deleteKeyword(data);
+    const result = await keywordQuery.deleteKeyword(data);
     res.status(200).send (
       {
         'message': 'delete keyword success',
       }
     )
   } catch (e) {
-    res.status(500).send(
-      {
-        'message': 'delete keyword fail - unexpected errors occer in db'
-      }
-    )
+    res.status(500).send()
   }
 };
 
