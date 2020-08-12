@@ -36,7 +36,6 @@ const logIn = async (req: express.Request, res: express.Response, next: express.
         expiresIn: '1h'
       }
     )
-    console.log(token);
     res.cookie('token', token)
     res.status(200).redirect('/dashboard')
   } catch (e) {
