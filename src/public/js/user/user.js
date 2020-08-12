@@ -1,7 +1,20 @@
 const deleteUserCallback = (xhr) => {
-  window.location.href = '/user';
+  const status = xhr.status;
+  const message = xhr.response.message;
+
+  switch(status) {
+    case 200:
+      alert(message);
+      window.location.href = '/user';
+      break;
+    
+    case 400:
+      alert(message);
+      break;
+  }
 }
 
+//유저 정보 테이블의 각 행을 클릭할 때 일어나는 이벤트 처리
 $('tbody tr').click(function(event){ 
   const target = $(event.target);
   const tr = $(this);
@@ -26,7 +39,6 @@ $('#createUserButton').on('click', () => {
   const email = userCreateModal.find('[name="email"]').val();
   const permission = userCreateModal.find('[name="permission"]').val();
   const password = userCreateModal.find('[name="password"]').val();
-  const userForm =  $('#userForm');
 
   const userData = {
     type: type,
@@ -43,17 +55,22 @@ $('#createUserButton').on('click', () => {
 });
 
 const createUserCallback = function(xhr) {
+  const status = xhr.status;
   const message = xhr.response.message;
 
-  if (xhr.status === 200) {
-    alert(message);
-    window.location.href = '/user';
-  } else if (xhr.status === 400) {
-    alert(message);
-    window.location.href = '/user';
-  } else if (xhr.status === 500) {
-    alert(message);
-    window.location.href = '/user';
+  switch(status){
+    case 200: 
+      alert(message);
+      window.location.href = '/user';
+      break;
+    case 400:
+      alert(message);
+      window.location.href = '/user';
+      break;
+    case 500: 
+      alert(message);
+      window.location.href = '/user';
+      break;
   }
 };
 
