@@ -90,7 +90,7 @@ const deleteMatching = async (req: express.Request, res: express.Response, next:
   }
 };
 
-const modifyForm = async (req: express.Request, res: express.Response, next: express.NextFunction) => {
+const renderModifyForm = async (req: express.Request, res: express.Response, next: express.NextFunction) => {
 
   let data = await matchingDAO.getMatching([req.params.id]);
   res.status(200).render('matching/matchingUpdate',
@@ -135,8 +135,8 @@ const modifyMatching = async (req: express.Request, res: express.Response, next:
   const data = [
     req.body.mentor_USN,
     req.body.mentee_USN,
-    new Date(), //req.body.request_time,
-    new Date(), //req.body.response_time,
+    dateFormatConvert(req.body.request_time),
+    dateFormatConvert(req.body.response_time),
     req.body.state,
     req.body.request_message,
     req.body.response_message,
@@ -218,7 +218,7 @@ const getMatchingDetail = async (req: express.Request, res: express.Response, ne
 
 router.get('/', getMatching);
 router.get('/:id', getMatchingDetail);
-router.get('/update/:id', modifyForm);
+router.get('/update/:id', renderModifyForm);
 router.put('/update/:id', modifyMatching)
 router.post('/', createMatching);
 router.delete('/:id', deleteMatching);
