@@ -1,24 +1,19 @@
 import server from '../src/index';
 const request = require('supertest')
 const exec = require('child_process').exec;
-(() => {
-  exec('mysql -uroot -p1234 test < ./testData.sql', (err) => {
-    if (err) {
-      console.error(`exec error: ${err}`);
-      return;
-    }
-    console.log('test data inserted!!');
-  });
-})();
+
+// Below code doesn't work.
+// (async () => {
+//   await exec('mysql -h 10.19.247.204 -ujingoo -p1234 AdminTestDB < ./testData.sql', (err) => {
+//     if (err) {
+//       console.error(`exec error: ${err}`);
+//       return;
+//     }
+//     console.log('test data inserted!!');
+//   });
+// })()
+
 describe('category test', () => {
-  // beforeAll( () => {
-  //   exec('mysql -uroot -p1234 test < ./testData.sql', (err) => {
-  //     if (err) {
-  //       console.error(`exec error: ${err}`);
-  //       return;
-  //     }
-  //   });
-  // })
   afterEach( () => {
     server.close();
   });
@@ -111,13 +106,13 @@ describe('matching test', () => {
   test("create matching with proper parameter", async () => {
     await request(server)
     .post('/matching')
-    .send({mentor_ID: "ImMentor", mentee_ID: "ImMentee", state: 0})
+    .send({mentor_ID: "ImMentor", mentee_ID: "ImMentee", state: 0, request_message: "Request!"})
     .expect(200);
   });
   test("create matching with improper parameter", async () => {
     await request(server)
     .post('/matching')
-    .send({mentor_ID: "WrongID", mentee_ID: "Wrororrng", state: 0})
+    .send({mentor_ID: "WrongID", mentee_ID: "Wrororrng", state: 0, request_message: "Request!"})
     .expect(500);
   });
   test("create matching without parameter", async () => {
@@ -139,7 +134,7 @@ describe('matching test', () => {
   test("modify matching with proper parameter", async () => {
   await request(server)
   .put('/matching/update/2')
-  .send({mentor_ID:"ImMentor", mentee_ID: "ImMentee", state: 1, is_checked:1, request_time: new Date(), response_time: new Date()})
+  .send({mentor_ID:"ImMentor", mentee_ID: "ImMentee", state: 1, is_checked:1, request_time: new Date(), response_time: new Date(), request_message: "Request!"})
   .expect(200);
   });
   test("modify matching with improper parameter", async () => {
