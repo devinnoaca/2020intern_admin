@@ -51,12 +51,14 @@ const getNotifications = async (req: express.Request, res: express.Response, nex
       extraQuery += `AND un.is_checked = ${query.isChecked} `;
     }
 
-    if (query.sender !== null && query.senderID !== null && query.senderID !== '') {
-      extraQuery += `AND sender.ID LIKE '%${query.senderID}%' `;
+    if (query.sender !== null && query.senderID !== null) {
+      const senderID = query.senderID.toString().trim();
+      extraQuery += `AND sender.ID LIKE '%${senderID}%' `;
     }
 
-    if (query.receiver !== null && query.receiverID !== null && query.receiverID !== '') {
-      extraQuery += `AND receiver.ID LIKE '%${query.receiverID}%' `;
+    if (query.receiver !== null && query.receiverID !== null) {
+      const receiverID = query.receiverID.toString().trim();
+      extraQuery += `AND receiver.ID LIKE '%${receiverID}%' `;
     }
   }
 
