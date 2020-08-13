@@ -72,8 +72,29 @@ const createUser = async (req: express.Request, res: express.Response, next: exp
 
 const getUsers = async (req: express.Request, res: express.Response, next: express.NextFunction) => {
   console.log('controller: getUsers');
+
+  let extraQuery = '';
+  const query = req.query;
+  
+  if (Object.keys(query).length !== 0) {
+    console.log(Object.keys(query).length);
+    extraQuery += ' WHERE USN >= 0 ';
+    if (query.searchType !== null && query.searchType !== 'all') {
+      extraQuery += `AND type = ${query.searchType} `;
+    }
+
+    if (query.searchOption !== null && query.searchWord !== null) {
+      extraQuery += `AND ${query.searchOption} LIKE '%${query.searchWord}%' `;
+    }
+
+    if (query.searchPermission !== null && query.searchPermission !== 'all') {
+      extraQuery += `AND permission = ${query.searchPermission} `;
+    }
+  } 
+
   try {
-    const result = await userQuery.getUsers();
+      const result = await userQuery.getUsers(extraQuery);
+    
 
     res.status(200).render('user/user',
       {
@@ -84,6 +105,7 @@ const getUsers = async (req: express.Request, res: express.Response, next: expre
   } catch (e) {
     res.status(500).send()
   }
+
 };
 
 const getUser = async (req: express.Request, res: express.Response, 

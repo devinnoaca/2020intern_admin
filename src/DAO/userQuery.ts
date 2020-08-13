@@ -16,7 +16,7 @@ WHERE mentee_USN = ?;`;
 
 const searchAllUser = `
 SELECT * \
-FROM User;`;
+FROM User`;
 
 const insertUser = `
 INSERT INTO User(id, name, email, password, image_url, description, company, permission,type) \

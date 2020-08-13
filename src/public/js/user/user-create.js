@@ -1,36 +1,4 @@
-import {userDataValidation} from "./userValidation.js";
-
-const deleteUserCallback = (xhr) => {
-  const status = xhr.status;
-  const message = xhr.response.message;
-
-  switch(status) {
-    case 200:
-      alert(message);
-      window.location.href = '/user';
-      break;
-    
-    case 400:
-      alert(message);
-      break;
-  }
-}
-
-//유저 정보 테이블의 각 행을 클릭할 때 일어나는 이벤트 처리
-$('tbody tr').click(function(event){ 
-  const target = $(event.target);
-  const tr = $(this);
-
-  if(target.is('[name=deleteButton]')){
-    const usn = target.val();
-    sendAjax('DELETE', `/user/${usn}`, null, deleteUserCallback);
-  } else {
-    const td = tr.children();
-    const id = td.eq(0).text();
-
-    window.location.href = `/user/${id}`;
-  }
-});
+import {userDataValidation} from "./user-validation.js";
 
 //유저 정보 생성 모달의 생성 버튼 클릭시 이벤트
 $('#createUserButton').on('click', () => {
@@ -56,6 +24,7 @@ $('#createUserButton').on('click', () => {
   }
 });
 
+//유저 생성에 대한 콜백 함수
 const createUserCallback = function(xhr) {
   const status = xhr.status;
   const message = xhr.response.message;
