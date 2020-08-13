@@ -15,7 +15,8 @@ FROM get_recommend_keyword \
 WHERE mentee_USN = ?;`;
 
 const searchAllUser = `
-SELECT * \
+SELECT ceil(count(*)) totalCount,ceil(count(*)/30) totalPage FROM User;
+SELECT usn, name, id, email, password, image_url, description, company, permission, noti_count, type \
 FROM User`;
 
 const insertUser = `
