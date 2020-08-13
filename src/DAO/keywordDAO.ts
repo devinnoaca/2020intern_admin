@@ -24,6 +24,7 @@ async function createKeyword(data: Array<any>) {
 async function deleteKeyword(data: Array<any>) {
   try {
     const [rows, fields] = await db.connection.promise().query(query.deleteKeyword, data);
+    console.log(rows);
     if (rows.affectedRows === 0) {
       throw 'cannot find';
     }

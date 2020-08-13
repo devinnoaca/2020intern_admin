@@ -67,7 +67,16 @@ async function searchMatching(data: Array<any>, extraQuery: String) {
   }
 }
 
+async function searchUSN(data: Array<any>) {
+  try {
+    const [rows, fields] = await db.connection.promise().query(query.searchUSNbyID, data);
+    return rows;
+  } catch (e) {
+    console.log('dao: searchUSN error\n' + e);
+  }
+}
+
 export default {
   getAllMatching, createMatching, deleteMatching, getMatching, modifyMatching,
-  searchMatching
+  searchMatching, searchUSN
 }

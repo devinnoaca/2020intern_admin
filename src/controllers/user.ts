@@ -40,15 +40,22 @@ const createUser = async (req: express.Request, res: express.Response, next: exp
       }
     )
   }
+  else if (req.body.permission === null || req.body.permission == '' || req.body.permission === undefined) {
+    res.status(400).send(
+      {
+        'message': 'create user fail - please input permission'
+      }
+    )
+  }
   const data = 
   [
     req.body.id,
     req.body.name,
     req.body.email,
     req.body.password,
-    req.body.image_url,
-    req.body.description,
-    req.body.company,
+    req.body.image_url?req.body.image_url:null,
+    req.body.description?req.body.description:null,
+    req.body.company?req.body.company:null,
     req.body.permission,
     req.body.type
   ]
@@ -70,7 +77,7 @@ const getUsers = async (req: express.Request, res: express.Response, next: expre
   const query = req.query;
   
   if (Object.keys(query).length !== 0) {
-    console.log(Object.keys(query).length);
+    
     extraQuery += ' WHERE USN >= 0 ';
         
     if (query.searchType !== null && query.searchType !== 'all') {

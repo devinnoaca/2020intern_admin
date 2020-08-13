@@ -3,7 +3,7 @@ import { dbConfig } from '../config/db.config';
 
 let connection = mysql.createPool(dbConfig.conf);
 // 로컬 환경 DB 사용시 initialize
-if (dbConfig.branch === 'LOCAL' || dbConfig.branch === 'TEST') {
+if (dbConfig.branch === 'LOCAL') {
 (() => {
 	connection = mysql.createConnection(dbConfig.conf);
 	
@@ -113,7 +113,7 @@ ID INT NOT NULL AUTO_INCREMENT,\
 mentee_USN INT NOT NULL,\
 mentor_USN INT NOT NULL,\
 request_time DATETIME DEFAULT NOW(),\
-request_message TEXT,\
+request_message TEXT NOT NULL,\
 is_checked BOOL NOT NULL DEFAULT false,\
 state INT NOT NULL DEFAULT 0,\
 response_message TEXT, \

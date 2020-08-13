@@ -1,19 +1,27 @@
 const modifyMatchingCallback = (xhr) => {
-  if(xhr.status == 200) {
-    alert(`매칭정보가 정상적으로 수정되었습니다`);
-    window.location.href = '/matching';
-  } else {
-    alert(`매칭정보 수정 실패 [${xhr.status}]`);
+  const status = xhr.status;
+  const message = xhr.response.message;
+
+  switch (status) {
+    case 200:
+      alert(`매칭정보가 정상적으로 수정되었습니다.`);
+      console.log(message);
+      window.location.href = '/matching';
+      break;
+
+    case 400:
+      alert(`수정 실패 : ${message}`);
+      break;
   }
 }
 
-const onModify = (id) => {
+const onModify = () => {
 
   const formData = document.modifyForm;
   const jsonData = {
     state: formData.state.value,
-    mentee_USN: formData.menteeUSN.value,
-    mentor_USN: formData.mentorUSN.value,
+    mentee_id: formData.menteeID.value,
+    mentor_id: formData.mentorID.value,
     is_checked: formData.isChecked.value,
     request_time: formData.requestTime.value,
     response_time: formData.responseTime.value,
@@ -21,7 +29,7 @@ const onModify = (id) => {
     response_message: formData.responseMessage.value
   }
 
-  console.log(jsonData);
-
-  sendAjax('PUT', `/matching/update/${modifyForm.id.value}`, JSON.stringify(jsonData), modifyMatchingCallback);
+  if(matchingDataValidation(jsonData)) {
+    sendAjax('PUT', `/matching/update/${modifyForm.id.value}`, JSON.stringify(jsonData), modifyMatchingCallback);
+  }
 }

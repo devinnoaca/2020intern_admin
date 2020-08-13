@@ -37,11 +37,45 @@ const createNotification = async (req: express.Request, res: express.Response, n
   }
 }
 const getNotifications = async (req: express.Request, res: express.Response, next: express.NextFunction) => {
-  const result = await notificationQuery.getNotifications();
+  const query = req.query;
+  let extraQuery = '';
 
-  res.status(200).render('notification/notification', {
-    "notifications" : result   
-  });
+  if (Object.keys(query).length !== 0) {
+    extraQuery += ' WHERE un.id >= 0 ';
+    
+    if (query.searchType !== null && query.searchType !== 'all') {
+      extraQuery += `AND n.type = ${query.searchType} `;
+    }
+
+    if (query.isChecked !== null && query.isChecked !== 'all') {
+      extraQuery += `AND un.is_checked = ${query.isChecked} `;
+    }
+
+    if (query.sender !== null && query.senderID !== null) {
+      const senderID = query.senderID.toString().trim();
+      extraQuery += `AND sender.ID LIKE '%${senderID}%' `;
+    }
+
+    if (query.receiver !== null && query.receiverID !== null) {
+      const receiverID = query.receiverID.toString().trim();
+      extraQuery += `AND receiver.ID LIKE '%${receiverID}%' `;
+    }
+  }
+
+  try {
+    let result = await notificationQuery.getNotifications(extraQuery);
+    
+    if(result === undefined) {
+      result = new Array();
+    }
+
+    res.status(200).render('notification/notification', {
+      "notifications" : result   
+    });
+  } catch (e) {
+    res.status(500).send()
+  }
+
 }
 
 const getNotification = async (req: express.Request, res: express.Response, next: express.NextFunction) => {

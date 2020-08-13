@@ -43,8 +43,7 @@ DATE_FORMAT(un.time, '%Y-%m-%d %T') time \
 FROM User_Notification as un \
 JOIN Notification as n ON un.noti_id = n.id \
 JOIN User as receiver ON un.receiver_usn = receiver.usn \
-JOIN User as sender ON un.sender_usn = sender.usn
-ORDER BY id DESC;` 
+JOIN User as sender ON un.sender_usn = sender.usn` 
 
 export default {
   searchUserByType, searchUserByID, searchAllUser,

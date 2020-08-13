@@ -21,7 +21,7 @@
                     <label>멘토 ID</label>
                   </div>
                   <div class="form-inline col-md-6">
-                    <input class="form-control" type="text" name="mentorUSN" required>
+                    <input class="form-control" type="text" name="mentorId" required>
                   </div>
                 </div>
               </li>
@@ -33,7 +33,7 @@
                     <label>멘티 ID</label>
                   </div>
                   <div class="form-inline col-md-6">
-                    <input class="form-control" type="text" name="menteeUSN" required>
+                    <input class="form-control" type="text" name="menteeId" required>
                   </div>
                 </div>
               </li>
@@ -66,17 +66,17 @@
                 <div class="row form-group">
                   <div class="form-group">
                     <label for="request-reason">요청 메시지</label>
-                    <input type="text" class="form-control" id="request-reason" name="requestMessage" required>
+                    <input type="text" class="form-control" name="requestMessage" required>
                   </div>
                 </div>
               </li>
 
               <!-- Response Message -->
-              <li class="list-group-item" id="reject-input-form" style="display: none;">
+              <li class="list-group-item" id="responseInputLi" style="display: none;">
                 <div class="row form-group">
                   <div class="form-group">
                     <label for="reject-reason">응답 메시지</label>
-                    <input type="text" class="form-control" id="reject-reason" name="responseMessage">
+                    <input type="text" class="form-control" name="responseMessage">
                   </div>
                 </div>
               </li>              
@@ -94,3 +94,4 @@
 </div>
 
 <script type="text/javascript" src="/js/matching/matching-create.js"></script>
+<script type="text/javascript" src="/js/matching/matching-validation.js"></script>

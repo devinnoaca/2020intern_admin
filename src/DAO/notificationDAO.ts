@@ -50,8 +50,8 @@ async function createNotificationToMentee(data: Array<any>) {
 
 async function createNotification(data: Array<any>) {
   try {
-    const [user] = await db.connection.promise().query(query.searchUserByID, data);
-    const [notification] = await db.connection.promise().query(query.createNotification, data)
+    const [user] = await db.connection.promise().query(query.searchUserByID, data[2]);
+    const [notification] = await db.connection.promise().query(query.createNotification, data[1]);
     user.map( (c) => {
       db.connection.query(query.createUserNotification, [parseInt(notification.insertId), parseInt(c.USN), 1])
     })
@@ -70,6 +70,7 @@ async function createNotification(data: Array<any>) {
 async function getUserNotification(data: Array<any>) {
   try {
     const [rows] = await db.connection.promise().query(query.searchUserNotification, data);
+
     if (rows.length === 0) {
       throw 'cannot find';
     }
@@ -81,9 +82,13 @@ async function getUserNotification(data: Array<any>) {
 
 }
 
-async function getNotifications(){
+async function getNotifications(extraQuery: String){
   try {
-    const [rows] = await db.connection.promise().query(query.getNotifications);
+    const [rows] = await db.connection.promise().query(query.getNotifications + extraQuery);
+    
+    if (rows.length === 0) {
+      throw 'cannot find';
+    }
     return rows;
   } catch (e) {
     console.log('dao: getNotifications error\n' + e);
