@@ -40,7 +40,7 @@
               <h6 class="m-0 font-weight-bold text-primary">회원 조회</h6>
             </div>
             <div class="card-body">
-              <form method="GET" action="/user">
+              <form method="GET" action="/user" name="searchUserForm">
                 <ul class="list-group list-group-flush">
                   <!-- 회원 종류-->
                   <li class="list-group-item">
@@ -210,7 +210,9 @@
   <!-- Send Ajax 메소드 추가 -->
   <script src="/js/common/ajax.js"></script>
   
+  <!-- 유저 생성, 유저 상세조회에 대한 이벤트 -->
   <script type="module" src="/js/user/user.js"></script>
+
 </body>
 
 </html>
