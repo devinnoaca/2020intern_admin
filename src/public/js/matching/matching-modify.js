@@ -1,10 +1,17 @@
 const modifyMatchingCallback = (xhr) => {
-  if(xhr.status == 200) {
-    alert(`매칭정보가 정상적으로 수정되었습니다`);
-    window.location.href = '/matching';
-  } else {
-    alert(`매칭정보 수정 실패 [${xhr.status}]`);
-    console.log(xhr.response.message);
+  const status = xhr.status;
+  const message = xhr.response.message;
+
+  switch (status) {
+    case 200:
+      alert(`매칭정보가 정상적으로 수정되었습니다.`);
+      console.log(message);
+      window.location.href = '/matching';
+      break;
+
+    case 400:
+      alert(`수정 실패 : ${message}`);
+      break;
   }
 }
 

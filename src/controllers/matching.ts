@@ -54,6 +54,7 @@ const createMatching = async (req: express.Request, res: express.Response, next:
       req.body.request_message,
       req.body.response_message
     ];
+
   } catch (e) {
     console.log(e);
   }
@@ -181,12 +182,12 @@ const getMatching = async (req: express.Request, res: express.Response, next: ex
   try {
     let resultData = [];
     
-    if (req.query.query_type === 'SEARCH') { //추후 페이징 쿼리와 구분하기 위해 임시로 구분자쿼리를 함께 보냈습니다.
+    if (req.query.queryType === 'SEARCH') { //추후 페이징 쿼리와 구분하기 위해 임시로 구분자쿼리를 함께 보냈습니다.
       console.log('controller: getMatching [SEARCH]');
       // 매칭정보 검색
       let inputData = [
-          dateFormatConvert(String(req.query.start_date)),
-          dateFormatConvert(String(req.query.end_date))
+          dateFormatConvert(String(req.query.startDateSubmit)),
+          dateFormatConvert(String(req.query.endDateSubmit))
         ];
   
       let extraQuery = '';
@@ -194,11 +195,11 @@ const getMatching = async (req: express.Request, res: express.Response, next: ex
       if (req.query.state !== '-1' && req.query.state !== null) {
         extraQuery += ` AND m.state = ${req.query.state}`;
       }
-      if (req.query.mentee_id !== null && req.query.mentee_id !== '') {
-        extraQuery += ` AND mentee.ID = '${req.query.mentee_id}'`;
+      if (req.query.menteeID !== null && req.query.menteeID !== '') {
+        extraQuery += ` AND mentee.ID = '${req.query.menteeID}'`;
       }
-      if (req.query.mentor_id !== null && req.query.mentor_id !== '') {
-        extraQuery += ` AND mentor.ID = '${req.query.mentor_id}'`;
+      if (req.query.mentorID !== null && req.query.mentorID !== '') {
+        extraQuery += ` AND mentor.ID = '${req.query.mentorID}'`;
       }
       extraQuery += ';';
       
