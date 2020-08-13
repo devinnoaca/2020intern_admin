@@ -47,7 +47,7 @@
             </div>
             <div class="card-body">
               <form name="searchingForm" onsubmit="onSearch(); return false;" method="GET" action="/matching">
-                <input type="hidden" name="query_type" value="SEARCH">
+                <input type="hidden" name="queryType" value="SEARCH">
                 <ul class="list-group list-group-flush">
 
                   <!-- mentor / mentee -->
@@ -58,7 +58,7 @@
                           <span>멘토</span>
                         </div>
                         <div class="col-auto">
-                          <input type="text" class="form-control" name="mentor_id" placeholder="Mentor ID">
+                          <input type="text" class="form-control" name="mentorID" placeholder="Mentor ID">
                         </div>
                       </div>
 
@@ -67,7 +67,7 @@
                           <span>멘티</span>
                         </div>
                         <div class="col-auto">
-                          <input type="text" class="form-control" name="mentee_id" placeholder="Mentee ID">
+                          <input type="text" class="form-control" name="menteeID" placeholder="Mentee ID">
                         </div>
                       </div>
                     </div>
@@ -100,7 +100,7 @@
                         </label>
                       </div>
                       <div class="col-md-1 form-check">
-                          <input type="checkbox" class="form-check-input" id="isTotal" name="is_total">
+                          <input type="checkbox" class="form-check-input" id="isTotal" name="isTotal">
                           <label class="form-check-label" for="isTotal">전체 기간</label>
                       </div>
                       <div class="col-auto">
@@ -111,8 +111,8 @@
                         <input type="text" id="datePicker" name="endDate" class="form-control end-date">
                       </div>
                     </div>
-                    <input type="hidden" name="start_date">
-                    <input type="hidden" name="end_date">
+                    <input type="hidden" name="startDateSubmit">
+                    <input type="hidden" name="endDateSubmit">
                   </li>
                 </ul>
                 <!-- 조회 버튼 -->
