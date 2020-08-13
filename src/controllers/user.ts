@@ -72,8 +72,8 @@ const createUser = async (req: express.Request, res: express.Response, next: exp
 
 const getUsers = async (req: express.Request, res: express.Response, next: express.NextFunction) => {
   console.log('controller: getUsers');
-  const page = parseInt(req.body.page)
-  const range = parseInt(req.body.range)
+  const page = parseInt(req.params.page)
+  const range = parseInt(req.params.range)
   if (page === null || page === undefined) {
     res.status(400).send(
       {
