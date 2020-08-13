@@ -47,7 +47,6 @@ const onCreate = () => {
     state: formData.state.value,
     mentee_ID: formData.menteeId.value,
     mentor_ID: formData.mentorId.value,
-    request_time: new Date(),
     is_checked: isChecked,
     request_message: formData.requestMessage.value,
     response_message: formData.responseMessage.value

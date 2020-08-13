@@ -1,5 +1,5 @@
 import * as express from 'express';
-
+import * as moment from 'moment';
 import matchingDAO from '../dao/matchingDAO'
 
 const router = express.Router();
@@ -48,7 +48,7 @@ const createMatching = async (req: express.Request, res: express.Response, next:
     data = [
       mentor_USN[0].usn, //mentor_USN
       mentee_USN[0].usn, //mentee_USN
-      dateFormatConvert(req.body.request_time),
+      moment().format('YYYY-MM-DD HH:mm'),
       req.body.state,
       req.body.is_checked,
       req.body.request_message,
@@ -186,9 +186,11 @@ const getMatching = async (req: express.Request, res: express.Response, next: ex
       console.log('controller: getMatching [SEARCH]');
       // 매칭정보 검색
       let inputData = [
-          dateFormatConvert(String(req.query.startDateSubmit)),
-          dateFormatConvert(String(req.query.endDateSubmit))
+          req.query.startDateSubmit,
+          req.query.endDateSubmit
         ];
+
+        console.log(inputData);
   
       let extraQuery = '';
   
