@@ -50,8 +50,9 @@ async function createNotificationToMentee(data: Array<any>) {
 
 async function createNotification(data: Array<any>) {
   try {
-    const [user] = await db.connection.promise().query(query.searchUserByID, data);
-    const [notification] = await db.connection.promise().query(query.createNotification, data)
+    const [user] = await db.connection.promise().query(query.searchUserByID, data[2]);
+    console.log(user);
+    const [notification] = await db.connection.promise().query(query.createNotification, data[1]);
     user.map( (c) => {
       db.connection.query(query.createUserNotification, [parseInt(notification.insertId), parseInt(c.USN), 1])
     })
