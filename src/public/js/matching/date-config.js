@@ -36,4 +36,4 @@ const setDatePicker = () => {
     } 
   }
 
-  export { setDatePicker, dateObjectFactory }
+  setDatePicker();

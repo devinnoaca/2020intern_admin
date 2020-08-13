@@ -1,4 +1,3 @@
-import {dateObjectFactory} from '/js/matching/date-config.js';
 
 // 라디오 인풋 폼이 체크되어있는지 확인
 const radioCheck = (radioGroup) => {
@@ -11,7 +10,7 @@ const radioCheck = (radioGroup) => {
 }
 
 // 검색 폼 제출
-window.onSearch = () => {
+const onSearch = () => {
   let formData = document.searchingForm;
   
   let convStartDate; //converted start date

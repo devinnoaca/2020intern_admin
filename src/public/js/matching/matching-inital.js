@@ -1,8 +1,14 @@
-import { setDatePicker } from '/js/matching/date-config.js';
-import { getURLParams, isEmptyObject } from '/js/common/parse-query.js';
+// parse query string
+const getURLParams = () => {
+  let params = {};
+  window.location.search.replace(/[?&]+([^=&]+)=([^&]*)/gi, function (str, key, value) { params[key] = value; });
+  return params;
+}
 
-// init datepicker
-setDatePicker();
+//해당 쿼리스트링 객체가 비었는지 확인
+const isEmptyObject = (param) => {
+  return Object.keys(param).length === 0 && param.constructor === Object;
+}
 
 // init search form
 const formData = document.searchingForm;
@@ -48,5 +54,4 @@ if(isEmptyObject(searchParams)) {
     formStartDate.disabled = true;
     formEndDate.disabled = true;
   }
-  
 }
