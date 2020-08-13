@@ -72,12 +72,19 @@ const createUser = async (req: express.Request, res: express.Response, next: exp
 
 const getUsers = async (req: express.Request, res: express.Response, next: express.NextFunction) => {
   console.log('controller: getUsers');
-
+  const page = parseInt(req.params.page)
+  const range = parseInt(req.params.range)
+  if (page === null || page === undefined) {
+    res.status(400).send(
+      {
+        'message': 'get users fail - please input page number'
+      }
+    )
+  }
   let extraQuery = '';
   const query = req.query;
   
   if (Object.keys(query).length !== 0) {
-    
     extraQuery += ' WHERE USN >= 0 ';
     if (query.searchType !== null && query.searchType !== 'all') {
       extraQuery += `AND type = ${query.searchType} `;
@@ -90,22 +97,30 @@ const getUsers = async (req: express.Request, res: express.Response, next: expre
     if (query.searchPermission !== null && query.searchPermission !== 'all') {
       extraQuery += `AND permission = ${query.searchPermission} `;
     }
-  } 
-
+  }
+  extraQuery += ` LIMIT ${(page-1)*30}, 30;`
   try {
-      const result = await userQuery.getUsers(extraQuery);
-    
-
+    let result = await userQuery.getUsers(extraQuery);
+    result[0][0]['startPage'] = (range - 1) * 10 + 1 ;
+    result[0][0]['endPage'] = range * 10;
+    result[0][0]['startList'] = (page - 1) * 30;
+    result[0][0]['prev'] = range == 1 ? false : true;
+    result[0][0]['next'] = parseInt(result[0]['endPage']) > parseInt(result[0]['totalPage']) ? false : true;
+    if (parseInt(result[0]['endPage']) > parseInt(result[0]['totalPage'])) {
+			result[0][0]['endPage'] = result[0]['pageCnt'];
+			result[0][0]['next'] = false;
+		}
+    console.log(result)
     res.status(200).render('user/user',
       {
         'message': 'get users success',
-        'users': result
+        'page': result[0],
+        'users': result[1]
       }
     );
   } catch (e) {
     res.status(500).send()
   }
-
 };
 
 const getUser = async (req: express.Request, res: express.Response, 
