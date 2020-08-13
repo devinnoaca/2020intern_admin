@@ -3,7 +3,7 @@ import { dbConfig } from '../config/db.config';
 
 let connection = mysql.createPool(dbConfig.conf);
 // 로컬 환경 DB 사용시 initialize
-if (dbConfig.branch === 'LOCAL' || dbConfig.branch === 'TEST') {
+if (dbConfig.branch === 'LOCAL') {
 (() => {
 	connection = mysql.createConnection(dbConfig.conf);
 	

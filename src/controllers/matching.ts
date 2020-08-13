@@ -12,17 +12,18 @@ const dateFormatConvert = (date: string): string => {
 
 const createMatching = async (req: express.Request, res: express.Response, next: express.NextFunction) => {
   console.log('controller: createMatching');
-  if (req.body.mentor_USN === null || req.body.mentor_USN === '' || req.body.mentor_USN === undefined) {
+
+  if (req.body.mentor_ID === null || req.body.mentor_ID === '' || req.body.mentor_ID === undefined) {
     res.status(400).send(
       {
-        'message': 'create matching fail - please input mentor usn'
+        'message': 'create matching fail - please input mentor ID'
       }
     )
   }
-  else if (req.body.mentee_USN === null || req.body.mentee_USN === '' || req.body.mentee_USN === undefined) {
+  else if (req.body.mentee_ID === null || req.body.mentee_ID === '' || req.body.mentee_ID === undefined) {
     res.status(400).send(
       {
-        'message': 'create matching fail - please input mentee usn'
+        'message': 'create matching fail - please input mentee ID'
       }
     )
   }
@@ -40,15 +41,23 @@ const createMatching = async (req: express.Request, res: express.Response, next:
     req.body.is_checked = 0;
   }
 
-  const data = [
-    req.body.mentor_USN, //mentor_USN
-    req.body.mentee_USN, //mentee_USN
-    dateFormatConvert(req.body.request_time),
-    req.body.state,
-    req.body.is_checked,
-    req.body.request_message,
-    req.body.response_message
-  ];
+  let data;
+  try {
+    const mentor_USN = await matchingDAO.searchUSN([req.body.mentor_ID]);
+    const mentee_USN = await matchingDAO.searchUSN([req.body.mentee_ID]);
+    data = [
+      mentor_USN[0].usn, //mentor_USN
+      mentee_USN[0].usn, //mentee_USN
+      dateFormatConvert(req.body.request_time),
+      req.body.state,
+      req.body.is_checked,
+      req.body.request_message,
+      req.body.response_message
+    ];
+
+  } catch (e) {
+    console.log(e);
+  }
 
   try {
     const result = await matchingDAO.createMatching(data);
@@ -112,17 +121,17 @@ const renderModifyForm = async (req: express.Request, res: express.Response, nex
 
 const modifyMatching = async (req: express.Request, res: express.Response, next: express.NextFunction) => {
   console.log('controller: updateMatching');
-  if (req.body.mentor_USN === null || req.body.mentor_USN === '' || req.body.mentor_USN === undefined) {
+  if (req.body.mentor_ID === null || req.body.mentor_ID === '' || req.body.mentor_ID === undefined) {
     res.status(400).send(
       {
-        'message': 'modify matching fail - please input mentor usn'
+        'message': 'modify matching fail - please input mentor id'
       }
     )
   }
-  else if (req.body.mentee_USN === null || req.body.mentee_USN === '' || req.body.mentee_USN === undefined) {
+  else if (req.body.mentee_ID === null || req.body.mentee_ID === '' || req.body.mentee_ID === undefined) {
     res.status(400).send(
       {
-        'message': 'modify matching fail - please input mentee usn'
+        'message': 'modify matching fail - please input mentee id'
       }
     )
   }
@@ -140,9 +149,11 @@ const modifyMatching = async (req: express.Request, res: express.Response, next:
       }
     )
   }
+  const mentor_USN = await matchingDAO.searchUSN([req.body.mentor_ID]);
+  const mentee_USN = await matchingDAO.searchUSN([req.body.mentee_ID]);
   const data = [
-    req.body.mentor_USN,
-    req.body.mentee_USN,
+    mentor_USN[0].usn,
+    mentee_USN[0].usn,
     dateFormatConvert(req.body.request_time),
     dateFormatConvert(req.body.response_time),
     req.body.state,
@@ -171,12 +182,12 @@ const getMatching = async (req: express.Request, res: express.Response, next: ex
   try {
     let resultData = [];
     
-    if (req.query.query_type === 'SEARCH') { //추후 페이징 쿼리와 구분하기 위해 임시로 구분자쿼리를 함께 보냈습니다.
+    if (req.query.queryType === 'SEARCH') { //추후 페이징 쿼리와 구분하기 위해 임시로 구분자쿼리를 함께 보냈습니다.
       console.log('controller: getMatching [SEARCH]');
       // 매칭정보 검색
       let inputData = [
-          dateFormatConvert(String(req.query.start_date)),
-          dateFormatConvert(String(req.query.end_date))
+          dateFormatConvert(String(req.query.startDateSubmit)),
+          dateFormatConvert(String(req.query.endDateSubmit))
         ];
   
       let extraQuery = '';
@@ -184,11 +195,11 @@ const getMatching = async (req: express.Request, res: express.Response, next: ex
       if (req.query.state !== '-1' && req.query.state !== null) {
         extraQuery += ` AND m.state = ${req.query.state}`;
       }
-      if (req.query.mentee_id !== null && req.query.mentee_id !== '') {
-        extraQuery += ` AND mentee.ID = '${req.query.mentee_id}'`;
+      if (req.query.menteeID !== null && req.query.menteeID !== '') {
+        extraQuery += ` AND mentee.ID = '${req.query.menteeID}'`;
       }
-      if (req.query.mentor_id !== null && req.query.mentor_id !== '') {
-        extraQuery += ` AND mentor.ID = '${req.query.mentor_id}'`;
+      if (req.query.mentorID !== null && req.query.mentorID !== '') {
+        extraQuery += ` AND mentor.ID = '${req.query.mentorID}'`;
       }
       extraQuery += ';';
       

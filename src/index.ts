@@ -4,6 +4,7 @@ import * as path from 'path';
 import * as bodyparser from 'body-parser';
 import * as cookieParser from 'cookie-parser';
 import { secretObj } from '../config/config';
+import {MODE} from '../config/config';
 
 const morgan = require('morgan');
 const {stream} = require('../config/logger')
@@ -38,7 +39,7 @@ app.use('/*', (req, res, next) => {
 	} catch {
 		res.redirect('/login');
 	}
-})
+});
 
 app.use('/', router);
 

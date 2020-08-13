@@ -48,6 +48,7 @@ async function deleteMatching(data: Array<any>) {
 async function modifyMatching(data: Array<any>) {
   try {
     const [rows, fields] = await db.connection.promise().query(query.modifyMatching, data);
+    console.log(rows);
     if (rows.affectedRows === 0) {
       throw 'cannot find'
     }
@@ -67,7 +68,16 @@ async function searchMatching(data: Array<any>, extraQuery: String) {
   }
 }
 
+async function searchUSN(data: Array<any>) {
+  try {
+    const [rows, fields] = await db.connection.promise().query(query.searchUSNbyID, data);
+    return rows;
+  } catch (e) {
+    console.log('dao: searchUSN error\n' + e);
+  }
+}
+
 export default {
   getAllMatching, createMatching, deleteMatching, getMatching, modifyMatching,
-  searchMatching
+  searchMatching, searchUSN
 }
