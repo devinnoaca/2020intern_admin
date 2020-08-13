@@ -28,6 +28,7 @@ const setDatePicker = () => {
   }
 
   const dateObjectFactory = (date, isEnd) => {
+    if(date === '') { return null; }
     const DATE_FORMAT = 'YYYY-MM-DD HH:mm';
     if (isEnd) {
       return new moment(date).endOf('day').format(DATE_FORMAT);
