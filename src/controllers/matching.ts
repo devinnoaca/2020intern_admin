@@ -120,17 +120,17 @@ const renderModifyForm = async (req: express.Request, res: express.Response, nex
 
 const modifyMatching = async (req: express.Request, res: express.Response, next: express.NextFunction) => {
   console.log('controller: updateMatching');
-  if (req.body.mentor_USN === null || req.body.mentor_USN === '' || req.body.mentor_USN === undefined) {
+  if (req.body.mentor_ID === null || req.body.mentor_ID === '' || req.body.mentor_ID === undefined) {
     res.status(400).send(
       {
-        'message': 'modify matching fail - please input mentor usn'
+        'message': 'modify matching fail - please input mentor id'
       }
     )
   }
-  else if (req.body.mentee_USN === null || req.body.mentee_USN === '' || req.body.mentee_USN === undefined) {
+  else if (req.body.mentee_ID === null || req.body.mentee_ID === '' || req.body.mentee_ID === undefined) {
     res.status(400).send(
       {
-        'message': 'modify matching fail - please input mentee usn'
+        'message': 'modify matching fail - please input mentee id'
       }
     )
   }
@@ -148,9 +148,11 @@ const modifyMatching = async (req: express.Request, res: express.Response, next:
       }
     )
   }
+  const mentor_USN = await matchingDAO.searchUSN([req.body.mentor_ID]);
+  const mentee_USN = await matchingDAO.searchUSN([req.body.mentee_ID]);
   const data = [
-    req.body.mentor_ID,
-    req.body.mentee_ID,
+    mentor_USN[0].usn,
+    mentee_USN[0].usn,
     dateFormatConvert(req.body.request_time),
     dateFormatConvert(req.body.response_time),
     req.body.state,

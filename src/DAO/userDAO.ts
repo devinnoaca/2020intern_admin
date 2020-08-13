@@ -4,6 +4,7 @@ import db from '../db';
 async function getUser(data: Array<any>) {
   try {
     const [rows, fields] = await db.connection.promise().query(query.searchUser, data);
+    console.log(rows);
     if (rows.length === 0) {
       throw 'cannot find'
     }

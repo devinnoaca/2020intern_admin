@@ -48,6 +48,7 @@ async function deleteMatching(data: Array<any>) {
 async function modifyMatching(data: Array<any>) {
   try {
     const [rows, fields] = await db.connection.promise().query(query.modifyMatching, data);
+    console.log(rows);
     if (rows.affectedRows === 0) {
       throw 'cannot find'
     }
