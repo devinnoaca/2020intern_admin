@@ -1,8 +1,5 @@
+import {dateObjectFactory} from '/js/matching/date-config.js';
 
-//해당 객체가 비었는지 확인(쿼리스트링 객체)
-const isEmptyObject = (param) => {
-  return Object.keys(param).length === 0 && param.constructor === Object;
-}
 // 라디오 인풋 폼이 체크되어있는지 확인
 const radioCheck = (radioGroup) => {
   for (let i = 0; i < radioGroup.length; i++) {
@@ -11,20 +8,6 @@ const radioCheck = (radioGroup) => {
     }
   }
   return false;
-}
-
-// 날짜포맷 변환(yyyy-mm-dd HH:MM)
-// const dateFormatConvert = (date) => {
-//   return (new Date(date)).toISOString().slice(0, 19).replace(/-/g, "-").replace("T", " ");
-// }
-
-const dateObjectFactory = (date, isEnd) => {
-  const DATE_FORMAT = 'YYYY-MM-DD HH:mm';
-  if (isEnd) {
-    return new moment(date).endOf('day').format(DATE_FORMAT);
-  } else {
-    return new moment(date).format(DATE_FORMAT);
-  } 
 }
 
 // 검색 폼 제출
@@ -61,48 +44,4 @@ const onSearch = () => {
     formData.submit();
 }
 
-const formData = document.searchingForm;
-// 전체기간 체크박스 이벤트
-formStartDate = formData.startDate;
-formEndDate = formData.endDate;
-formIsTotal = formData.isTotal;
-formState = formData.state;
-formMentorID = formData.mentorID;
-formMenteeID = formData.menteeID;
-
-formData.isTotal.addEventListener('change', (event) => {
-  if (event.target.checked) {
-    formStartDate.disabled = true;
-    formEndDate.disabled = true;
-  } else {
-    formStartDate.disabled = false;
-    formEndDate.disabled = false;
-  }
-});
-
-const searchParams = getURLParams();
-
-if(isEmptyObject(searchParams)) {
-  formIsTotal.checked = true;
-  formData.state[0].checked = true;
-  formStartDate.disabled = true;
-  formEndDate.disabled = true;
-} else {
-  
-  formMentorID.value = searchParams.mentorID;
-  formMenteeID.value = searchParams.menteeID;
-  
-  let state_id = parseInt(searchParams.state);
-  formState[state_id + 1].checked = true;
-
-  if(searchParams.isTotal !== 'on') {
-    $('.start-date').datepicker('setDate', new Date(searchParams.startDateSubmit.substr(0,10)));
-    $('.end-date').datepicker('setDate', new Date(searchParams.endDateSubmit.substr(0,10)));
-  } else {
-    formIsTotal.checked = true;
-    formStartDate.disabled = true;
-    formEndDate.disabled = true;
-  }
-  
-}
-
+export { onSearch };
