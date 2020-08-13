@@ -41,7 +41,7 @@
               <h6 class="m-0 font-weight-bold text-primary">회원 조회</h6>
             </div>
             <div class="card-body">
-              <form action="/notification" method="GET">
+              <form action="/notification" method="GET" name="searchNotificationForm">
                 <ul class="list-group list-group-flush">
 
                   <!-- 알림 종류, 열람 여부-->
@@ -223,14 +223,15 @@
 
   <script src="/js/notification/notification.js"></script>
 
+  <script src="/js/user/close-modal.js"></script>
+
   <script type="text/JavaScript">
-    $('[name="receiver"]').on('click', function(){
-      
-      if($(this).val() === 'user'){
-        $('[name="receiver_ID"]').attr('disabled', false);
+    $('[name="receiver"]').on('change', function(){
+
+      if ($(this).val() === 'user') {
+        $('[name="receiver_ID"]').attr('disabled',false);
       } else {
-        $('[name="receiver_ID"]').attr('disabled', true);
-        $('[name="receiver_ID"]').val('');
+        $('[name="receiver_ID"]').attr('disabled',true);
       }
     });
   </script>
