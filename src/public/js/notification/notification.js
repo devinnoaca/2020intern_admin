@@ -12,3 +12,19 @@ $('tbody tr').on('click', function(event){
     });
   }
 });
+
+(function(){
+  const queries = window.location.search.substring(1);
+  const arrQuery = queries.split('&');
+  const userForm = $('[name="searchNotificationForm"]');
+  let component;
+  let name = '';
+  let componentValue = '';
+
+  for (let i = 0; i < arrQuery.length; ++i) {
+    component = arrQuery[i].split('=');
+    name = component[0];
+    componentValue = component[1];
+    userForm.find(`[name="${name}"]`).val(componentValue);
+  }
+})();

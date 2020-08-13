@@ -77,7 +77,7 @@ const getUsers = async (req: express.Request, res: express.Response, next: expre
   const query = req.query;
   
   if (Object.keys(query).length !== 0) {
-    console.log(Object.keys(query).length);
+    
     extraQuery += ' WHERE USN >= 0 ';
     if (query.searchType !== null && query.searchType !== 'all') {
       extraQuery += `AND type = ${query.searchType} `;

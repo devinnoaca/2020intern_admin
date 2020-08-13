@@ -14,24 +14,16 @@
               <!-- 수신자 -->
               <li class="list-group-item">
                 <div class="row form-group">
-                  <div class="form-check form-check-inline col-md-2">
-                    <label class="form-check-label">수신자</label>
+                  <div class="form-group form-inline col-md-2">
+                    <label>수신자</label>
                   </div>
-                  <div class="form-check form-check-inline col-md-2">
-                    <input class="form-check-input" type="radio" name="receiver" id="receiver1" value="all">
-                    <label class="form-check-label" for="receiver1">전체</label>
-                  </div>
-                  <div class="form-check form-check-inline col-md-2">
-                    <input class="form-check-input" type="radio" name="receiver" id="receiver2" value="mentee">
-                    <label class="form-check-label" for="receiver2">멘티</label>
-                  </div>
-                  <div class="form-check form-check-inline col-md-2">
-                    <input class="form-check-input" type="radio" name="receiver" id="receiver3" value="mentor">
-                    <label class="form-check-label" for="receiver3">멘토</label>
-                  </div>
-                  <div class="form-check form-check-inline col-md-2">
-                    <input class="form-check-input" type="radio" name="receiver" id="receiver4" value="user">
-                    <label class="form-check-label" for="receiver3">특정 회원</label>
+                  <div class="form-group form-inline col-md-10">
+                    <select class="form-control" name="receiver">
+                      <option value="all">전체</option>
+                      <option value="mentee">멘티</option>
+                      <option value="mentor">멘토</option>
+                      <option value="user">회원</option>
+                    </select>
                   </div>
                 </div>
               </li>
