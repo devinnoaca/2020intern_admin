@@ -8,6 +8,11 @@ $('tbody tr').click(function(event){
   if(target.is('[name=deleteButton]')){
     const usn = target.val();
     sendAjax('DELETE', `/user/${usn}`, null, deleteUserCallback);
+
+  } else if (target.is('[name="sendNotification"]')) {
+    const notificationModal = $('#notiCreate');
+    notificationModal.find('[name="receiver"]').val('user');
+    notificationModal.modal();
   } else {
     const td = tr.children();
     const id = td.eq(0).text();
