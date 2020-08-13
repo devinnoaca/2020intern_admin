@@ -70,6 +70,8 @@ async function createNotification(data: Array<any>) {
 async function getUserNotification(data: Array<any>) {
   try {
     const [rows] = await db.connection.promise().query(query.searchUserNotification, data);
+    console.log(db.connection.query(query.searchUserNotification, data).sql)
+    console.log(rows);
     if (rows.length === 0) {
       throw 'cannot find';
     }
@@ -84,6 +86,10 @@ async function getUserNotification(data: Array<any>) {
 async function getNotifications(){
   try {
     const [rows] = await db.connection.promise().query(query.getNotifications);
+    console.log(rows);
+    if (rows.length === 0) {
+      throw 'cannot find';
+    }
     return rows;
   } catch (e) {
     console.log('dao: getNotifications error\n' + e);

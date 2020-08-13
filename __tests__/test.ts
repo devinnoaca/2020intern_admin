@@ -1,7 +1,24 @@
 import server from '../src/index';
 const request = require('supertest')
-
+const exec = require('child_process').exec;
+(() => {
+  exec('mysql -uroot -p1234 test < ./testData.sql', (err) => {
+    if (err) {
+      console.error(`exec error: ${err}`);
+      return;
+    }
+    console.log('test data inserted!!');
+  });
+})();
 describe('category test', () => {
+  // beforeAll( () => {
+  //   exec('mysql -uroot -p1234 test < ./testData.sql', (err) => {
+  //     if (err) {
+  //       console.error(`exec error: ${err}`);
+  //       return;
+  //     }
+  //   });
+  // })
   afterEach( () => {
     server.close();
   });
@@ -35,6 +52,14 @@ describe('category test', () => {
 });
 
 describe('keyword test', () => {
+  // beforeAll( () => {
+  //   exec('mysql -uroot -p1234 test < ./testData.sql', (err) => {
+  //     if (err) {
+  //       console.error(`exec error: ${err}`);
+  //       return;
+  //     }
+  //   });
+  // })
   afterEach( () => {
     server.close();
   });
@@ -62,6 +87,14 @@ describe('keyword test', () => {
 });
 
 describe('matching test', () => {
+  // beforeAll( () => {
+  //   exec('mysql -uroot -p1234 test < ./testData.sql', (err) => {
+  //     if (err) {
+  //       console.error(`exec error: ${err}`);
+  //       return;
+  //     }
+  //   });
+  // })
   afterEach( () => {
     server.close();
   });
@@ -78,19 +111,19 @@ describe('matching test', () => {
   test("create matching with proper parameter", async () => {
     await request(server)
     .post('/matching')
-    .send({mentor_USN: 2, mentee_USN: 3, state: 0})
+    .send({mentor_ID: "ImMentor", mentee_ID: "ImMentee", state: 0})
     .expect(200);
   });
   test("create matching with improper parameter", async () => {
     await request(server)
     .post('/matching')
-    .send({mentor_USN: -1, mentee_USN: 3, state: 0})
+    .send({mentor_ID: "WrongID", mentee_ID: "Wrororrng", state: 0})
     .expect(500);
   });
   test("create matching without parameter", async () => {
     await request(server)
     .post('/matching')
-    .send({mentee_USN: 3, state: 0})
+    .send({mentee_ID: 3, state: 0})
     .expect(400);
   });
   test("modify form with proper parameter", async () => {
@@ -106,20 +139,14 @@ describe('matching test', () => {
   test("modify matching with proper parameter", async () => {
   await request(server)
   .put('/matching/update/2')
-  .send({mentor_USN:2, mentee_USN: 3, state: 1, is_checked:1})
+  .send({mentor_ID:"ImMentor", mentee_ID: "ImMentee", state: 1, is_checked:1, request_time: new Date(), response_time: new Date()})
   .expect(200);
   });
   test("modify matching with improper parameter", async () => {
   await request(server)
   .put('/matching/update/-1')
-  .send({mentor_USN:2, mentee_USN:3, state: 1, is_checked:1})
+  .send({mentor_ID:"ImMentor", mentee_ID:"ImMentee", state: 1, is_checked:1, request_time: new Date(), response_time: new Date()})
   .expect(500);
-  });
-  test("modify matching with improper body", async () => {
-  await request(server)
-  .put('/matching/update/2')
-  .send({mentor_USN: -1})
-  .expect(400);
   });
   test("delete matching with proper parameter", async () => {
     await request(server)
@@ -133,46 +160,54 @@ describe('matching test', () => {
   });
   test("search matching with proper parameter", async () => {
     await request(server)
-    .post('/matching/search')
+    .get('/matching/')
     .send({start_date: new Date(70,1,1), end_date: new Date(2100,1,1)})
     .expect(200)
   });
 });
 
 describe('notification test', () => {
+  // beforeAll( () => {
+  //   exec('mysql -uroot -p1234 test < ./testData.sql', (err) => {
+  //     if (err) {
+  //       console.error(`exec error: ${err}`);
+  //       return;
+  //     }
+  //   });
+  // })
   afterEach( () => {
     server.close();
   });
   test("create notification with proper parameter", async () => {
     await request(server)
-    .post('/notification/create')
+    .post('/notification')
     .send({message: 'test', receiver: 'all'})
-    .expect(200);
+    .expect(302);
   });
   test("create notification with improper parameter", async () => {
     await request(server)
-    .post('/notification/create')
+    .post('/notification')
     .send({message: 'test', receiver_ID: -1})
     .expect(500);
   });
   test("create notification without parameter", async () => {
     await request(server)
-    .post('/notification/create')
+    .post('/notification')
     .expect(400);
   });
-  test("get notification with proper parameter", async () => {
+  test("search notification with proper parameter", async () => {
     await request(server)
     .post('/notification/search')
-    .send({type: 1, receiver_ID: "ImMentor", sender_ID: "ImAdmin"})
+    .send({type: 1, is_checked: "all", receiver_ID: "ImMentor", sender_ID: "ImAdmin"})
     .expect(200);
   });
-  test("get notification with improper parameter", async () => {
+  test("search notification with improper parameter", async () => {
     await request(server)
     .post('/notification/search')
-    .send({type: 1, receiver_ID: "ImMentortest", sender_ID: "ImAdmintest"})
+    .send({type: 1, is_checked: "all", receiver_ID: "ImMentortest", sender_ID: "ImAdmintest"})
     .expect(500);
   });
-  test("get notification without parameter", async () => {
+  test("search notification without parameter", async () => {
     await request(server)
     .post('/notification/search')
     .expect(400);
@@ -190,19 +225,27 @@ describe('notification test', () => {
 });
 
 describe('user test', () => {
+  // beforeAll( () => {
+  //   exec('mysql -uroot -p1234 test < ./testData.sql', (err) => {
+  //     if (err) {
+  //       console.error(`exec error: ${err}`);
+  //       return;
+  //     }
+  //   });
+  // })
   afterEach( () => {
     server.close();
   });
   test("create user with proper parameter", async () => {
     await request(server)
     .post('/user')
-    .send({id:"testID", name:"testName", password:"testPW", email:"test@te.st", type:1})
+    .send({id:"testID", name:"testName", password:"testPW", email:"test@te.st", type:1, permission: -1})
     .expect(200);
   });
   test("create user with improper parameter", async () => {
     await request(server)
     .post('/user')
-    .send({id:1235234, name:"testName", password:"testPW", email:"test@te.st", type:"asd"})
+    .send({id:1235234, name:"testName", password:"testPW", email:"test@te.st", type:"asd", permission: -1})
     .expect(500);
   });
   test("create user without parameter", async () => {

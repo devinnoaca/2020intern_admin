@@ -37,11 +37,15 @@ const createNotification = async (req: express.Request, res: express.Response, n
   }
 }
 const getNotifications = async (req: express.Request, res: express.Response, next: express.NextFunction) => {
-  const result = await notificationQuery.getNotifications();
+  try {
+    const result = await notificationQuery.getNotifications();
+    res.status(200).render('notification/notification', {
+      "notifications" : result   
+    });
+  } catch (e) {
+    res.status(500).send()
+  }
 
-  res.status(200).render('notification/notification', {
-    "notifications" : result   
-  });
 }
 
 const getNotification = async (req: express.Request, res: express.Response, next: express.NextFunction) => {
