@@ -5,9 +5,11 @@ JOIN User as mentor ON mentor.USN = m.mentor_USN \
 JOIN User as mentee ON mentee.USN = m.mentee_USN;`;
 
 const getMatching = `
-SELECT id, mentor_USN, mentee_USN, date_format(request_time,'%Y-%m-%d %T') AS request_time, date_format(response_time,'%Y-%m-%d %T') AS response_time, state, request_message, response_message, is_checked \
-FROM Matching \
-WHERE id = ?;`;
+SELECT m.id id, mentor.ID mentor_ID, mentee.ID mentee_ID, date_format(m.request_time,'%Y-%m-%d %T') AS request_time, date_format(m.response_time,'%Y-%m-%d %T') AS response_time, m.state state, m.request_message request_message, m.response_message response_message, m.is_checked is_checked \
+FROM Matching as m \
+JOIN User as mentee ON m.mentee_USN = mentee.USN \
+JOIN User as mentor ON m.mentor_USN = mentor.USN \
+WHERE m.id = ?;`;
 
 const createMatching = `
 INSERT INTO Matching(mentor_USN, mentee_USN, request_time, state, is_checked, request_message, response_message) \
