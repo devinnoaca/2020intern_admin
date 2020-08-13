@@ -186,9 +186,11 @@ const getMatching = async (req: express.Request, res: express.Response, next: ex
       console.log('controller: getMatching [SEARCH]');
       // 매칭정보 검색
       let inputData = [
-          dateFormatConvert(String(req.query.startDateSubmit)),
-          dateFormatConvert(String(req.query.endDateSubmit))
+          req.query.startDateSubmit,
+          req.query.endDateSubmit
         ];
+
+        console.log(inputData);
   
       let extraQuery = '';
   

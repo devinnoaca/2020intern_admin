@@ -1,4 +1,4 @@
-$(function () {
+const setDatePicker = () => {
   $('.start-date').datepicker({
     format: "yyyy-mm-dd",
     autoclose: true,	//사용자가 날짜를 클릭하면 자동 캘린더가 닫히는 옵션
@@ -24,5 +24,6 @@ $(function () {
   }).on('clearDate', function (selected) {
     $('.start-date').datepicker('setEndDate', null);
   });
-});
+}
 
+setDatePicker();

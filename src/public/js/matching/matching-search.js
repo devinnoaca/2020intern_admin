@@ -1,3 +1,4 @@
+
 //해당 객체가 비었는지 확인(쿼리스트링 객체)
 const isEmptyObject = (param) => {
   return Object.keys(param).length === 0 && param.constructor === Object;
@@ -13,14 +14,23 @@ const radioCheck = (radioGroup) => {
 }
 
 // 날짜포맷 변환(yyyy-mm-dd HH:MM)
-const dateFormatConvert = (date) => {
-  return (new Date(date)).toISOString().slice(0, 19).replace(/-/g, "-").replace("T", " ");
+// const dateFormatConvert = (date) => {
+//   return (new Date(date)).toISOString().slice(0, 19).replace(/-/g, "-").replace("T", " ");
+// }
+
+const dateObjectFactory = (date, isEnd) => {
+  const DATE_FORMAT = 'YYYY-MM-DD HH:mm';
+  if (isEnd) {
+    return new moment(date).endOf('day').format(DATE_FORMAT);
+  } else {
+    return new moment(date).format(DATE_FORMAT);
+  } 
 }
 
 // 검색 폼 제출
 const onSearch = () => {
   let formData = document.searchingForm;
-
+  
   let convStartDate; //converted start date
   let convEndDate;
   
@@ -32,25 +42,24 @@ const onSearch = () => {
   
   // 검색기간(전체) 체크박스 값 체크
   if(formData.isTotal.checked) {
-    convStartDate = new Date('1970-01-01');
-    convEndDate = new Date();
-    convEndDate.setDate(convEndDate.getDate()+1);
+    convStartDate = dateObjectFactory('1970-01-01 00:00', false);
+    convEndDate = dateObjectFactory([], true);
   } else {
     // 검색기간(닐짜) 폼 유효성 체크.
     if(formData.startDate.value == '' || formData.endDate.value == '') {
       alert('기간을 정확히 입력해주세요');
       return false;
     } else {
-      convStartDate = new Date(formData.startDate.value);
-      convEndDate = new Date(formData.endDate.value);
+      convStartDate = dateObjectFactory(formData.startDate.value, false);
+      convEndDate = dateObjectFactory(formData.endDate.value, true);
     }
   }
-    formData.startDateSubmit.value = dateFormatConvert(convStartDate);
-    formData.endDateSubmit.value = dateFormatConvert(convEndDate);
+
+    formData.startDateSubmit.value = convStartDate;
+    formData.endDateSubmit.value = convEndDate;
 
     formData.submit();
 }
-
 
 const formData = document.searchingForm;
 // 전체기간 체크박스 이벤트
@@ -86,10 +95,9 @@ if(isEmptyObject(searchParams)) {
   let state_id = parseInt(searchParams.state);
   formState[state_id + 1].checked = true;
 
-
   if(searchParams.isTotal !== 'on') {
-    formStartDate.value = searchParams.startDateSubmit;
-    formEndDate.value = searchParams.endDateSubmit;
+    $('.start-date').datepicker('setDate', new Date(searchParams.startDateSubmit.substr(0,10)));
+    $('.end-date').datepicker('setDate', new Date(searchParams.endDateSubmit.substr(0,10)));
   } else {
     formIsTotal.checked = true;
     formStartDate.disabled = true;
