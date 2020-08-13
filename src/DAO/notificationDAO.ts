@@ -83,10 +83,10 @@ async function getUserNotification(data: Array<any>) {
 
 }
 
-async function getNotifications(){
+async function getNotifications(extraQuery: String){
   try {
-    const [rows] = await db.connection.promise().query(query.getNotifications);
-    console.log(rows);
+    const [rows] = await db.connection.promise().query(query.getNotifications + extraQuery);
+    
     if (rows.length === 0) {
       throw 'cannot find';
     }

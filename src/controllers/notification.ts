@@ -37,8 +37,36 @@ const createNotification = async (req: express.Request, res: express.Response, n
   }
 }
 const getNotifications = async (req: express.Request, res: express.Response, next: express.NextFunction) => {
+  const query = req.query;
+  let extraQuery = '';
+
+  if (Object.keys(query).length !== 0) {
+    extraQuery += ' WHERE un.id >= 0 ';
+    
+    if (query.searchType !== null && query.searchType !== 'all') {
+      extraQuery += `AND n.type = ${query.searchType} `;
+    }
+
+    if (query.isChecked !== null && query.isChecked !== 'all') {
+      extraQuery += `AND un.is_checked = ${query.isChecked} `;
+    }
+
+    if (query.sender !== null && query.senderID !== null && query.senderID !== '') {
+      extraQuery += `AND sender.ID LIKE '%${query.senderID}%' `;
+    }
+
+    if (query.receiver !== null && query.receiverID !== null && query.receiverID !== '') {
+      extraQuery += `AND receiver.ID LIKE '%${query.receiverID}%' `;
+    }
+  }
+
   try {
-    const result = await notificationQuery.getNotifications();
+    let result = await notificationQuery.getNotifications(extraQuery);
+    
+    if(result === undefined) {
+      result = new Array();
+    }
+
     res.status(200).render('notification/notification', {
       "notifications" : result   
     });
