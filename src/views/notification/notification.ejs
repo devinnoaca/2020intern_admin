@@ -226,11 +226,11 @@
   <script type="text/JavaScript">
     $('[name="receiver"]').on('click', function(){
       
-      if($(this).val() === '3'){
-        $('[name="id"]').attr('disabled', false);
+      if($(this).val() === 'user'){
+        $('[name="receiver_ID"]').attr('disabled', false);
       } else {
-        $('[name="id"]').attr('disabled', true);
-        $('[name="id"]').val('');
+        $('[name="receiver_ID"]').attr('disabled', true);
+        $('[name="receiver_ID"]').val('');
       }
     });
   </script>
