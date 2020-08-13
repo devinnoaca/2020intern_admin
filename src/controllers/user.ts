@@ -72,12 +72,14 @@ const getUsers = async (req: express.Request, res: express.Response, next: expre
   if (Object.keys(query).length !== 0) {
     console.log(Object.keys(query).length);
     extraQuery += ' WHERE USN >= 0 ';
+        
     if (query.searchType !== null && query.searchType !== 'all') {
       extraQuery += `AND type = ${query.searchType} `;
     }
 
     if (query.searchOption !== null && query.searchWord !== null) {
-      extraQuery += `AND ${query.searchOption} LIKE '%${query.searchWord}%' `;
+      const searchWord = query.searchWord.toString().trim();
+      extraQuery += `AND ${query.searchOption} LIKE '%${searchWord}%' `;
     }
 
     if (query.searchPermission !== null && query.searchPermission !== 'all') {
@@ -165,7 +167,9 @@ const deleteUser = async (req: express.Request, res: express.Response, next: exp
       }
     );
   } catch (e) {
-    res.status(500).send()
+    res.status(500).send({
+      'message': 'delete user fail - internal error'
+    })
   }
 };
 
