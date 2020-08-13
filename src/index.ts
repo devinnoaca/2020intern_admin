@@ -36,7 +36,7 @@ app.use('/*', (req, res, next) => {
 		jwt.verify(token, secretObj.secret);
 		next();
 	} catch {
-		res.redirect('login');
+		res.redirect('/login');
 	}
 })
 
