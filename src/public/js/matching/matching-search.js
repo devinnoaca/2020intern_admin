@@ -11,7 +11,7 @@ const radioCheck = (radioGroup) => {
 }
 
 // 검색 폼 제출
-const onSearch = () => {
+window.onSearch = () => {
   let formData = document.searchingForm;
   
   let convStartDate; //converted start date
@@ -43,5 +43,3 @@ const onSearch = () => {
 
     formData.submit();
 }
-
-export { onSearch };
