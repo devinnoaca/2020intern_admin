@@ -31,15 +31,17 @@ app.get('/forgot-password', (request: express.Request, response: express.Respons
 
 app.post('/login', router);
 
-app.use('/*', (req, res, next) => {
-	const token = req.cookies.token;
-	try {
-		jwt.verify(token, secretObj.secret);
-		next();
-	} catch {
-		res.redirect('/login');
-	}
-});
+if (MODE !== 'TEST') {
+		app.use('/*', (req, res, next) => {
+		const token = req.cookies.token;
+		try {
+			jwt.verify(token, secretObj.secret);
+			next();
+		} catch {
+			res.redirect('/login');
+		}
+	});
+}
 
 app.use('/', router);
 
