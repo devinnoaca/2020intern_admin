@@ -45,8 +45,8 @@ const userDetailDataValidation = function(userData) {
   const nameReg = /^[가-힣]{1,40}$/;
   const emailReg = /^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/i;
   const passwordReg =  /^(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{4,20}$/;
-  const companyReg = /^[0-9a-zA-Zㄱ-ㅎ가-힣;:._()#?!%*-]{0,50}$/;
-  const descriptionReg = /^[0-9a-zA-Zㄱ-ㅎ가-힣;:._()#?%*!\-\s]{0,1000}$/;
+  const companyReg = /^[0-9a-zA-Zㄱ-ㅎ가-힣;:._()#?!%*/\-\s]{0,50}$/;
+  const descriptionReg = /^[0-9a-zA-Zㄱ-ㅎ가-힣;:._()#?%*!/\-\s]{0,1000}$/;
 
   if(!idReg.test(userData.id)){
     alert('id는 영문자(소문자)와 숫자 조합 5~20자리로 입력해주세요.');

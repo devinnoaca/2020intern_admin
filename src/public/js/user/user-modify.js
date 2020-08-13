@@ -1,5 +1,8 @@
-import {userDetailDataValidation} from "./userValidation.js";
-import {careerValidation} from "../career/careerValidation.js"
+import {userDetailDataValidation} from "./user-validation.js";
+import {careerValidation} from "../career/career-validation.js";
+import {addCareerCallback} from "../career/career-create.js";
+import {modifyCareerCallback} from "../career/career-modify.js";
+import {deleteCareerCallback} from "../career/career-delete.js";
 
 const url = window.location.href;
 const urlSplit = url.split('/');
@@ -96,51 +99,6 @@ const modifyUserCallback = function(xhr) {
   }
 };
 
-//커리어 추가시 콜백 함수
-const addCareerCallback = function(xhr) {
-  const status = xhr.status;
-  const message = xhr.response.message;
-  const content = xhr.response.content;
-  const careerID = xhr.response.careerID;
-
-  const careerTemplate = `<div class="input-group my-sm-1" name="careerDiv">
-                            <input class="form-control" value="${content}" name="career" type="text"
-                            aria-describedby="deleteCareerButton">
-                            <div class="input-group-append">
-                              <button class="btn btn-outline-primary" type="button" name="updateCareerButton"
-                              value="${careerID}">수정</button>
-                              <button class="btn btn-danger" type="button" name="deleteCareerButton"
-                              value="${careerID}">삭제</button>
-                            </div>
-                          </div>`;
-
-  const careerDivLength = $('[name="careerDiv"]').length;
-
-  alert(message);
-
-  switch (status) {
-    case 200:
-      if (careerDivLength != 0) {
-        $('[name="careerDiv"]').last().after(careerTemplate);
-      } else {
-        $('[name="careerWrapper"]').prepend(careerTemplate);
-      }
-
-      $('[name="addCareerInput"]').val('');
-      $('[name="careerDiv"]').last().on('click', function (event) {
-        careerClickEvent(event, $(this));
-      });
-      
-      break;
-    
-    case 400:
-      break;
-    
-    case 500:
-      break;
-  }
-}
-
 //커리어 항목 클릭시 이벤트 처리
 const careerClickEvent = function(event, careerDiv) {
   const target = $(event.target);
@@ -164,43 +122,3 @@ const careerClickEvent = function(event, careerDiv) {
     });
   }
 }
-
-//커리어 수정 콜백 함수
-const modifyCareerCallback = function(xhr) {
-  const status = xhr.status;
-  const message = xhr.response.message;
-
-  switch(status) {
-    case 200:
-      alert(message);
-      break;
-    
-    case 400:
-      alert(message);
-      break;
-
-    case 500:
-      alert(message);
-      break;
-  }
-};
-
-//커리어 삭제 콜백 함수
-const deleteCareerCallback = function(xhr) {
-  const status = xhr.status;
-  const message = xhr.response.message;
-
-  switch(status) {
-    case 200:
-      alert(message);
-      break;
-    
-    case 400:
-      alert(message);
-      break;
-
-    case 500:
-      alert(message);
-      break;
-  }
-};
