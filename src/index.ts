@@ -31,7 +31,7 @@ app.get('/forgot-password', (request: express.Request, response: express.Respons
 
 app.post('/login', router);
 
-if (MODE !== 'TEST') {
+if (MODE !== 'TEST' || MODE !== 'LOCAL') {
 		app.use('/*', (req, res, next) => {
 		const token = req.cookies.token;
 		try {

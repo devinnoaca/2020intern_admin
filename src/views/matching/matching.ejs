@@ -83,10 +83,11 @@
                       </div>
                       <% const radios = ['전체', '대기', '수락', '거절'] %>
                       <% for(let i = -1; i < radios.length-1; ++i) { %>
-                        <div class="form-check form-check-inline col-md-1">
-                          <input class="form-check-input state-radio" type="radio" name="state" id="state-<%= i %>" value="<%= i %>">
-                          <label class="form-check-label" for="state-<%= i %>"><%= radios[i+1] %></label>
-                        </div>
+                      <div class="form-check form-check-inline col-md-1">
+                        <input class="form-check-input state-radio" type="radio" name="state" id="state-<%= i %>"
+                          value="<%= i %>">
+                        <label class="form-check-label" for="state-<%= i %>"><%= radios[i+1] %></label>
+                      </div>
                       <% } %>
                     </div>
                   </li>
@@ -100,11 +101,11 @@
                         </label>
                       </div>
                       <div class="col-md-1 form-check">
-                          <input type="checkbox" class="form-check-input" id="isTotal" name="isTotal">
-                          <label class="form-check-label" for="isTotal">전체 기간</label>
+                        <input type="checkbox" class="form-check-input" id="isTotal" name="isTotal">
+                        <label class="form-check-label" for="isTotal">전체 기간</label>
                       </div>
                       <div class="col-auto">
-                         <input type="text" id="datePicker" name="startDate" class="form-control start-date">
+                        <input type="text" id="datePicker" name="startDate" class="form-control start-date">
                       </div>
                       ~
                       <div class="col-auto">
@@ -147,7 +148,7 @@
                   </thead>
                   <tbody id='dataBody'>
                     <% if(matching.length == 0) { %>
-                      <td colspan="7">조건에 해당되는 데이터가 없습니다.</td>
+                    <td colspan="7">조건에 해당되는 데이터가 없습니다.</td>
                     <% } %>
                     <% matching.forEach(elem => { %>
                     <tr>
@@ -205,20 +206,21 @@
   <script src="/js/bootstrap-datepicker.js"></script>
   <script src="/js/bootstrap-datepicker.ko.min.js"></script>
 
-  <!-- matching datepicker-->
-  <script src="/js/matching/form-date-picker.js"></script>
+  <!-- moment.js module -->
+  <script src="/js/moment.min.js"></script>
   
+  <script type="text/javascript" src="/js/matching/date-config.js"></script>
+
   <!-- ajax -->
-  <script type="text/javascript" src="/js/common/ajax.js"></script>
-
-  <!-- parse querystring -->
-  <script type="text/javascript" src="/js/common/parse-query.js"></script>
-
-  <!-- matching js -->
-  <script type="text/javascript" src="/js/matching/matching-search.js"></script>
+  <script src="/js/common/ajax.js"></script>
 
   <script type="text/javascript" src="/js/matching/table-event.js"></script>
 
+  <!-- init matching js -->
+  <script type="text/javascript" src="/js/matching/matching-inital.js"></script>
+
+  <!-- matching-search -->
+  <script type="text/javascript" src="/js/matching/matching-search.js"></script>
 </body>
 
 </html>

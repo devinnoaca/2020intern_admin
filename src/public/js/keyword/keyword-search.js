@@ -5,7 +5,6 @@ const activeTab = (categoryId) => {
 
 // badge 태그 생성함수 (검색결과 뱃지)
 const badgeFactory = (categoryId, name) => {
-  // console.log(`run badgeFactory -> ${categoryId} | ${name}`);
   return `<a href="#" class="badge badge-info result-badge" onclick="activeTab('${categoryId}')">${name}</a>`
 }
 
