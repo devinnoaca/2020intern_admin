@@ -8,15 +8,22 @@ $('tbody tr').click(function(event){
   const tr = $(this);
 
   if(target.is('[name=deleteButton]')){
-    const usn = target.val();
+    const id = target.val();
     sendAjax('DELETE', `/user/${usn}`, null, deleteUserCallback);
 
   } else if (target.is('[name="sendNotification"]')) {
+    const id = target.val();
     const notificationModal = $('#notiCreate');
     const receiver = notificationModal.find('[name="receiver"]');
-    const id = notificationModal.find('[name=""]');
+    const receiverId = notificationModal.find('[name="receiver_ID"]');
+    
+    //수신자를 특정 회원으로 고정함
     receiver.val('user');
-    notificationModal.find('[nam]');
+    receiver.attr('disabled', true);
+
+    //수신자ID를 특정 회원으로 고정함
+    receiverId.val(id);
+
     notificationModal.modal();
   } else {
     const td = tr.children();
