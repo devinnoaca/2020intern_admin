@@ -197,6 +197,8 @@ const getMatching = async (req: express.Request, res: express.Response, next: ex
   }
 
   let resultData = [];
+  const query = req.query;
+  let urlPattern = '?';
   let extraQuery = '';
   try {
     if (req.query.queryType === 'SEARCH') { //추후 페이징 쿼리와 구분하기 위해 임시로 구분자쿼리를 함께 보냈습니다.
@@ -211,12 +213,15 @@ const getMatching = async (req: express.Request, res: express.Response, next: ex
   
       if (req.query.state !== '-1' && req.query.state !== null) {
         extraQuery += ` AND m.state = ${req.query.state}`;
+        urlPattern += `&state=${query.state}`;
       }
       if (req.query.menteeID !== null && req.query.menteeID !== '') {
         extraQuery += ` AND mentee.ID = '${req.query.menteeID}'`;
+        urlPattern += `&state=${query.menteeID}`;
       }
       if (req.query.mentorID !== null && req.query.mentorID !== '') {
         extraQuery += ` AND mentor.ID = '${req.query.mentorID}'`;
+        urlPattern += `&state=${query.mentorID}`;
       }
       extraQuery += ` LIMIT ${(page-1)*30}, 30;`;
       
@@ -230,12 +235,14 @@ const getMatching = async (req: express.Request, res: express.Response, next: ex
     let url = new Array();
 
     for (let i = resultData[0][0]['startPage']; i <= resultData[0][0]['endPage']; ++i) {
-      url.push(`&page=${i}&range=${range}`);
+      url.push(urlPattern + `&page=${i}&range=${range}`);
     }
     res.status(200).render('matching/matching',
       {
         'message': 'get category success',
-        'matching': resultData,
+        'page': resultData[0],
+        'matching': resultData[1],
+        'url': url
       }
     );
 
