@@ -73,23 +73,23 @@ const createUser = async (req: express.Request, res: express.Response, next: exp
 };
 
 const getUsers = async (req: express.Request, res: express.Response, next: express.NextFunction) => {
-  console.log('controller: getUsers');
-  const page = parseInt(req.query.page.toString());
-  const range = parseInt(req.query.range.toString());
-  
-  if (page === null || page === undefined) {
+  console.log('controller: getUsers');  
+  if (req.query.page === null || req.query.page === undefined) {
     res.status(400).send(
       {
         'message': 'get users fail - please input page number'
       }
     )
-  } else if (page === null || page === undefined) {
+  } else if (req.query.range === null || req.query.range === undefined) {
     res.status(400).send(
       {
         'message': 'get users fail - please input range number'
       }
     )
   }
+  const page = parseInt(req.query.page.toString());
+  const range = parseInt(req.query.range.toString());
+
   let extraQuery = '';
   const query = req.query;
   let urlPattern = '?';

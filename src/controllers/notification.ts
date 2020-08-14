@@ -1,7 +1,7 @@
 import * as express from 'express';
 import notificationQuery from '../dao/notificationDAO'
 import { route } from './user';
-
+import { pagination } from '../lib/lib'
 const router = express.Router();
 
 const createNotification = async (req: express.Request, res: express.Response, next: express.NextFunction) => {
@@ -37,40 +37,67 @@ const createNotification = async (req: express.Request, res: express.Response, n
   }
 }
 const getNotifications = async (req: express.Request, res: express.Response, next: express.NextFunction) => {
+  if (req.query.page === null || req.query.page === undefined) {
+    res.status(400).send(
+      {
+        'message': 'get users fail - please input page number'
+      }
+    )
+  } else if (req.query.range === null || req.query.range === undefined) {
+    res.status(400).send(
+      {
+        'message': 'get users fail - please input range number'
+      }
+    )
+  }
+  const page = parseInt(req.query.page.toString());
+  const range = parseInt(req.query.range.toString());
+  
   const query = req.query;
   let extraQuery = '';
+  let urlPattern = '?';
 
   if (Object.keys(query).length !== 0) {
     extraQuery += ' WHERE un.id >= 0 ';
     
-    if (query.searchType !== null && query.searchType !== 'all') {
+    if (query.searchType !== null && query.searchType !== undefined && query.searchType !== 'all') {
       extraQuery += `AND n.type = ${query.searchType} `;
+      urlPattern += `&searchType=${query.searchType}`;
     }
 
-    if (query.isChecked !== null && query.isChecked !== 'all') {
+    if (query.isChecked !== null && query.idChecked !== undefined && query.isChecked !== 'all') {
       extraQuery += `AND un.is_checked = ${query.isChecked} `;
+      urlPattern += `&isChecked=${query.isChecked}`;
     }
 
-    if (query.sender !== null && query.senderID !== null) {
+    if (query.sender !== null && query.sender !== undefined && query.senderID !== null) {
       const senderID = query.senderID.toString().trim();
       extraQuery += `AND sender.ID LIKE '%${senderID}%' `;
+      urlPattern += `&sender=${query.sender}`;
     }
 
-    if (query.receiver !== null && query.receiverID !== null) {
+    if (query.receiver !== null && query.seceiver !== undefined && query.receiverID !== null) {
       const receiverID = query.receiverID.toString().trim();
       extraQuery += `AND receiver.ID LIKE '%${receiverID}%' `;
+      urlPattern += `&receiver=${query.state}`;
     }
   }
-
+  extraQuery += ` LIMIT ${(page-1)*30}, 30;`
   try {
-    let result = await notificationQuery.getNotifications(extraQuery);
+    let result = pagination(await notificationQuery.getNotifications(extraQuery),range, page);
     
     if(result === undefined) {
       result = new Array();
     }
+    let url = new Array();
 
+    for (let i = result[0][0]['startPage']; i <= result[0][0]['endPage']; ++i) {
+      url.push(urlPattern + `&page=${i}&range=${range}`);
+    }
     res.status(200).render('notification/notification', {
-      "notifications" : result   
+      'page': result[0],
+      "notifications" : result[1],
+      'url': url
     });
   } catch (e) {
     res.status(500).send()
@@ -80,6 +107,25 @@ const getNotifications = async (req: express.Request, res: express.Response, nex
 
 const getNotification = async (req: express.Request, res: express.Response, next: express.NextFunction) => {
   console.log('controller: getNotification')
+  if (req.query.page === null || req.query.page === undefined) {
+    res.status(400).send(
+      {
+        'message': 'get users fail - please input page number'
+      }
+    )
+  } else if (req.query.range === null || req.query.range === undefined) {
+    res.status(400).send(
+      {
+        'message': 'get users fail - please input range number'
+      }
+    )
+  }
+  const page = parseInt(req.query.page.toString());
+  const range = parseInt(req.query.range.toString());
+  
+  const query = req.query;
+  let extraQuery = '';
+  let urlPattern = '?';
   if (req.body.type === null || req.body.type === '' || req.body.type === undefined) {
     res.status(400).send(
       {
@@ -106,7 +152,11 @@ const getNotification = async (req: express.Request, res: express.Response, next
     let data;
     if (req.body.is_checked === 'all'){
       data = 
-      [
+      [ req.body.type,
+        0,
+        1,
+        req.body.receiver_ID,
+        req.body.sender_ID,
         req.body.type,
         0,
         1,
@@ -121,16 +171,29 @@ const getNotification = async (req: express.Request, res: express.Response, next
         req.body.is_checked,
         req.body.is_checked,
         req.body.receiver_ID,
+        req.body.sender_ID,
+        req.body.type,
+        req.body.is_checked,
+        req.body.is_checked,
+        req.body.receiver_ID,
         req.body.sender_ID
       ]
     }
 
-    const result = await notificationQuery.getUserNotification(data);
+    const result = pagination(await notificationQuery.getUserNotification(data),range, page);
     
+    let url = new Array();
+
+    for (let i = result[0][0]['startPage']; i <= result[0][0]['endPage']; ++i) {
+      url.push(urlPattern + `&page=${i}&range=${range}`);
+    }
+
     res.status(200).render('notification/notification',
       {
         'message': 'get notifiation success',
-        'notifications': result
+        'page': result[0],
+        'notifications': result[1],
+        'url': url
       }
     )
   } catch (e) {
