@@ -217,11 +217,11 @@ const getMatching = async (req: express.Request, res: express.Response, next: ex
       }
       if (req.query.menteeID !== null && req.query.menteeID !== '') {
         extraQuery += ` AND mentee.ID = '${req.query.menteeID}'`;
-        urlPattern += `&state=${query.menteeID}`;
+        urlPattern += `&menteeID=${query.menteeID}`;
       }
       if (req.query.mentorID !== null && req.query.mentorID !== '') {
         extraQuery += ` AND mentor.ID = '${req.query.mentorID}'`;
-        urlPattern += `&state=${query.mentorID}`;
+        urlPattern += `&mentorID=${query.mentorID}`;
       }
       extraQuery += ` LIMIT ${(page-1)*30}, 30;`;
       
