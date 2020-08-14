@@ -211,15 +211,15 @@ const getMatching = async (req: express.Request, res: express.Response, next: ex
           req.query.endDateSubmit
         ];
   
-      if (req.query.state !== '-1' && req.query.state !== null) {
+      if (req.query.state !== '-1' && req.query.state !== null && req.query.state !== undefined) {
         extraQuery += ` AND m.state = ${req.query.state}`;
         urlPattern += `&state=${query.state}`;
       }
-      if (req.query.menteeID !== null && req.query.menteeID !== '') {
+      if (req.query.menteeID !== null && req.query.menteeID !== '' && req.query.menteeID !== undefined) {
         extraQuery += ` AND mentee.ID = '${req.query.menteeID}'`;
         urlPattern += `&menteeID=${query.menteeID}`;
       }
-      if (req.query.mentorID !== null && req.query.mentorID !== '') {
+      if (req.query.mentorID !== null && req.query.mentorID !== '' && req.query.mentorID !== undefined) {
         extraQuery += ` AND mentor.ID = '${req.query.mentorID}'`;
         urlPattern += `&mentorID=${query.mentorID}`;
       }
