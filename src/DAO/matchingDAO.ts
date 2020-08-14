@@ -1,9 +1,9 @@
 import query from './MatchingQuery';
 import db from '../db';
 
-async function getAllMatching() {
+async function getAllMatching(extraQuery: String, page: number) {
   try {
-    const [rows, fields] = await db.connection.promise().query(query.getAllMatching);
+    const [rows, fields] = await db.connection.promise().query(query.getAllMatchingPagination+extraQuery+';'+query.getAllMatching+extraQuery+` LIMIT ${(page-1)*30}, 30;`);
     return rows;
   } catch (e) {
     console.log('dao: getAllMatching error\n' + e);
@@ -58,9 +58,9 @@ async function modifyMatching(data: Array<any>) {
   }
 }
 
-async function searchMatching(data: Array<any>, extraQuery: String) {
+async function searchMatching(data: Array<any>, extraQuery: String, page: number) {
   try {
-    const [rows, fields] = await db.connection.promise().query(query.searchMatching+extraQuery, data);
+    const [rows, fields] = await db.connection.promise().query(query.searchMatchingPagination+extraQuery+';'+query.searchMatching+extraQuery, data+` LIMIT ${(page-1)*30}, 30;`);
     return rows;
   } catch (e) {
     console.log('dao: searchMatching error\n' + e);
