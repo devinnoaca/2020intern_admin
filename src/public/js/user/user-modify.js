@@ -8,6 +8,7 @@ const url = window.location.href;
 const urlSplit = url.split('/');
 const usn = urlSplit[urlSplit.length - 1];
 
+//매칭 열람하기 링크 초기화
 (function(){
   const id = $('[name="id"]').val();
   const type = $('[name="type"]').val();

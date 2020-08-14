@@ -1,5 +1,6 @@
 import {deleteUserCallback} from './user-delete.js';
 import {queryParser} from '../common/queryParser.js';
+import {userSearchValidation} from './user-validation.js';
 
 //유저 정보 테이블의 각 행을 클릭할 때 일어나는 이벤트 처리
 $('tbody tr').click(function(event){ 
@@ -37,20 +38,12 @@ $('[name="searchFormButton"]').on('click', ()=>{
   const page = query.page;
   const range = query.range;
 
-  let url = '/user?';
-
-  url += `&searchType=${searchType}`;
-  url += `&searchOption=${searchOption}`;
-  url += `&searchWord=${searchWord}`;
-  url += `&searchPermission=${searchPermission}`;
-  url += `&page=${page}`;
-  url += `&range=${range}`;
-   
-  console.log(url);
+  userForm.find('[name="page"]').val(page);
+  userForm.find('[name="range"]').val(range);
   
-  userForm.attr('action', url);
-  console.log(userForm.attr('action'));
-  userForm.submit();
+  if(userSearchValidation(searchWord)){
+    userForm.submit();
+  }
 });
 
 //검색 폼에 대한 초기화 작업
