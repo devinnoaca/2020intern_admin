@@ -1,14 +1,15 @@
 import * as express from 'express';
 import categoryQuery from '../dao/categoryDAO'
+import {checkParameter} from '../lib/lib'
 
 const router = express.Router();
 
 const createCategory = async (req: express.Request, res: express.Response, next: express.NextFunction) => {
   console.log('controller: createCategory');
-  if (req.body.name === null || req.body.name === '' || req.body.name === undefined) {
+  if (checkParameter([req.body.name])) {
     res.status(400).send(
       {
-        'message': 'create category fail - please input category name'
+        'message': 'create category'
       }
     )
   }
@@ -33,7 +34,7 @@ const createCategory = async (req: express.Request, res: express.Response, next:
 
 const deleteCategory = async (req: express.Request, res: express.Response, next: express.NextFunction) => {
   console.log('controller: deleteCategory');
-  if (req.params.id === null || req.params.id === undefined) {
+  if (checkParameter([req.params.id])) {
     res.status(400).send()
   }
   const data =

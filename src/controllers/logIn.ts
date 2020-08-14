@@ -1,22 +1,18 @@
 import * as express from 'express';
 import loginQuery from '../dao/logInDAO'
 import { secretObj } from '../../config/config';
+import { checkParameter } from '../lib/lib';
 const jwt = require('jsonwebtoken'); // module import
 
 const router = express.Router();
 
 const logIn = async (req: express.Request, res: express.Response, next: express.NextFunction) => {
   console.log("controller: log in");
-  if (req.body.id === null || req.body.id === '' || req.body.id === undefined) {
+  
+  if (checkParameter([req.body.id, req.body.password])) {
     res.status(400).send(
       {
-        'message': 'log in fail - please input id'
-      }
-    )
-  } else if (req.body.password === null || req.body.password === '' || req.body.password === undefined) {
-    res.status(400).send(
-      {
-        'message': 'log in fail - please input password'
+        'message': 'log in'
       }
     )
   }
