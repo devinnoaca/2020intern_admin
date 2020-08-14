@@ -133,9 +133,9 @@
                   <tbody>
                     <% for (let i = 0; i < users.length; i++) { %>
                     <tr>
-                      <td><%= users[i].USN %></td>
+                      <td><%= users[i].usn %></td>
                       <td><%= users[i].type %></td>
-                      <td><%= users[i].ID %></td>
+                      <td><%= users[i].id %></td>
                       <td><%= users[i].name %></td>
                       <td><%= users[i].email %></td>
                       <td>
@@ -238,6 +238,9 @@
   <!-- 유저 생성, 유저 상세조회에 대한 이벤트 -->
   <script type="module" src="/js/user/user-search.js"></script>
   <script type="module" src="/js/user/user-create.js"></script>
+  <script type="text/JavaScript">
+    alert($('tbody tr').length);
+  </script>
 </body>
 
 </html>
