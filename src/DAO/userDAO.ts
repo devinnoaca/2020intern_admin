@@ -35,9 +35,9 @@ async function createUser(data: Array<any>) {
   }
 }
 
-async function getUsers(extraQuery: String) {
+async function getUsers(extraQuery: String, page: number) {
   try {
-    const [rows, fields] = await db.connection.promise().query(query.searchAllUser + extraQuery);
+    const [rows, fields] = await db.connection.promise().query(query.searchPagination + extraQuery +';' +query.searchAllUser + extraQuery + ` LIMIT ${(page-1)*30}, 30;`);
     return rows;
   } catch (e) {
     console.log('dao: getUsers error\n' + e);

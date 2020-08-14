@@ -1,6 +1,7 @@
 import * as express from 'express';
 import userQuery from '../dao/userDAO'
 import { search } from './keyword';
+import { pagination } from '../lib/lib'
 
 const router = express.Router();
 
@@ -72,17 +73,23 @@ const createUser = async (req: express.Request, res: express.Response, next: exp
 };
 
 const getUsers = async (req: express.Request, res: express.Response, next: express.NextFunction) => {
-  console.log('controller: getUsers');
-  const page = parseInt(req.query.page.toString());
-  const range = parseInt(req.query.range.toString());
-  
-  if (page === null || page === undefined) {
+  console.log('controller: getUsers');  
+  if (req.query.page === null || req.query.page === undefined) {
     res.status(400).send(
       {
         'message': 'get users fail - please input page number'
       }
     )
+  } else if (req.query.range === null || req.query.range === undefined) {
+    res.status(400).send(
+      {
+        'message': 'get users fail - please input range number'
+      }
+    )
   }
+  const page = parseInt(req.query.page.toString());
+  const range = parseInt(req.query.range.toString());
+
   let extraQuery = '';
   const query = req.query;
   let urlPattern = '?';
@@ -107,27 +114,20 @@ const getUsers = async (req: express.Request, res: express.Response, next: expre
       urlPattern += `&searchPermission=${query.searchPermission}`;
     }
   }
-  extraQuery += ` LIMIT ${(page-1)*30}, 30;`
+  
   try {
+<<<<<<< HEAD
     let result = await userQuery.getUsers(extraQuery);
     
+=======
+    let result = pagination(await userQuery.getUsers(extraQuery, page), range, page);
+>>>>>>> develop
     let url = new Array();
-    
-    result[0][0]['startPage'] = (range - 1) * 10 + 1 ;
-    result[0][0]['endPage'] = range * 10;
-    result[0][0]['startList'] = (page - 1) * 30;
-    result[0][0]['prev'] = range == 1 ? false : true;
-    result[0][0]['next'] = parseInt(result[0][0]['endPage']) > parseInt(result[0][0]['totalPage']) ? false : true;
-    
-    if (parseInt(result[0][0]['endPage']) > parseInt(result[0][0]['totalPage'])) {
-			result[0][0]['endPage'] = result[0][0]['totalPage'];
-			result[0][0]['next'] = false;
-		}
 
     for (let i = result[0][0]['startPage']; i <= result[0][0]['endPage']; ++i) {
       url.push(urlPattern + `&page=${i}&range=${range}`);
     }
-
+    
     res.status(200).render('user/user',
       {
         'message': 'get users success',

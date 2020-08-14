@@ -82,9 +82,9 @@ async function getUserNotification(data: Array<any>) {
 
 }
 
-async function getNotifications(extraQuery: String){
+async function getNotifications(extraQuery: String, page: number){
   try {
-    const [rows] = await db.connection.promise().query(query.getNotifications + extraQuery);
+    const [rows] = await db.connection.promise().query(query.getNotificationsPagination + extraQuery + ';' +query.getNotifications + extraQuery + ` LIMIT ${(page-1)*30}, 30;`);
     
     if (rows.length === 0) {
       throw 'cannot find';
