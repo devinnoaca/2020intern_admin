@@ -17,9 +17,9 @@ function pagination(result: Array<Array<Object>>, range: number, page: number): 
 function checkParameter(params: Array<any>): boolean {
   params.map( (e) => {
   if (e === null || e === '' || e === undefined) 
-    return false;
+    return true;
   })
-  return true;
+  return false;
 }
 
 function dateFormatConvert(date: string): string {
