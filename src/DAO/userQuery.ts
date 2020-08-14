@@ -14,8 +14,11 @@ SELECT keyword_ID, keyword_Name, category_ID, category_Name \
 FROM get_recommend_keyword \
 WHERE mentee_USN = ?;`;
 
+const searchPagination = `
+SELECT ceil(count(*)) totalCount,ceil(count(*)/30) totalPage \
+FROM User`;
+
 const searchAllUser = `
-SELECT ceil(count(*)) totalCount,ceil(count(*)/30) totalPage FROM User;
 SELECT usn, name, id, email, password, image_url, description, company, permission, noti_count, type \
 FROM User`;
 
@@ -85,5 +88,5 @@ export default {
     updateUserCareerAdd, updateUserCareerModify, updateUserCareerDelete,
     updateUserRecommendKeywordCreate, updateUserRecommendKeywordDelete,
     updateUserTotalKeywordCreate, updateUserTotalKeywordDelete,
-    searchUserTotalkeywords, searchUserRecommendkeywords
+    searchUserTotalkeywords, searchUserRecommendkeywords, searchPagination
 };

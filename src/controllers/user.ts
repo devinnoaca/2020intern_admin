@@ -113,9 +113,9 @@ const getUsers = async (req: express.Request, res: express.Response, next: expre
       urlPattern += `&searchPermission=${query.searchPermission}`;
     }
   }
-  extraQuery += ` LIMIT ${(page-1)*30}, 30;`
+  
   try {
-    let result = pagination(await userQuery.getUsers(extraQuery), range, page);
+    let result = pagination(await userQuery.getUsers(extraQuery, page), range, page);
     let url = new Array();
 
     for (let i = result[0][0]['startPage']; i <= result[0][0]['endPage']; ++i) {

@@ -223,13 +223,12 @@ const getMatching = async (req: express.Request, res: express.Response, next: ex
         extraQuery += ` AND mentor.ID = '${req.query.mentorID}'`;
         urlPattern += `&mentorID=${query.mentorID}`;
       }
-      extraQuery += ` LIMIT ${(page-1)*30}, 30;`;
       
-      resultData = await matchingDAO.searchMatching(inputData, extraQuery);
+      resultData = await matchingDAO.searchMatching(inputData, extraQuery, page);
     } else {
       // 매칭정보 리스트 요청
-      extraQuery += ` LIMIT ${(page-1)*30}, 30;`;
-      resultData = await matchingDAO.getAllMatching(extraQuery);
+
+      resultData = await matchingDAO.getAllMatching(extraQuery, page);
     }
     resultData = pagination(resultData, range, page);
     let url = new Array();

@@ -82,9 +82,9 @@ const getNotifications = async (req: express.Request, res: express.Response, nex
       urlPattern += `&receiver=${query.state}`;
     }
   }
-  extraQuery += ` LIMIT ${(page-1)*30}, 30;`
+
   try {
-    let result = pagination(await notificationQuery.getNotifications(extraQuery),range, page);
+    let result = pagination(await notificationQuery.getNotifications(extraQuery, page),range, page);
     
     if(result === undefined) {
       result = new Array();
