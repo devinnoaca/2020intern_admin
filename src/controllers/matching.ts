@@ -1,6 +1,7 @@
 import * as express from 'express';
 import * as moment from 'moment';
 import matchingDAO from '../dao/matchingDAO'
+import { pagination } from '../lib/lib'
 
 const router = express.Router();
 
@@ -178,21 +179,35 @@ const modifyMatching = async (req: express.Request, res: express.Response, next:
 
 const getMatching = async (req: express.Request, res: express.Response, next: express.NextFunction) => {
   console.log('controller: getMatching');
+  const page = parseInt(req.query.page.toString());
+  const range = parseInt(req.query.range.toString());
   
+  if (page === null || page === undefined) {
+    res.status(400).send(
+      {
+        'message': 'get users fail - please input page number'
+      }
+    )
+  } else if (page === null || page === undefined) {
+    res.status(400).send(
+      {
+        'message': 'get users fail - please input range number'
+      }
+    )
+  }
+
+  let resultData = [];
+  let extraQuery = '';
   try {
-    let resultData = [];
-    
     if (req.query.queryType === 'SEARCH') { //추후 페이징 쿼리와 구분하기 위해 임시로 구분자쿼리를 함께 보냈습니다.
       console.log('controller: getMatching [SEARCH]');
       // 매칭정보 검색
       let inputData = [
           req.query.startDateSubmit,
+          req.query.endDateSubmit,
+          req.query.startDateSubmit,
           req.query.endDateSubmit
         ];
-
-        console.log(inputData);
-  
-      let extraQuery = '';
   
       if (req.query.state !== '-1' && req.query.state !== null) {
         extraQuery += ` AND m.state = ${req.query.state}`;
@@ -203,14 +218,20 @@ const getMatching = async (req: express.Request, res: express.Response, next: ex
       if (req.query.mentorID !== null && req.query.mentorID !== '') {
         extraQuery += ` AND mentor.ID = '${req.query.mentorID}'`;
       }
-      extraQuery += ';';
+      extraQuery += ` LIMIT ${(page-1)*30}, 30;`;
       
       resultData = await matchingDAO.searchMatching(inputData, extraQuery);
     } else {
       // 매칭정보 리스트 요청
-      resultData = await matchingDAO.getAllMatching();
+      extraQuery += ` LIMIT ${(page-1)*30}, 30;`;
+      resultData = await matchingDAO.getAllMatching(extraQuery);
     }
+    resultData = pagination(resultData, range, page);
+    let url = new Array();
 
+    for (let i = resultData[0][0]['startPage']; i <= resultData[0][0]['endPage']; ++i) {
+      url.push(`&page=${i}&range=${range}`);
+    }
     res.status(200).render('matching/matching',
       {
         'message': 'get category success',

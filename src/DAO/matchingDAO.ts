@@ -1,9 +1,9 @@
 import query from './MatchingQuery';
 import db from '../db';
 
-async function getAllMatching() {
+async function getAllMatching(extraQuery: String) {
   try {
-    const [rows, fields] = await db.connection.promise().query(query.getAllMatching);
+    const [rows, fields] = await db.connection.promise().query(query.getAllMatching+extraQuery);
     return rows;
   } catch (e) {
     console.log('dao: getAllMatching error\n' + e);
