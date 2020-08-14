@@ -5,7 +5,9 @@ import { pagination } from '../lib/lib'
 const router = express.Router();
 
 const createNotification = async (req: express.Request, res: express.Response, next: express.NextFunction) => {
-  console.log('controller: createNotification');
+  const splitedReferer = req.header('Referer').split('/');``
+  const redirectTo = splitedReferer[splitedReferer.length-1];
+  console.log(redirectTo)
   if (req.body.message === null || req.body.message === '' || req.body.message === undefined) {
     res.status(400).send(
       {
@@ -28,10 +30,11 @@ const createNotification = async (req: express.Request, res: express.Response, n
       result = await notificationQuery.createNotificationToMentee(data);
     } else {
       data.push(req.body.receiver_ID)
+      console.log(data);
       result = await notificationQuery.createNotification(data);
     }
 
-    res.status(200).redirect('/notification?page=1&range=1');
+    res.status(200).redirect(`/${redirectTo}`);
   } catch (e) {
     res.status(500).send()
   }
@@ -71,13 +74,13 @@ const getNotifications = async (req: express.Request, res: express.Response, nex
       urlPattern += `&isChecked=${query.isChecked}`;
     }
 
-    if (query.sender !== null && query.sender !== undefined && query.senderID !== null) {
+    if (query.sender !== null && query.sender !== undefined && query.senderID !== null && query.senderID !== undefined) {
       const senderID = query.senderID.toString().trim();
       extraQuery += `AND sender.ID LIKE '%${senderID}%' `;
       urlPattern += `&sender=${query.sender}`;
     }
 
-    if (query.receiver !== null && query.receiver !== undefined && query.receiverID !== null) {
+    if (query.receiver !== null && query.receiver !== undefined && query.receiverID !== null && query.receiverID !== undefined) {
       const receiverID = query.receiverID.toString().trim();
       extraQuery += `AND receiver.ID LIKE '%${receiverID}%' `;
       urlPattern += `&receiver=${query.state}`;
@@ -86,7 +89,7 @@ const getNotifications = async (req: express.Request, res: express.Response, nex
 
   try {
     let result = pagination(await notificationQuery.getNotifications(extraQuery, page),range, page);
-    console.log(extraQuery);
+    
     if(result === undefined) {
       result = new Array();
     }
