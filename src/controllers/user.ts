@@ -72,8 +72,9 @@ const createUser = async (req: express.Request, res: express.Response, next: exp
 
 const getUsers = async (req: express.Request, res: express.Response, next: express.NextFunction) => {
   console.log('controller: getUsers');
-  const page = parseInt(req.params.page)
-  const range = parseInt(req.params.range)
+  const page = parseInt(req.query.page.toString());
+  const range = parseInt(req.query.range.toString());
+  
   if (page === null || page === undefined) {
     res.status(400).send(
       {
@@ -87,16 +88,16 @@ const getUsers = async (req: express.Request, res: express.Response, next: expre
   if (Object.keys(query).length !== 0) {
     extraQuery += ' WHERE USN >= 0 ';
         
-    if (query.searchType !== null && query.searchType !== 'all') {
+    if (query.searchType !== null && query.searchType !== 'all' && query.searchType !== undefined) {
       extraQuery += `AND type = ${query.searchType} `;
     }
 
-    if (query.searchOption !== null && query.searchWord !== null) {
+    if (query.searchOption !== null && query.searchWord !== null && query.searchOption !== undefined && query.searchWord !== undefined) {
       const searchWord = query.searchWord.toString().trim();
       extraQuery += `AND ${query.searchOption} LIKE '%${searchWord}%' `;
     }
 
-    if (query.searchPermission !== null && query.searchPermission !== 'all') {
+    if (query.searchPermission !== null && query.searchPermission !== 'all' && query.searchPermission !== undefined) {
       extraQuery += `AND permission = ${query.searchPermission} `;
     }
   }
@@ -112,7 +113,7 @@ const getUsers = async (req: express.Request, res: express.Response, next: expre
 			result[0][0]['endPage'] = result[0]['pageCnt'];
 			result[0][0]['next'] = false;
 		}
-    console.log(result)
+    
     res.status(200).render('user/user',
       {
         'message': 'get users success',
