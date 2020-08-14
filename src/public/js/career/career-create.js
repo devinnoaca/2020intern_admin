@@ -1,5 +1,4 @@
 import {careerClickEvent} from './career-event.js';
-import {modifyCareerCallback} from './career-modify.js';
 
 //커리어 추가시 콜백 함수
 const addCareerCallback = function(xhr) {

@@ -1,8 +1,8 @@
 //각 유저 폼 데이터에 대한 정규표현식과 에러처리
 const userDataValidation = function(userData) {
   //각 유저 데이터에 대한 정규 표현식
-  const idReg = /^[A-Za-z0-9]{5,20}/;
-  const nameReg = /^[가-힣]{1,40}/;
+  const idReg = /^[A-Za-z0-9]{5,20}$/;
+  const nameReg = /^[가-힣]{1,40}$/;
   const emailReg = /^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/i;
   const passwordReg =  /^(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{4,20}$/;
 
@@ -41,7 +41,7 @@ const userDataValidation = function(userData) {
 
 //유저 상세페이지의 유저 기본정보 데이터에 대한 정규표현식 처리
 const userDetailDataValidation = function(userData) {
-  const idReg = /^[A-Za-z0-9]{5,20}/;
+  const idReg = /^[A-Za-z0-9]{5,20}$/;
   const nameReg = /^[가-힣]{1,40}$/;
   const emailReg = /^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/i;
   const passwordReg =  /^(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{4,20}$/;
@@ -91,4 +91,15 @@ const userDetailDataValidation = function(userData) {
   return true;
 }
 
-export { userDataValidation, userDetailDataValidation }
+const userSearchValidation = function(searchWord) {
+  const searchWordReg = /^[0-9a-zA-Zㄱ-ㅎ가-힣;:._()#?!%*/\-\s]{0,50}$/;
+
+  if(!searchWordReg.test(searchWord)){
+    alert('검색어는 총 50자 내외로 입력해주세요.');
+    return false;
+  }
+
+  return true;
+}
+
+export { userDataValidation, userDetailDataValidation, userSearchValidation }

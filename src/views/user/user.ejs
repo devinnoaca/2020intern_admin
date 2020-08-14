@@ -42,6 +42,8 @@
             <div class="card-body">
               <form method="GET" action="/user" name="searchUserForm">
                 <ul class="list-group list-group-flush">
+                  <input type="hidden" name="page">
+                  <input type="hidden" name="range">
                   <!-- 회원 종류-->
                   <li class="list-group-item">
                     <div class="form-row">
@@ -104,7 +106,7 @@
                 <!-- 검색 버튼 -->
                  <div class="form-row">
                    <div class="col">
-                    <button type="submit" class="btn btn-primary align-self-center">검색</button>
+                    <button type="button" class="btn btn-primary align-self-center" name="searchFormButton">검색</button>
                    </div>
                  </div>
               </form>
@@ -140,11 +142,11 @@
                       <td><%= users[i].email %></td>
                       <td>
                         <button class="btn btn-primary d-inline" name="sendNotification" 
-                        type="button" value="<%=users[i].USN%>">알림 발송</button>
+                        type="button" value="<%=users[i].id%>">알림 발송</button>
                       </td>
                       <td>
                         <button class="btn btn-primary d-inline" name="deleteButton" 
-                        type="button" value="<%=users[i].USN%>">삭제</button>
+                        type="button" value="<%=users[i].usn%>">삭제</button>
                       </td>
                     </tr>
                     <% } %>
@@ -242,9 +244,6 @@
   <!-- 유저 생성, 유저 상세조회에 대한 이벤트 -->
   <script type="module" src="/js/user/user-search.js"></script>
   <script type="module" src="/js/user/user-create.js"></script>
-  <script type="text/JavaScript">
-    console.log('<%=page[0].endPage%>');
-  </script>
 </body>
 
 </html>

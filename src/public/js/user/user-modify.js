@@ -8,6 +8,27 @@ const url = window.location.href;
 const urlSplit = url.split('/');
 const usn = urlSplit[urlSplit.length - 1];
 
+//매칭 열람하기 링크 초기화
+(function(){
+  const id = $('[name="id"]').val();
+  const type = $('[name="type"]').val();
+  let queryString = '';
+  switch (type) {
+    case '0':
+      queryString += `queryType=SEARCH&mentorID=&menteeID=${id}&state=-1
+                      &isTotal=on&startDateSubmit=1970-01-01+00%3A00%3A00&endDateSubmit=2020-08-14+06%3A59%3A45`;
+      break;
+    case '1':
+      queryString += `queryType=SEARCH&mentorID=${id}&menteeID=&state=-1
+                      &isTotal=on&startDateSubmit=1970-01-01+00%3A00%3A00&endDateSubmit=2020-08-14+06%3A59%3A45`;
+      break;
+    default:
+      break;
+  }
+  
+  $('[name="userMatching"]').attr('href', `/matching?${queryString}`);
+})();
+
 //회원 수정 버튼 클릭 이벤트 
 $('#userUpdateButton').on('click', () => {
   //input disable 해제
@@ -26,6 +47,11 @@ $('#userUpdateButton').on('click', () => {
   $('ul').find('[name="id"]').attr('disabled', true);
   //button disabled처리
   $('button').attr('disabled', false);
+});
+
+//수정 취소 요청시 이벤트
+$('[name="updateCancelButton"]').on('click', () => {
+  window.history.back();
 });
 
 //커리어 추가 버튼 클릭시 이벤트 ------------ 비동기 처리로 요청 성공시 반환값으로 추가된 커리어 정보를 반환해야함"

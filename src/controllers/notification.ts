@@ -5,7 +5,9 @@ import { pagination } from '../lib/lib'
 const router = express.Router();
 
 const createNotification = async (req: express.Request, res: express.Response, next: express.NextFunction) => {
-  console.log('controller: createNotification');
+  const splitedReferer = req.header('Referer').split('/');``
+  const redirectTo = splitedReferer[splitedReferer.length-1];
+  console.log(redirectTo)
   if (req.body.message === null || req.body.message === '' || req.body.message === undefined) {
     res.status(400).send(
       {
@@ -28,14 +30,16 @@ const createNotification = async (req: express.Request, res: express.Response, n
       result = await notificationQuery.createNotificationToMentee(data);
     } else {
       data.push(req.body.receiver_ID)
+      console.log(data);
       result = await notificationQuery.createNotification(data);
     }
 
-    res.status(200).redirect('/notification');
+    res.status(200).redirect(`/${redirectTo}`);
   } catch (e) {
     res.status(500).send()
   }
 }
+
 const getNotifications = async (req: express.Request, res: express.Response, next: express.NextFunction) => {
   if (req.query.page === null || req.query.page === undefined) {
     res.status(400).send(
@@ -65,18 +69,18 @@ const getNotifications = async (req: express.Request, res: express.Response, nex
       urlPattern += `&searchType=${query.searchType}`;
     }
 
-    if (query.isChecked !== null && query.idChecked !== undefined && query.isChecked !== 'all') {
+    if (query.isChecked !== null && query.isChecked !== undefined && query.isChecked !== 'all') {
       extraQuery += `AND un.is_checked = ${query.isChecked} `;
       urlPattern += `&isChecked=${query.isChecked}`;
     }
 
-    if (query.sender !== null && query.sender !== undefined && query.senderID !== null) {
+    if (query.sender !== null && query.sender !== undefined && query.senderID !== null && query.senderID !== undefined) {
       const senderID = query.senderID.toString().trim();
       extraQuery += `AND sender.ID LIKE '%${senderID}%' `;
       urlPattern += `&sender=${query.sender}`;
     }
 
-    if (query.receiver !== null && query.seceiver !== undefined && query.receiverID !== null) {
+    if (query.receiver !== null && query.receiver !== undefined && query.receiverID !== null && query.receiverID !== undefined) {
       const receiverID = query.receiverID.toString().trim();
       extraQuery += `AND receiver.ID LIKE '%${receiverID}%' `;
       urlPattern += `&receiver=${query.state}`;
@@ -90,7 +94,7 @@ const getNotifications = async (req: express.Request, res: express.Response, nex
       result = new Array();
     }
     let url = new Array();
-
+    
     for (let i = result[0][0]['startPage']; i <= result[0][0]['endPage']; ++i) {
       url.push(urlPattern + `&page=${i}&range=${range}`);
     }

@@ -353,28 +353,6 @@
   $('[name="permission"] option:nth-child(<%=user[0].permission + 1%>)').attr('selected', true);
   //유저 타입 셀렉트 박스 초기화  
   $('[name="type"] option:nth-child(<%=user[0].type + 1%>)').attr('selected', true);
-
-  $('[name="updateCancelButton"]').on('click', () => {
-    window.location.href = `/user`;
-  });
-
-  const id = $('[name="id"]').val();
-  const type = $('[name="type"]').val();
-  let queryString = '';
-  switch (type) {
-    case '0':
-      queryString += `queryType=SEARCH&mentorID=&menteeID=${id}&state=-1
-                      &isTotal=on&startDateSubmit=1970-01-01+00%3A00%3A00&endDateSubmit=2020-08-14+06%3A59%3A45`;
-      break;
-    case '1':
-      queryString += `queryType=SEARCH&mentorID=${id}&menteeID=&state=-1
-                      &isTotal=on&startDateSubmit=1970-01-01+00%3A00%3A00&endDateSubmit=2020-08-14+06%3A59%3A45`;
-      break;
-    default:
-      break;
-  }
-  
-  $('[name="userMatching"]').attr('href', `/matching?${queryString}`);
   </script>
 </body>
 

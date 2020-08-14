@@ -102,7 +102,8 @@ const getUsers = async (req: express.Request, res: express.Response, next: expre
       urlPattern += `&searchType=${query.searchType}`;
     }
 
-    if (query.searchOption !== null && query.searchWord !== null && query.searchOption !== undefined && query.searchWord !== undefined) {
+    if (query.searchOption !== null && query.searchWord !== null && query.searchOption !== undefined && 
+      query.searchWord !== undefined) {
       const searchWord = query.searchWord.toString().trim();
       extraQuery += `AND ${query.searchOption} LIKE '%${searchWord}%' `;
       urlPattern += `&searchOption=${query.searchOption}&searchWord=${searchWord}`;
