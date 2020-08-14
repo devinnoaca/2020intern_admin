@@ -1,5 +1,6 @@
 import * as express from 'express';
 import userQuery from '../dao/userDAO'
+import { search } from './keyword';
 
 const router = express.Router();
 
@@ -72,8 +73,9 @@ const createUser = async (req: express.Request, res: express.Response, next: exp
 
 const getUsers = async (req: express.Request, res: express.Response, next: express.NextFunction) => {
   console.log('controller: getUsers');
-  const page = parseInt(req.params.page)
-  const range = parseInt(req.params.range)
+  const page = parseInt(req.query.page.toString());
+  const range = parseInt(req.query.range.toString());
+  
   if (page === null || page === undefined) {
     res.status(400).send(
       {
@@ -83,43 +85,58 @@ const getUsers = async (req: express.Request, res: express.Response, next: expre
   }
   let extraQuery = '';
   const query = req.query;
-  
+  let urlPattern = '?';
+
   if (Object.keys(query).length !== 0) {
     extraQuery += ' WHERE USN >= 0 ';
-    if (query.searchType !== null && query.searchType !== 'all') {
+        
+    if (query.searchType !== null && query.searchType !== 'all' && query.searchType !== undefined) {
       extraQuery += `AND type = ${query.searchType} `;
+      urlPattern += `&searchType=${query.searchType}`;
     }
 
-    if (query.searchOption !== null && query.searchWord !== null) {
-      extraQuery += `AND ${query.searchOption} LIKE '%${query.searchWord}%' `;
+    if (query.searchOption !== null && query.searchWord !== null && query.searchOption !== undefined && query.searchWord !== undefined) {
+      const searchWord = query.searchWord.toString().trim();
+      extraQuery += `AND ${query.searchOption} LIKE '%${searchWord}%' `;
+      urlPattern += `&searchOption=${query.searchOption}&searchWord=${searchWord}`;
     }
 
-    if (query.searchPermission !== null && query.searchPermission !== 'all') {
+    if (query.searchPermission !== null && query.searchPermission !== 'all' && query.searchPermission !== undefined) {
       extraQuery += `AND permission = ${query.searchPermission} `;
+      urlPattern += `&searchPermission=${query.searchPermission}`;
     }
   }
   extraQuery += ` LIMIT ${(page-1)*30}, 30;`
   try {
     let result = await userQuery.getUsers(extraQuery);
+    console.log(result[1]);
+    let url = new Array();
+    
     result[0][0]['startPage'] = (range - 1) * 10 + 1 ;
     result[0][0]['endPage'] = range * 10;
     result[0][0]['startList'] = (page - 1) * 30;
     result[0][0]['prev'] = range == 1 ? false : true;
-    result[0][0]['next'] = parseInt(result[0]['endPage']) > parseInt(result[0]['totalPage']) ? false : true;
-    if (parseInt(result[0]['endPage']) > parseInt(result[0]['totalPage'])) {
-			result[0][0]['endPage'] = result[0]['pageCnt'];
+    result[0][0]['next'] = parseInt(result[0][0]['endPage']) > parseInt(result[0][0]['totalPage']) ? false : true;
+    
+    if (parseInt(result[0][0]['endPage']) > parseInt(result[0][0]['totalPage'])) {
+			result[0][0]['endPage'] = result[0][0]['totalPage'];
 			result[0][0]['next'] = false;
 		}
-    console.log(result)
+
+    for (let i = result[0][0]['startPage']; i <= result[0][0]['endPage']; ++i) {
+      url.push(urlPattern + `&page=${i}&range=${range}`);
+    }
+
     res.status(200).render('user/user',
       {
         'message': 'get users success',
         'page': result[0],
-        'users': result[1]
+        'users': result[1],
+        'url': url
       }
     );
   } catch (e) {
-    res.status(500).send()
+    res.status(500).send();
   }
 };
 
@@ -187,7 +204,9 @@ const deleteUser = async (req: express.Request, res: express.Response, next: exp
       }
     );
   } catch (e) {
-    res.status(500).send()
+    res.status(500).send({
+      'message': 'delete user fail - internal error'
+    })
   }
 };
 
