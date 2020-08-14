@@ -1,3 +1,5 @@
+import {notificationValidation} from './notification-validation.js'
+
 //삭제 버튼 처리 이벤트
 $('tbody tr').on('click', function(event){
   const tr = $(this);
