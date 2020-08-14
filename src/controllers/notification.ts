@@ -31,11 +31,12 @@ const createNotification = async (req: express.Request, res: express.Response, n
       result = await notificationQuery.createNotification(data);
     }
 
-    res.status(200).redirect('/notification');
+    res.status(200).redirect('/notification?page=1&range=1');
   } catch (e) {
     res.status(500).send()
   }
 }
+
 const getNotifications = async (req: express.Request, res: express.Response, next: express.NextFunction) => {
   if (req.query.page === null || req.query.page === undefined) {
     res.status(400).send(
@@ -65,7 +66,7 @@ const getNotifications = async (req: express.Request, res: express.Response, nex
       urlPattern += `&searchType=${query.searchType}`;
     }
 
-    if (query.isChecked !== null && query.idChecked !== undefined && query.isChecked !== 'all') {
+    if (query.isChecked !== null && query.isChecked !== undefined && query.isChecked !== 'all') {
       extraQuery += `AND un.is_checked = ${query.isChecked} `;
       urlPattern += `&isChecked=${query.isChecked}`;
     }
@@ -76,7 +77,7 @@ const getNotifications = async (req: express.Request, res: express.Response, nex
       urlPattern += `&sender=${query.sender}`;
     }
 
-    if (query.receiver !== null && query.seceiver !== undefined && query.receiverID !== null) {
+    if (query.receiver !== null && query.receiver !== undefined && query.receiverID !== null) {
       const receiverID = query.receiverID.toString().trim();
       extraQuery += `AND receiver.ID LIKE '%${receiverID}%' `;
       urlPattern += `&receiver=${query.state}`;
@@ -85,12 +86,12 @@ const getNotifications = async (req: express.Request, res: express.Response, nex
 
   try {
     let result = pagination(await notificationQuery.getNotifications(extraQuery, page),range, page);
-    
+    console.log(extraQuery);
     if(result === undefined) {
       result = new Array();
     }
     let url = new Array();
-
+    
     for (let i = result[0][0]['startPage']; i <= result[0][0]['endPage']; ++i) {
       url.push(urlPattern + `&page=${i}&range=${range}`);
     }

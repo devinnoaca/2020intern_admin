@@ -43,7 +43,8 @@
             <div class="card-body">
               <form action="/notification" method="GET" name="searchNotificationForm">
                 <ul class="list-group list-group-flush">
-
+                  <input type="hidden" name="page">
+                  <input type="hidden" name="range">
                   <!-- 알림 종류, 열람 여부-->
                   <li class="list-group-item">
                     <div class="row">
@@ -118,7 +119,7 @@
                 <!-- 검색 버튼 -->
                  <div class="form-row">
                    <div class="col">
-                    <button type="submit" class="btn btn-primary align-self-center">검색</button>
+                    <button type="button" class="btn btn-primary align-self-center" name="notificationSearchButton">검색</button>
                    </div>
                  </div>
               </form>
@@ -226,6 +227,7 @@
   <script src="/js/user/close-modal.js"></script>
 
   <script src="/js/notification/notification-event.js"></script>
+  <script type="module" src="/js/notification/notification-search.js"></script>
 </body>
 
 </html>
