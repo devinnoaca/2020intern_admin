@@ -116,12 +116,7 @@ const getUsers = async (req: express.Request, res: express.Response, next: expre
   }
   
   try {
-<<<<<<< HEAD
-    let result = await userQuery.getUsers(extraQuery);
-    
-=======
     let result = pagination(await userQuery.getUsers(extraQuery, page), range, page);
->>>>>>> develop
     let url = new Array();
 
     for (let i = result[0][0]['startPage']; i <= result[0][0]['endPage']; ++i) {
