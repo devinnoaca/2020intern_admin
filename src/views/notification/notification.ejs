@@ -149,11 +149,19 @@
                     <% notifications.forEach(function(elem, index) { %>
                     <tr>
                       <td><%= elem.id %></td>
-                      <td><%= elem.type %></td>
+                      <td>
+                        <% if(elem.type == 0) { %> 매칭 요청
+                        <% } else if(elem.type == 1) { %> 공지사항 
+                        <% } %>
+                      </td>
                       <td><%= elem.sender_ID %></td>
                       <td><%= elem.receiver_ID %></td>
                       <td><%= elem.time %></td>
-                      <td><%= elem.is_checked %></td>
+                      <td>
+                        <% if(elem.is_checked == 0) { %> 미열람
+                        <% } else if(elem.is_checked == 1) { %> 열람 
+                        <% } %>
+                      </td>
                       <td>
                         <button class="btn btn-primary d-inline" name="deleteButton" type="button" value="<%=elem.id%>">삭제</button>
                       </td>
@@ -246,7 +254,7 @@
   <!-- notification 추가 모달 -->
   <%- include ('./createNotificationModal.ejs') %> 
 
-  <script src="/js/notification/notification.js"></script>
+  <script type="module" src="/js/notification/notification.js"></script>
 
   <script src="/js/user/close-modal.js"></script>
 
