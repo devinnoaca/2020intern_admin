@@ -1,17 +1,17 @@
 import * as express from 'express';
 import notificationQuery from '../dao/notificationDAO'
 import { route } from './user';
-import { pagination } from '../lib/lib'
+import { pagination,checkParameter } from '../lib/lib'
 const router = express.Router();
 
 const createNotification = async (req: express.Request, res: express.Response, next: express.NextFunction) => {
   const splitedReferer = req.header('Referer').split('/');``
   const redirectTo = splitedReferer[splitedReferer.length-1];
   console.log(redirectTo)
-  if (req.body.message === null || req.body.message === '' || req.body.message === undefined) {
+  if (checkParameter([req.body.message])) {
     res.status(400).send(
       {
-        'message': 'create notification fail - please input message'
+        'message': 'create notification'
       }
     )
   }
@@ -41,16 +41,10 @@ const createNotification = async (req: express.Request, res: express.Response, n
 }
 
 const getNotifications = async (req: express.Request, res: express.Response, next: express.NextFunction) => {
-  if (req.query.page === null || req.query.page === undefined) {
+  if (checkParameter([req.query.page, req.query.range])) {
     res.status(400).send(
       {
-        'message': 'get users fail - please input page number'
-      }
-    )
-  } else if (req.query.range === null || req.query.range === undefined) {
-    res.status(400).send(
-      {
-        'message': 'get users fail - please input range number'
+        'message': 'get users'
       }
     )
   }
@@ -111,16 +105,10 @@ const getNotifications = async (req: express.Request, res: express.Response, nex
 
 const getNotification = async (req: express.Request, res: express.Response, next: express.NextFunction) => {
   console.log('controller: getNotification')
-  if (req.query.page === null || req.query.page === undefined) {
+  if (checkParameter([req.query.page, req.query.range, req.body.type, req.body.receiver_ID, req.body.sender_ID])) {
     res.status(400).send(
       {
-        'message': 'get users fail - please input page number'
-      }
-    )
-  } else if (req.query.range === null || req.query.range === undefined) {
-    res.status(400).send(
-      {
-        'message': 'get users fail - please input range number'
+        'message': 'get users'
       }
     )
   }
@@ -130,28 +118,6 @@ const getNotification = async (req: express.Request, res: express.Response, next
   const query = req.query;
   let extraQuery = '';
   let urlPattern = '?';
-  if (req.body.type === null || req.body.type === '' || req.body.type === undefined) {
-    res.status(400).send(
-      {
-        'message': 'get notification fail - please input type'
-      }
-    )
-  }
-  else if (req.body.receiver_ID === null || req.body.receiver_ID === '' || req.body.receiver_ID === undefined) {
-    res.status(400).send(
-      {
-        'message': 'get notification fail - please input receiver id'
-      }
-    )
-  }
-  else if (req.body.sender_ID === null || req.body.sender_ID === '' || req.body.sender_ID === undefined) {
-  
-    res.status(400).send(
-      {
-        'message': 'get notification fail - please input sender id'
-      }
-    )
-  }
   try {
     let data;
     if (req.body.is_checked === 'all'){
@@ -207,10 +173,10 @@ const getNotification = async (req: express.Request, res: express.Response, next
 
 const deleteUserNotification = async (req: express.Request, res: express.Response, next: express.NextFunction) => {
   console.log('controller: deleteUserNotification')
-  if (req.params.id === null || req.params.id === '' || req.params.id === undefined) {
+  if (checkParameter([req.params.id])) {
     res.status(400).send(
       {
-        'message': 'delete user notification fail - please input id'
+        'message': 'delete user notification'
       }
     )
   }

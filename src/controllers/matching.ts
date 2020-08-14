@@ -1,37 +1,21 @@
 import * as express from 'express';
 import * as moment from 'moment';
 import matchingDAO from '../dao/matchingDAO'
-import { pagination } from '../lib/lib'
+import { pagination, checkParameter, dateFormatConvert } from '../lib/lib'
 
 const router = express.Router();
 
 
 //날짜시간 포맷 변환
-const dateFormatConvert = (date: string): string => {
-  return (new Date(date)).toISOString().slice(0, 19).replace(/-/g, "-").replace("T", " ");
-}
+
 
 const createMatching = async (req: express.Request, res: express.Response, next: express.NextFunction) => {
   console.log('controller: createMatching');
 
-  if (req.body.mentor_ID === null || req.body.mentor_ID === '' || req.body.mentor_ID === undefined) {
+  if (checkParameter([req.body.mentor_ID, req.body.mentee_ID, req.body.state])) {
     res.status(400).send(
       {
-        'message': 'create matching fail - please input mentor ID'
-      }
-    )
-  }
-  else if (req.body.mentee_ID === null || req.body.mentee_ID === '' || req.body.mentee_ID === undefined) {
-    res.status(400).send(
-      {
-        'message': 'create matching fail - please input mentee ID'
-      }
-    )
-  }
-  else if (req.body.state === null || req.body.state === '' || req.body.state === undefined) {
-    res.status(400).send(
-      {
-        'message': 'create matching fail - please input state'
+        'message': 'create matching'
       }
     )
   }
@@ -75,10 +59,10 @@ const createMatching = async (req: express.Request, res: express.Response, next:
 
 const deleteMatching = async (req: express.Request, res: express.Response, next: express.NextFunction) => {
   console.log('controller: deleteCategory');
-  if (req.params.id === null || req.params.id === '' || req.params.id === undefined) {
+  if (checkParameter([req.params.id])) {
     res.status(400).send(
       {
-        'message': 'delete matching fail - please input matching id'
+        'message': 'delete matching'
       }
     )
   }
@@ -100,10 +84,10 @@ const deleteMatching = async (req: express.Request, res: express.Response, next:
 
 const renderModifyForm = async (req: express.Request, res: express.Response, next: express.NextFunction) => {
 
-  if (req.params.id === null || req.params.id === '' || req.params.id === undefined) {
+  if (checkParameter([req.params.id])) {
     res.status(400).send(
       {
-        'message': 'modify matching form fail - please input id'
+        'message': 'modify matching form'
       }
     )
   }
@@ -122,31 +106,10 @@ const renderModifyForm = async (req: express.Request, res: express.Response, nex
 
 const modifyMatching = async (req: express.Request, res: express.Response, next: express.NextFunction) => {
   console.log('controller: updateMatching');
-  if (req.body.mentor_ID === null || req.body.mentor_ID === '' || req.body.mentor_ID === undefined) {
+  if (checkParameter([req.body.mentor_ID, req.body.mentee_ID, req.body.state, req.body.is_checked])) {
     res.status(400).send(
       {
-        'message': 'modify matching fail - please input mentor id'
-      }
-    )
-  }
-  else if (req.body.mentee_ID === null || req.body.mentee_ID === '' || req.body.mentee_ID === undefined) {
-    res.status(400).send(
-      {
-        'message': 'modify matching fail - please input mentee id'
-      }
-    )
-  }
-  else if (req.body.state === null || req.body.state === '' || req.body.state === undefined) {
-    res.status(400).send(
-      {
-        'message': 'modify matching fail - please input state'
-      }
-    )
-  }
-  else if (req.body.is_checked === null || req.body.is_checked === '' || req.body.is_checked === undefined) {
-    res.status(400).send(
-      {
-        'message': 'modify matching fail - please input isChecked'
+        'message': 'modify matching'
       }
     )
   }
@@ -180,16 +143,10 @@ const modifyMatching = async (req: express.Request, res: express.Response, next:
 const getMatching = async (req: express.Request, res: express.Response, next: express.NextFunction) => {
   console.log('controller: getMatching');
   
-  if (req.query.page === null || req.query.page === undefined) {
+  if (checkParameter([req.query.page, req.query.range])) {
     res.status(400).send(
       {
-        'message': 'get users fail - please input page number'
-      }
-    )
-  } else if (req.query.range === null || req.query.range === undefined) {
-    res.status(400).send(
-      {
-        'message': 'get users fail - please input range number'
+        'message': 'get matchings'
       }
     )
   }
@@ -211,15 +168,15 @@ const getMatching = async (req: express.Request, res: express.Response, next: ex
           req.query.endDateSubmit
         ];
   
-      if (req.query.state !== '-1' && req.query.state !== null && req.query.state !== undefined) {
+      if (req.query.state !== '-1' && req.query.state !== null) {
         extraQuery += ` AND m.state = ${req.query.state}`;
         urlPattern += `&state=${query.state}`;
       }
-      if (req.query.menteeID !== null && req.query.menteeID !== '' && req.query.menteeID !== undefined) {
+      if (req.query.menteeID !== null && req.query.menteeID !== '') {
         extraQuery += ` AND mentee.ID = '${req.query.menteeID}'`;
         urlPattern += `&menteeID=${query.menteeID}`;
       }
-      if (req.query.mentorID !== null && req.query.mentorID !== '' && req.query.mentorID !== undefined) {
+      if (req.query.mentorID !== null && req.query.mentorID !== '') {
         extraQuery += ` AND mentor.ID = '${req.query.mentorID}'`;
         urlPattern += `&mentorID=${query.mentorID}`;
       }
@@ -252,10 +209,10 @@ const getMatching = async (req: express.Request, res: express.Response, next: ex
 
 const getMatchingDetail = async (req: express.Request, res: express.Response, next: express.NextFunction) => {
   console.log('controller: getMatchingDetail');
-  if (req.params.id === null || req.params.id === '' || req.params.id === undefined) {
+  if (checkParameter([req.params.id])) {
     res.status(400).send(
       {
-        'message': 'get matching detail fail - please input id'
+        'message': 'get matching detail'
       }
     )
   }

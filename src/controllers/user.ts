@@ -1,51 +1,16 @@
 import * as express from 'express';
 import userQuery from '../dao/userDAO'
 import { search } from './keyword';
-import { pagination } from '../lib/lib'
+import { pagination, checkParameter } from '../lib/lib'
 
 const router = express.Router();
 
 const createUser = async (req: express.Request, res: express.Response, next: express.NextFunction) => {
   console.log('controller: createUser');
-  if (req.body.id === null || req.body.id === '' || req.body.id === undefined) {
+  if (checkParameter([req.body.id, req.body.name, req.body.password, req.body.email, req.body.type, req.body.permission])) {
     res.status(400).send(
       {
-        'message': 'create user fail - please input id'
-      }
-    )
-  }
-  else if (req.body.name === null || req.body.name === '' || req.body.name === undefined) {
-    res.status(400).send(
-      {
-        'message': 'create user fail - please input name'
-      }
-    )
-  }
-  else if (req.body.password === null || req.body.password === '' || req.body.password === undefined) {
-    res.status(400).send(
-      {
-        'message': 'create user fail - please input password'
-      }
-    )
-  }
-  else if (req.body.email === null || req.body.email === '' || req.body.email === undefined) {
-    res.status(400).send(
-      {
-        'message': 'create user fail - please input email'
-      }
-    )
-  }
-  else if (req.body.type === null || req.body.type === '' || req.body.type === undefined) {
-    res.status(400).send(
-      {
-        'message': 'create user fail - please input type'
-      }
-    )
-  }
-  else if (req.body.permission === null || req.body.permission == '' || req.body.permission === undefined) {
-    res.status(400).send(
-      {
-        'message': 'create user fail - please input permission'
+        'message': 'create user'
       }
     )
   }
@@ -74,16 +39,10 @@ const createUser = async (req: express.Request, res: express.Response, next: exp
 
 const getUsers = async (req: express.Request, res: express.Response, next: express.NextFunction) => {
   console.log('controller: getUsers');  
-  if (req.query.page === null || req.query.page === undefined) {
+  if (checkParameter([req.query.page, req.query.range])) {
     res.status(400).send(
       {
-        'message': 'get users fail - please input page number'
-      }
-    )
-  } else if (req.query.range === null || req.query.range === undefined) {
-    res.status(400).send(
-      {
-        'message': 'get users fail - please input range number'
+        'message': 'get users'
       }
     )
   }
@@ -139,10 +98,10 @@ const getUsers = async (req: express.Request, res: express.Response, next: expre
 const getUser = async (req: express.Request, res: express.Response, 
   next: express.NextFunction) => {
   console.log('controller: getUser');
-  if (req.params.usn === null || req.params.usn === '' || req.params.usn === undefined) {
+  if (checkParameter([req.params.usn])) {
     res.status(400).send(
       {
-        'message': 'get user fail - please input usn'
+        'message': 'get user'
       }
     )
   }
@@ -181,10 +140,10 @@ const getUser = async (req: express.Request, res: express.Response,
 
 const deleteUser = async (req: express.Request, res: express.Response, next: express.NextFunction) => {
   console.log('controller: deleteUser');
-  if (req.params.usn === null || req.params.usn === '' || req.params.usn === undefined) {
+  if (req.params.usn) {
     res.status(400).send(
       {
-        'message': 'delete user fail - please input usn'
+        'message': 'delete user'
       }
     )
   }
@@ -208,31 +167,10 @@ const deleteUser = async (req: express.Request, res: express.Response, next: exp
 
 const modifyUser = async (req: express.Request, res: express.Response, next: express.NextFunction) => {
   console.log('controller: modifyUser');
-  if (req.body.email === null || req.body.email === '' || req.body.email === undefined) {
+  if (checkParameter([req.body.email, req.body.name, req.body.permission, req.body.type])) {
     res.status(400).send(
       {
-        'message': 'modify user fail - please input email'
-      }
-    )
-  }
-  else if (req.body.name === null || req.body.name === '' || req.body.name === undefined) {
-    res.status(400).send(
-      {
-        'message': 'modify user fail - please input name'
-      }
-    )
-  }
-  else if (req.body.permission === null || req.body.permission === '' || req.body.permission === undefined) {
-    res.status(400).send(
-      {
-        'message': 'modify user fail - please input permission'
-      }
-    )
-  }
-  else if (req.body.type === null || req.body.type === '' || req.body.type === undefined) {
-    res.status(400).send(
-      {
-        'message': 'modify user fail - please input type'
+        'message': 'modify user'
       }
     )
   }
@@ -285,17 +223,10 @@ const modifyUser = async (req: express.Request, res: express.Response, next: exp
 
 const createUserCareer = async (req: express.Request, res: express.Response, next: express.NextFunction) => {
   console.log('controller: createUserCareer');
-  if (req.params.usn === null || req.params.usn === '' || req.params.usn === undefined) {
+  if (checkParameter([req.params.usn, req.body.content])) {
     res.status(400).send(
       {
-        'message': 'create user career fail - please input usn'
-      }
-    )
-  }
-  if (req.body.content === null || req.body.content === '' || req.body.content === undefined) {
-    res.status(400).send(
-      {
-        'message': 'create user career fail - please input content'
+        'message': 'create user career'
       }
     )
   }
@@ -321,17 +252,10 @@ const createUserCareer = async (req: express.Request, res: express.Response, nex
 
 const modifyUserCareer = async (req: express.Request, res: express.Response, next: express.NextFunction) => {
   console.log('controller: modifyUserCareer');
-  if (req.body.id === null || req.body.id === '' || req.body.id === undefined) {
+  if (checkParameter([req.body.id, req.body.content])) {
     res.status(400).send(
       {
-        'message': 'modify user career fail - please input id'
-      }
-    )
-  }
-  else if (req.body.content === null || req.body.content === '' || req.body.content === undefined) {
-    res.status(400).send(
-      {
-        'message': 'modify user career fail - please input content'
+        'message': 'modify user career'
       }
     )
   }
@@ -354,10 +278,10 @@ const modifyUserCareer = async (req: express.Request, res: express.Response, nex
 
 const deleteUserCareer = async (req: express.Request, res: express.Response, next: express.NextFunction) => {
   console.log('controller: deleteUserCareer');
-  if (req.body.id === null || req.body.id === '' || req.body.id === undefined) {
+  if (checkParameter([req.body.id])) {
     res.status(400).send(
       {
-        'message': 'delete user career fail - please input id'
+        'message': 'delete user career'
       }
     )
   }
@@ -379,17 +303,10 @@ const deleteUserCareer = async (req: express.Request, res: express.Response, nex
 
 const createUserRecommendKeyword = async (req: express.Request, res: express.Response, next: express.NextFunction) => {
   console.log('controller: createUserRecommendKeyword');
-  if (req.params.usn === null || req.params.usn === '' || req.params.usn === undefined) {
+  if (checkParameter([req.params.usn, req.body.id])) {
     res.status(400).send(
       {
-        'message': 'create user recommend keyword fail - please input usn'
-      }
-    )
-  }
-  if (req.body.id === null || req.body.id === '' || req.body.id === undefined) {
-    res.status(400).send(
-      {
-        'message': 'create user recommend keyword fail - please input id'
+        'message': 'create user recommend keyword'
       }
     )
   }
@@ -412,17 +329,10 @@ const createUserRecommendKeyword = async (req: express.Request, res: express.Res
 
 const deleteUserRecommendKeyword = async (req: express.Request, res: express.Response, next: express.NextFunction) => {
   console.log('controller: deleteUserRecommendKeyword');
-  if (req.params.usn === null || req.params.usn === '' || req.params.usn === undefined) {
+  if (checkParameter([req.params.usn, req.body.id])) {
     res.status(400).send(
       {
-        'message': 'delete user recommend keyword fail - please input usn'
-      }
-    )
-  }
-  if (req.body.id === null || req.body.id === '' || req.body.id === undefined) {
-    res.status(400).send(
-      {
-        'message': 'delete user recommend keyword fail - please input id'
+        'message': 'delete user recommend keyword'
       }
     )
   }
@@ -445,17 +355,10 @@ const deleteUserRecommendKeyword = async (req: express.Request, res: express.Res
 
 const createUserTotalKeyword = async (req: express.Request, res: express.Response, next: express.NextFunction) => {
   console.log('controller: createUserTotalKeyword');
-  if (req.params.usn === null || req.params.usn === '') {
+  if (checkParameter([req.params.usn, req.body.id])) {
     res.status(400).send(
       {
-        'message': 'create user total keyword fail - please input usn'
-      }
-    )
-  }
-  else if (req.body.id === null || req.body.id === '' || req.body.id === undefined) {
-    res.status(400).send(
-      {
-        'message': 'create user total keyword fail - please input id'
+        'message': 'create user total keyword'
       }
     )
   }
@@ -477,17 +380,10 @@ const createUserTotalKeyword = async (req: express.Request, res: express.Respons
 }
 
 const deleteUserTotalKeyword = async (req: express.Request, res: express.Response, next: express.NextFunction) => {
-  if (req.params.usn === null || req.params.usn === '' || req.params.usn === undefined) {
+  if (checkParameter([req.params.usn, req.body.id])) {
     res.status(400).send(
       {
-        'message': 'delete user total keyword fail - please input usn'
-      }
-    )
-  }
-  if (req.body.id === null || req.body.id === '' || req.body.id === undefined) {
-    res.status(400).send(
-      {
-        'message': 'delete user total keyword fail - please input id'
+        'message': 'delete user total keyword'
       }
     )
   }

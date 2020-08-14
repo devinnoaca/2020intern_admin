@@ -1,5 +1,6 @@
 import * as express from 'express';
 import keywordQuery from '../dao/keywordDAO'
+import {checkParameter} from '../lib/lib'
 
 const router = express.Router();
 
@@ -63,17 +64,10 @@ const renderKeyword = async (req: express.Request, res: express.Response, next: 
 
 const createKeyword = async (req: express.Request, res: express.Response, next: express.NextFunction) => {
   console.log('controller: createKeyword');
-  if (req.body.name === null || req.body.name === '' || req.body.name === undefined === undefined) {
+  if (checkParameter([req.body.name, req.body.categoryID])) {
     res.status(400).send(
       {
-        'message': 'create keyword fail - please input name'
-      }
-    )
-  }
-  if (req.body.categoryID === null || req.body.categoryID === '' || req.body.categoryID === undefined) {
-    res.status(400).send(
-      {
-        'message': 'create keyword fail - please input category ID'
+        'message': 'create keyword'
       }
     )
   }
@@ -96,10 +90,10 @@ const createKeyword = async (req: express.Request, res: express.Response, next: 
 
 const deleteKeyword = async (req: express.Request, res: express.Response, next: express.NextFunction) => {
   console.log('controller: deleteKeyword');
-  if (req.params.id === null || req.params.id === '' || req.params.id === undefined) {
+  if (checkParameter([req.params.id])) {
     res.status(400).send(
       {
-        'message': 'delete keyword fail - please input keyword id'
+        'message': 'delete keyword'
       }
     )
   }
