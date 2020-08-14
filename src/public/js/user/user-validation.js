@@ -2,7 +2,7 @@
 const userDataValidation = function(userData) {
   //각 유저 데이터에 대한 정규 표현식
   const idReg = /^[A-Za-z0-9]{5,20}$/;
-  const nameReg = /^[가-힣]{1,40}/;
+  const nameReg = /^[가-힣]{1,40}$/;
   const emailReg = /^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/i;
   const passwordReg =  /^(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{4,20}$/;
 
