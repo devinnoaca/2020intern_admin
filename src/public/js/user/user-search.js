@@ -18,10 +18,13 @@ $('tbody tr').click(function(event){
     const receiverId = notificationModal.find('[name="receiver_ID"]');
     
     //수신자를 특정 회원으로 고정함
+    receiver.attr('readonly', true);
     receiver.val('user');
-    receiver.attr('disabled', true);
+
 
     //수신자ID를 특정 회원으로 고정함
+    receiverId.attr('readonly', true);
+    receiverId.attr('disabled', false);
     receiverId.val(id);
 
     notificationModal.modal();
