@@ -355,7 +355,7 @@
   $('[name="type"] option:nth-child(<%=user[0].type + 1%>)').attr('selected', true);
 
   $('[name="updateCancelButton"]').on('click', () => {
-    window.location.href = `/user`;
+    window.history.back();
   });
 
   const id = $('[name="id"]').val();
