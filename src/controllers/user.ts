@@ -73,7 +73,6 @@ const createUser = async (req: express.Request, res: express.Response, next: exp
 
 const getUsers = async (req: express.Request, res: express.Response, next: express.NextFunction) => {
   console.log('controller: getUsers');
-  console.log(req.url);
   const page = parseInt(req.query.page.toString());
   const range = parseInt(req.query.range.toString());
   
@@ -96,7 +95,8 @@ const getUsers = async (req: express.Request, res: express.Response, next: expre
       urlPattern += `&searchType=${query.searchType}`;
     }
 
-    if (query.searchOption !== null && query.searchWord !== null && query.searchOption !== undefined && query.searchWord !== undefined) {
+    if (query.searchOption !== null && query.searchWord !== null && query.searchOption !== undefined && 
+      query.searchWord !== undefined) {
       const searchWord = query.searchWord.toString().trim();
       extraQuery += `AND ${query.searchOption} LIKE '%${searchWord}%' `;
       urlPattern += `&searchOption=${query.searchOption}&searchWord=${searchWord}`;
@@ -110,6 +110,7 @@ const getUsers = async (req: express.Request, res: express.Response, next: expre
   extraQuery += ` LIMIT ${(page-1)*30}, 30;`
   try {
     let result = await userQuery.getUsers(extraQuery);
+    
     let url = new Array();
     
     result[0][0]['startPage'] = (range - 1) * 10 + 1 ;
