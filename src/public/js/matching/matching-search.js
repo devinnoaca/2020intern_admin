@@ -39,6 +39,13 @@ const onSearch = () => {
 
     formData.startDateSubmit.value = convStartDate;
     formData.endDateSubmit.value = convEndDate;
+    
+    const query = getURLParams();
+    const page = query.page;
+    const range = query.range;
+
+    formData.page.value = page;
+    formData.range.value = range;
 
     formData.submit();
 }
