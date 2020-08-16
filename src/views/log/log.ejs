@@ -43,7 +43,7 @@
               <h6 class="m-0 font-weight-bold text-primary">로그 조회</h6>
             </div>
             <div class="card-body">
-              <form name="searchingForm" method="GET" action="/log">
+              <form name="logSearchingForm" method="GET" action="/log">
                 <input type="hidden" name="queryType" value="SEARCH">
                 <ul class="list-group list-group-flush">
 
@@ -52,40 +52,31 @@
                     <div class="form-row form-inline">
                       <div class="form-inline col-md-3">
                         <div class="col-auto">
-                          <span>멘토</span>
+                          <span>상태코드</span>
                         </div>
                         <div class="col-auto">
-                          <input type="text" class="form-control" name="mentorID" placeholder="Mentor ID">
+                            <select name="statusCode" class="custom-select">
+                                <option value="200" selected>200</option>
+                                <option value="300">300</option>
+                                <option value="400">400</option>
+                                <option value="500">500</option>
+                              </select>
                         </div>
                       </div>
 
                       <div class="form-inline col-md-3">
                         <div class="col-auto">
-                          <span>멘티</span>
+                          <span>HTTP Method</span>
                         </div>
                         <div class="col-auto">
-                          <input type="text" class="form-control" name="menteeID" placeholder="Mentee ID">
+                            <select name="httpMethod" class="custom-select">
+                                <option value="GET" selected>GET</option>
+                                <option value="POST">POST</option>
+                                <option value="PUT">PUT</option>
+                                <option value="DELETE">DELETE</option>
+                              </select>
                         </div>
                       </div>
-                    </div>
-                  </li>
-
-                  <!-- state-->
-                  <li class="list-group-item">
-                    <div class="form-row form-inline">
-                      <div class="form-check col-md-1">
-                        <label class="form-check-label">
-                          상태
-                        </label>
-                      </div>
-                      <% const radios = ['전체', '대기', '수락', '거절'] %>
-                      <% for(let i = -1; i < radios.length-1; ++i) { %>
-                      <div class="form-check form-check-inline col-md-1">
-                        <input class="form-check-input state-radio" type="radio" name="state" id="state-<%= i %>"
-                          value="<%= i %>">
-                        <label class="form-check-label" for="state-<%= i %>"><%= radios[i+1] %></label>
-                      </div>
-                      <% } %>
                     </div>
                   </li>
 
