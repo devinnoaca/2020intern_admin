@@ -6,7 +6,7 @@ const deleteMatchingCallback = (xhr) => {
     case 200:
       alert(`매칭정보가 정상적으로 삭제되었습니다.`);
       console.log(message);
-      window.location.href = '/matching';
+      window.location.href = `/matching?page=1&range=1`;
       break;
 
     case 400:
