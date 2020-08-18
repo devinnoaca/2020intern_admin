@@ -131,8 +131,7 @@ const modifyMatching = async (req: express.Request, res: express.Response, next:
     const result = await matchingDAO.modifyMatching(data);
     res.status(200).send(
       {
-        'message': 'get modify matching success',
-        'matching': result
+        'message': 'get modify matching success'
       }
     )
   } catch (e) {
@@ -225,7 +224,7 @@ const getMatchingDetail = async (req: express.Request, res: express.Response, ne
       }
     )
   } catch (e) {
-    res.status(500).send('get matching detail fail - unexpected errors occur in db')
+    res.status(500).send()
   }
 };
 

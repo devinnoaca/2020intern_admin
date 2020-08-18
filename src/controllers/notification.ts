@@ -44,7 +44,7 @@ const getNotifications = async (req: express.Request, res: express.Response, nex
   if (checkParameter([req.query.page, req.query.range])) {
     res.status(400).send(
       {
-        'message': 'get users'
+        'message': 'get notifications'
       }
     )
   }
@@ -92,7 +92,8 @@ const getNotifications = async (req: express.Request, res: express.Response, nex
     for (let i = result[0][0]['startPage']; i <= result[0][0]['endPage']; ++i) {
       url.push(urlPattern + `&page=${i}&range=${range}`);
     }
-    res.status(200).render('notification/notification', {
+    res.status(200).render('notification/notification', 
+    {
       'page': result[0],
       "notifications" : result[1],
       'url': url
@@ -108,7 +109,7 @@ const getNotification = async (req: express.Request, res: express.Response, next
   if (checkParameter([req.query.page, req.query.range, req.body.type, req.body.receiver_ID, req.body.sender_ID])) {
     res.status(400).send(
       {
-        'message': 'get users'
+        'message': 'get notification'
       }
     )
   }
