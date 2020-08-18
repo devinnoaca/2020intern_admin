@@ -11,7 +11,7 @@ const isEmptyObject = (param) => {
 }
 
 const isSearchQuery = (param) => {
-  return param.queryType == undefined;
+  return param.queryType === undefined;
 }
 
 // init search form
