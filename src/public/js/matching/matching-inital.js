@@ -10,6 +10,10 @@ const isEmptyObject = (param) => {
   return Object.keys(param).length === 0 && param.constructor === Object;
 }
 
+const isSearchQuery = (param) => {
+  return param.queryType === undefined;
+}
+
 // init search form
 const formData = document.searchingForm;
 // 전체기간 체크박스 이벤트
@@ -33,7 +37,7 @@ formData.isTotal.addEventListener('change', (event) => {
 // init search form data (querystring)
 const searchParams = getURLParams();
 
-if(isEmptyObject(searchParams)) {
+if(isSearchQuery(searchParams)) {
   formIsTotal.checked = true;
   formData.state[0].checked = true;
   formStartDate.disabled = true;

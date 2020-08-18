@@ -24,7 +24,7 @@ createMatchingCallback = (xhr) => {
     case 200:
       alert(`매칭정보가 정상적으로 생성되었습니다`);
       console.log(message);
-      window.location.href = '/matching';
+      location.reload();
       break;
 
     case 400:
