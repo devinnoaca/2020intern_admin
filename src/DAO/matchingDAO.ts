@@ -60,7 +60,7 @@ async function modifyMatching(data: Array<any>) {
 
 async function searchMatching(data: Array<any>, extraQuery: String, page: number) {
   try {
-    const [rows, fields] = await db.connection.promise().query(query.searchMatchingPagination+extraQuery+';'+query.searchMatching+extraQuery, data+` LIMIT ${(page-1)*30}, 30;`);
+    const [rows, fields] = await db.connection.promise().query(query.searchMatchingPagination+extraQuery+';'+query.searchMatching+extraQuery+` LIMIT ${(page-1)*30}, 30;`, data);
     return rows;
   } catch (e) {
     console.log('dao: searchMatching error\n' + e);

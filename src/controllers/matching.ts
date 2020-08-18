@@ -180,7 +180,6 @@ const getMatching = async (req: express.Request, res: express.Response, next: ex
         extraQuery += ` AND mentor.ID = '${req.query.mentorID}'`;
         urlPattern += `&mentorID=${query.mentorID}`;
       }
-      
       resultData = await matchingDAO.searchMatching(inputData, extraQuery, page);
     } else {
       // 매칭정보 리스트 요청
