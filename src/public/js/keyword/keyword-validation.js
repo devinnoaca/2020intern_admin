@@ -16,7 +16,7 @@ const keywordDataValidation = (keywordData) => {
 }
 
 const categoryDataValidation = (categoryData) => {
-  const CategoryReg = /^[0-9a-zA-Zㄱ-ㅎ가-힣;:._()#?%*!\-\s]{1,20}$/;
+  const CategoryReg = /^[0-9a-zA-Zㄱ-ㅎ가-힣;:._()#?%*!/\-\s]{1,20}$/;
 
   if (!CategoryReg.test(categoryData.name)) {
     alert('허용되지 않은 특수문자 또는 자리 수입니다.');
