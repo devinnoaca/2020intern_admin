@@ -6,6 +6,7 @@ const responseInput = document.querySelector('#responseInputLi');
 for (var i = 0; i < stateRadio.length; ++i) {
   stateRadio[i].onclick = function () {
     switch (this.value) {
+      case '1':
       case '2':
         responseInput.style.display = "block";
         break;
