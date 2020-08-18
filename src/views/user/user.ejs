@@ -133,6 +133,9 @@
                     </tr>
                   </thead>
                   <tbody>
+                    <% if(users.length == 0) { %>
+                      <td colspan="7">조건에 해당되는 데이터가 없습니다.</td>
+                      <% } %>
                     <% for (let i = 0; i < users.length; i++) { %>
                     <tr>
                       <td><%= users[i].usn %></td>
@@ -150,7 +153,7 @@
                         type="button" value="<%=users[i].id%>">알림 발송</button>
                       </td>
                       <td>
-                        <button class="btn btn-primary d-inline" name="deleteButton" 
+                        <button class="btn btn-danger d-inline" name="deleteButton" 
                         type="button" value="<%=users[i].usn%>">삭제</button>
                       </td>
                     </tr>

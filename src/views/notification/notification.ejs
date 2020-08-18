@@ -146,6 +146,10 @@
                     </tr>
                   </thead>
                   <tbody>
+                    <% if(notifications.length == 0) { %>
+                      <td colspan="7">조건에 해당되는 데이터가 없습니다.</td>
+                    <% } %>
+
                     <% notifications.forEach(function(elem, index) { %>
                     <tr>
                       <td><%= elem.id %></td>
@@ -163,7 +167,7 @@
                         <% } %>
                       </td>
                       <td>
-                        <button class="btn btn-primary d-inline" name="deleteButton" type="button" value="<%=elem.id%>">삭제</button>
+                        <button class="btn btn-danger d-inline" name="deleteButton" type="button" value="<%=elem.id%>">삭제</button>
                       </td>
                     </tr>
                     <% }) %>

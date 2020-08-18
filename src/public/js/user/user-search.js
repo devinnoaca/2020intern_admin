@@ -8,7 +8,7 @@ $('tbody tr').click(function(event){
   const tr = $(this);
 
   if(target.is('[name=deleteButton]')){
-    const id = target.val();
+    const usn = target.val();
     sendAjax('DELETE', `/user/${usn}`, null, deleteUserCallback);
 
   } else if (target.is('[name="sendNotification"]')) {

@@ -13,6 +13,7 @@ const deleteUserCallback = (xhr) => {
     
     case 400:
       alert(message);
+      location.reload();
       break;
   }
 }

@@ -32,15 +32,15 @@ const createUserCallback = function(xhr) {
   switch(status){
     case 200: 
       alert(message);
-      window.location.href = '/user';
+      location.reload();
       break;
     case 400:
       alert(message);
-      window.location.href = '/user';
+      location.reload();
       break;
     case 500: 
       alert(message);
-      window.location.href = '/user';
+      location.reload();
       break;
   }
 };
