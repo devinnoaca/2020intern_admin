@@ -14,17 +14,16 @@ npm run
 <br>
 
 ## Environment
----
-|||
+|Classification|Specification|
 |:------:|:-------|
-|<span style="color: #6495ED"> **OS** | macOS Catalina 10.15.5 |
-|<span style="color: #6495ED"> **Server** | node 12.18.2 |
-|<span style="color: #6495ED"> **Database** | MySQL 8.0.21 |
+| **OS** | macOS Catalina 10.15.5 |
+| **Server** | node 12.18.2 |
+| **Database** | MySQL 8.0.21 |
+
 <br>
 <br>
 
 ## Dependency
----
 |Dependencies|Version|
 |---:|:---|
 | @types/express| 4.17.7 |
