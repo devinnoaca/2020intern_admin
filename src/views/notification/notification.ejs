@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <%- include ('../common/header.ejs') %>
+</head>
+
+<body id="page-top">
+
+  <!-- Page Wrapper -->
+  <div id="wrapper">
+
+    <!-- Sidebar -->
+    <%- include ('../common/sidebar.ejs') %>
+    <!-- End of Sidebar -->
+
+    <!-- Content Wrapper -->
+    <div id="content-wrapper" class="d-flex flex-column">
+
+      <!-- Main Content -->
+      <div id="content">
+
+        <!-- Topbar -->
+        <%- include ('../common/topbar.ejs') %>
+        <!-- End of Topbar -->
+
+        <!-- Begin Page Content -->
+        <div class="container-fluid">
+
+          <!-- Page Heading -->
+          <div class="d-sm-flex align-items-center justify-content-between mb-4">
+            <h1 class="h3 mb-0 text-gray-800">알림 관리</h1>
+            <button class="btn btn-primary shadow-sm" id="notiCreateButton" data-toggle="modal" data-target="#notiCreate">
+              알림 생성
+            </button>
+          </div>
+          
+          <!-- 검색 조건 -->
+          <div class="card shadow mb-4">
+            <div class="card-header py-3">
+              <h6 class="m-0 font-weight-bold text-primary">알림 조회</h6>
+            </div>
+            <div class="card-body">
+              <form action="/notification" method="GET" name="searchNotificationForm">
+                <ul class="list-group list-group-flush">
+                  <input type="hidden" name="page">
+                  <input type="hidden" name="range">
+                  <!-- 알림 종류, 열람 여부-->
+                  <li class="list-group-item">
+                    <div class="row">
+                      <!-- 알림 종류 -->
+                      <div class="form-row col-md-6">
+                       <div class="form-group form-inline col-md-2">
+                        <h5>알림 종류</h5>
+                       </div>
+                       <div class="form-group form-inline col-md-10">
+                        <select class="form-control" name="searchType">
+                          <option value="1">메세지</option>
+                        </select>
+                       </div> 
+                      </div>
+
+                      <!-- 열람 여부 -->
+                      <div class="form-row col-md-6">
+                        <div class="form-group form-inline col-md-2">
+                          <label>
+                            <h5>알람여부</h5>
+                          </label>
+                        </div>
+                        <div class="form-group form-inline col-md-10">
+                          <select class="form-control" name="isChecked">
+                            <option value="all">전체</option>
+                            <option value="1">열람</option>
+                            <option value="0">미열람</option>
+                          </select>
+                        </div>
+                      </div>
+                    </div>
+                  </li>
+                  
+                  <!-- 송신자 -->
+                  <li class="list-group-item">
+                    <div class="form-row">
+                      <div class="form-group form-inline col-md-1">
+                        <label>
+                          <h5>송신자</h5>
+                        </label>
+                      </div>
+                      <div class="form-group form-inline col-md-1">
+                        <select class="form-control" name="sender">
+                          <option value="id">ID</option>
+                        </select>
+                      </div>
+                      <div class="form-group form-inline col-md-6">
+                        <input class="form-control col-md-12" type="text" name="senderID">
+                      </div>
+                    </div>
+                  </li>
+                  
+                  <!-- 수신자 -->
+                  <li class="list-group-item">
+                    <div class="form-row">
+                      <div class="form-group form-inline col-md-1">
+                        <label>
+                          <h5>수신자</h5>
+                        </label>
+                      </div>
+                      <div class="form-group form-inline col-md-1">
+                        <select class="form-control" name="receiver">
+                          <option value="id">ID</option>
+                        </select>
+                      </div>
+                      <div class="form-group form-inline col-md-6">
+                        <input class="form-control col-md-12" type="text" name="receiverID">
+                      </div>
+                    </div>
+                  </li>
+                </ul>
+                <!-- 검색 버튼 -->
+                 <div class="form-row">
+                   <div class="col">
+                    <button type="button" class="btn btn-primary align-self-center" name="notificationSearchButton">검색</button>
+                   </div>
+                 </div>
+              </form>
+            </div>
+          </div>
+
+          <!-- 검색 결과 테이블 -->
+          <div class="card shadow mb-4">
+            <div class="card-header py-3">
+              <h6 class="m-0 font-weight-bold text-primary">검색 결과</h6>
+            </div>
+            <div class="card-body">
+              <div class="table-responsive">
+                <table class="table table-bordered table-hover" id="dataTable" width="100%" cellspacing="0">
+                  <thead>
+                    <tr>
+                      <th>알림번호</th>
+                      <th>종류</th>
+                      <th>송신자</th>
+                      <th>수신자</th>
+                      <th>생성일자</th>
+                      <th>열람여부</th>
+                      <th>삭제</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <% if(notifications.length == 0) { %>
+                      <td colspan="7">조건에 해당되는 데이터가 없습니다.</td>
+                    <% } %>
+
+                    <% notifications.forEach(function(elem, index) { %>
+                    <tr>
+                      <td><%= elem.id %></td>
+                      <td>
+                        <% if(elem.type == 0) { %> 매칭 요청
+                        <% } else if(elem.type == 1) { %> 공지사항 
+                        <% } %>
+                      </td>
+                      <td><%= elem.sender_ID %></td>
+                      <td><%= elem.receiver_ID %></td>
+                      <td><%= elem.time %></td>
+                      <td>
+                        <% if(elem.is_checked == 0) { %> 미열람
+                        <% } else if(elem.is_checked == 1) { %> 열람 
+                        <% } %>
+                      </td>
+                      <td>
+                        <button class="btn btn-danger d-inline" name="deleteButton" type="button" value="<%=elem.id%>">삭제</button>
+                      </td>
+                    </tr>
+                    <% }) %>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+            <div class="card-footer">
+              <ul class="pagination">
+                <li class="page-item">
+                  <a class="page-link" href="#" aria-label="Previous">
+                    <span aria-hidden="true">&laquo;</span>
+                    <span class="sr-only">Previous</span>
+                  </a>
+                </li>
+                <% for(let i = 0; i <= (page[0].endPage - page[0].startPage); ++i) { %>
+                <li class="page-item">
+                  <a class="page-link" href="<%=url[i]%>">
+                    <%= i+1 %>
+                  </a>
+                </li>
+                <% } %>
+                <li class="page-item">
+                  <a class="page-link" href="#" aria-label="Next">
+                    <span aria-hidden="true">&raquo;</span>
+                    <span class="sr-only">Next</span>
+                  </a>
+                </li>
+              </ul>
+            </div>
+          </div>
+
+        </div>
+        <!-- /.container-fluid -->
+
+      </div>
+      <!-- End of Main Content -->
+
+      <!-- Footer -->
+      <%- include ('../common/footer.ejs') %>
+      <!-- End of Footer -->
+
+    </div>
+    <!-- End of Content Wrapper -->
+
+  </div>
+  <!-- End of Page Wrapper -->
+
+  <!-- Scroll to Top Button-->
+  <a class="scroll-to-top rounded" href="#page-top">
+    <i class="fas fa-angle-up"></i>
+  </a>
+
+  <!-- Logout Modal-->
+  <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
+          <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">×</span>
+          </button>
+        </div>
+        <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
+        <div class="modal-footer">
+          <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+          <a class="btn btn-primary" href="login">Logout</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Send Ajax 메소드 추가 -->
+  <script src="/js/common/ajax.js"></script>
+
+  <!-- notification 추가 모달 -->
+  <%- include ('./createNotificationModal.ejs') %> 
+
+  <script type="module" src="/js/notification/notification.js"></script>
+
+  <script src="/js/user/close-modal.js"></script>
+
+  <script src="/js/notification/notification-event.js"></script>
+  <script type="module" src="/js/notification/notification-search.js"></script>
+</body>
+
+</html>

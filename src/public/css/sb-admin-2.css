@@ -10816,9 +10816,10 @@ a:focus {
 }
 
 .bg-password-image {
-  background: url("https://source.unsplash.com/oWTW-jNGl9I/600x800");
+  background: url("https://innovationacademy.kr/logo.jpg");
   background-position: center;
-  background-size: cover;
+  background-size: contain;
+  background-repeat: no-repeat;
 }
 
 form.user .custom-checkbox.small label {
