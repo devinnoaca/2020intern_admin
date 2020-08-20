@@ -10,7 +10,7 @@ const getLogs = async (req: express.Request, res: express.Response, next: expres
   console.log("controller: get logs");
 
   try {
-    const files = fs.readdirSync('../logs')
+    const files = fs.readdirSync('./logs')
     let logFiles = [];
     files.map( (f) => {
       if(f.indexOf('WebLog') !== -1) logFiles.push(f);
@@ -23,13 +23,13 @@ const getLogs = async (req: express.Request, res: express.Response, next: expres
         logs.push(line);
       })
     })
-    res.status(200).send(
+    res.status(200).render('log/log',
       {
-        logs
+        'log': logs
       }
     )
   } catch (e) {
-    res.status(500).send()
+    res.status(500).send(e)
   }
 }
 
