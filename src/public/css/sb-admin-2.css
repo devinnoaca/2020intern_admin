@@ -10802,10 +10802,15 @@ a:focus {
   }
 }
 
+.topbar-logo-image {
+  width: 170px;
+  height: auto;
+}
+
 .bg-login-image {
-  background: url("https://innovationacademy.kr/logo.jpg");
+  background-image: url('../img/login_logo.png');
   background-position: center;
-  background-size: contain;
+  background-size: 87%;
   background-repeat: no-repeat;
 }
 
