@@ -34,7 +34,7 @@
     "dedent": "^0.7.0",
     "dedent-js": "^1.0.1",
     "jest": "^26.2.2",
-    "jsonwebtoken": "^8.5.1",
+    "jsonwebtoken": "^9.0.0",
     "morgan": "^1.10.0",
     "mysql2": "^2.1.0",
     "nodemon": "^2.0.4",
